@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | FarmConnect</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                        url('https://images.unsplash.com/photo-1500595046743-cd271d694d30') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-container {
+            background: white;
+            padding: 35px;
+            border-radius: 10px;
+            width: 420px;
+            text-align: center;
+        }
+
+        .register-container h2 {
+            margin-bottom: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .login-link {
+            margin-top: 15px;
+            display: block;
+            text-decoration: none;
+            color: #28a745;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-row input {
+            width: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="register-container">
+    <h2>Create FarmConnect Account 🌾</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Full Name -->
+        <input type="text" name="full_name" placeholder="Full Name" required>
+
+        <!-- Username + Email -->
+        <div class="form-row">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+        </div>
+
+        <!-- Phone -->
+        <input type="text" name="phone" placeholder="Phone Number" required>
+
+        <!-- Location -->
+        <input type="text" name="location" placeholder="Location (e.g Lagos, Nigeria)" required>
+
+        <!-- User Type -->
+        <select name="user_type" required>
+            <option value="">Select Account Type</option>
+            <option value="farmer">Farmer</option>
+            <option value="buyer">Buyer</option>
+        </select>
+
+        <!-- Password -->
+        <input type="password" name="password1" placeholder="Password" required>
+        <input type="password" name="password2" placeholder="Confirm Password" required>
+
+        <button type="submit">Create Account</button>
+    </form>
+
+    <a href="/login/" class="login-link">Already have an account? Login</a>
+</div>
+
+</body>
+</html>

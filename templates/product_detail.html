@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ product.name }} - FarmConnect</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* ===============================
+           RESET
+        =============================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* ===============================
+           NAVBAR
+        =============================== */
+        .navbar {
+            background: #2e7d32;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* ===============================
+           MAIN CONTAINER
+        =============================== */
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        /* ===============================
+           PRODUCT CARD
+        =============================== */
+        .product-card {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            gap: 30px;
+            padding: 25px;
+            flex-wrap: wrap;
+        }
+
+        /* ===============================
+           IMAGE SECTION
+        =============================== */
+        .image-section {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            background: #eee;
+        }
+
+        /* ===============================
+           DETAILS SECTION
+        =============================== */
+        .details {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .details h1 {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 28px;
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .stock {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .desc {
+            line-height: 1.7;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        /* ===============================
+           BUTTONS
+        =============================== */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 13px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .cart-btn {
+            background: #2e7d32;
+        }
+
+        .cart-btn:hover {
+            background: #1b5e20;
+        }
+
+        .chat-btn {
+            background: #1565c0;
+        }
+
+        .chat-btn:hover {
+            background: #0d47a1;
+        }
+
+        /* ===============================
+           IMAGE MODAL
+        =============================== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            padding-top: 40px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+        }
+
+        .modal img {
+            display: block;
+            margin: auto;
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        /* ===============================
+           RESPONSIVE
+        =============================== */
+        @media (max-width: 768px) {
+            .product-card {
+                flex-direction: column;
+            }
+
+            .main-image {
+                height: 300px;
+            }
+
+            .details h1 {
+                font-size: 24px;
+            }
+
+            .price {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===============================
+     NAVBAR
+================================ -->
+<div class="navbar">
+    <h2>🌾 FarmConnect</h2>
+
+    <div class="nav-links">
+        <a href="/marketplace/">Marketplace</a>
+        <a href="/cart/">Cart</a>
+        <a href="/">Home</a>
+    </div>
+</div>
+
+<!-- ===============================
+     PRODUCT DETAILS
+================================ -->
+<div class="container">
+
+    <div class="product-card">
+
+        <!-- IMAGE -->
+        <div class="image-section">
+            <img
+                src="{{ product.image.url }}"
+                alt="{{ product.name }}"
+                class="main-image"
+                onclick="openModal()"
+            >
+        </div>
+
+        <!-- DETAILS -->
+        <div class="details">
+
+            <h1>{{ product.name }}</h1>
+
+            <p class="price">₦{{ product.price }}</p>
+
+            <p class="stock">
+                <strong>Available Quantity:</strong> {{ product.quantity }}
+            </p>
+
+            <p class="desc">
+                {{ product.description }}
+            </p>
+
+            <div class="btn-group">
+
+                <a class="btn cart-btn" href="/add-to-cart/{{ product.id }}/">
+                    🛒 Add to Cart
+                </a>
+
+                <a class="btn chat-btn" href="/chat/start/{{ product.farmer.id }}/">
+                    💬 Chat Farmer
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===============================
+     IMAGE VIEW MODAL
+================================ -->
+<div id="imgModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img src="{{ product.image.url }}">
+</div>
+
+<!-- ===============================
+     SCRIPT
+================================ -->
+<script>
+function openModal() {
+    document.getElementById("imgModal").style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("imgModal").style.display = "none";
+}
+</script>
+
+</body>
+</html>

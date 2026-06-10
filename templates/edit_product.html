@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Product</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: auto;
+            padding-top: 40px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Edit Product ✏</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <input type="text" name="name" value="{{ product.name }}">
+            <textarea name="description">{{ product.description }}</textarea>
+            <input type="number" name="price" value="{{ product.price }}">
+            <input type="number" name="quantity" value="{{ product.quantity }}">
+
+            <p>Current Image:</p>
+            <img src="{{ product.image.url }}" width="100">
+
+            <input type="file" name="image">
+
+            <button type="submit">Update Product</button>
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

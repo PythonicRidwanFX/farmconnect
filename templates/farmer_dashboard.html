@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Farmer Dashboard - FarmConnect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ================= GLOBAL ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f9;
+    color: #333;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+    background: #2e7d32;
+    color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.navbar h2 {
+    font-size: 20px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: 600;
+}
+
+.nav-links a:hover {
+    opacity: 0.8;
+}
+
+/* ================= CONTAINER ================= */
+.container {
+    width: 92%;
+    max-width: 1200px;
+    margin: auto;
+    padding-top: 25px;
+}
+
+/* ================= STATS ================= */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.stat-box {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* ================= BUTTON ================= */
+.btn {
+    background: #2e7d32;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+/* ================= GRID ================= */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 220px));
+    gap: 20px;
+    justify-content: start;
+    margin-top: 20px;
+}
+
+/* ================= CARD ================= */
+.card {
+    width: 220px;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* ================= IMAGE ================= */
+.image-box {
+    width: 100%;
+    height: 180px;
+    background: #eee;
+    overflow: hidden;
+}
+
+.image-box img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    background: #f5f5f5;
+}
+
+/* ================= CONTENT ================= */
+.content {
+    padding: 12px;
+}
+
+.content h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.price {
+    color: #2e7d32;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.qty {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.desc {
+    font-size: 13px;
+    color: #777;
+}
+
+/* ================= ACTIONS ================= */
+.actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+}
+
+.actions a {
+    padding: 6px 10px;
+    background: #1565c0;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.delete {
+    background: #c62828 !important;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>🌾 FarmConnect Farmer</h2>
+    <div class="nav-links">
+        <a href="{% url 'farmer_dashboard' %}">Dashboard</a>
+        <a href="{% url 'add_product' %}">Add Product</a>
+        <a href="/logout/">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <h1>Farmer Dashboard 👨‍🌾</h1>
+
+    <!-- STATS -->
+    <div class="stats">
+
+        <div class="stat-box">
+            <h3>Total Products</h3>
+            <h2>{{ products|length }}</h2>
+        </div>
+
+        <div class="stat-box">
+            <h3>Total Value</h3>
+            <h2>₦{{ total_value }}</h2>
+        </div>
+
+    </div>
+
+    <a class="btn" href="{% url 'add_product' %}">+ Add New Product</a>
+
+    <!-- PRODUCTS -->
+    <div class="grid">
+
+        {% for p in products %}
+        <div class="card">
+
+            <!-- CLICK IMAGE TO VIEW FULL -->
+            <div class="image-box">
+                <a href="{{ p.image.url }}" target="_blank">
+                    <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                </a>
+            </div>
+
+            <div class="content">
+                <h3>{{ p.name }}</h3>
+
+                <p class="price">₦{{ p.price }}</p>
+
+                <p class="qty">Qty: {{ p.quantity }}</p>
+
+                <p class="desc">{{ p.description|truncatewords:10 }}</p>
+
+                <div class="actions">
+                    <a href="/product/edit/{{ p.id }}/">Edit</a>
+                    <a class="delete" href="/product/delete/{{ p.id }}/">Delete</a>
+                </div>
+            </div>
+
+        </div>
+        {% empty %}
+        <p>No products yet. Start selling 🚀</p>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Products - FarmConnect</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* ==========================
+           RESET
+        ========================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* ==========================
+           NAVBAR
+        ========================== */
+        .navbar {
+            background: #2e7d32;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar h2 {
+            font-size: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* ==========================
+           CONTAINER
+        ========================== */
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .page-title {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        /* ==========================
+           GRID
+        ========================== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 240px));
+            gap: 20px;
+            justify-content: start;
+        }
+
+        /* ==========================
+           CARD
+        ========================== */
+        .card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* ==========================
+           IMAGE
+        ========================== */
+        .image-box {
+            width: 100%;
+            height: 190px;
+            background: #eee;
+            overflow: hidden;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ==========================
+           CONTENT
+        ========================== */
+        .content {
+            padding: 14px;
+        }
+
+        .content h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .price {
+            color: #2e7d32;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .farmer {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* ==========================
+           BUTTONS
+        ========================== */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            padding: 11px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .cart-btn {
+            background: #2e7d32;
+        }
+
+        .cart-btn:hover {
+            background: #1b5e20;
+        }
+
+        .chat-btn {
+            background: #1565c0;
+        }
+
+        .chat-btn:hover {
+            background: #0d47a1;
+        }
+
+        .view-btn {
+            background: #6c757d;
+        }
+
+        .view-btn:hover {
+            background: #4e555b;
+        }
+
+        /* ==========================
+           EMPTY
+        ========================== */
+        .empty {
+            background: white;
+            padding: 40px;
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+        }
+
+        /* ==========================
+           RESPONSIVE
+        ========================== */
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ==========================
+     NAVBAR
+========================== -->
+<div class="navbar">
+    <h2>🌾 FarmConnect</h2>
+
+    <div class="nav-links">
+        <a href="/add-product/">Add Product</a>
+        <a href="/cart/">Cart 🛒</a>
+        <a href="/">Home</a>
+    </div>
+</div>
+
+<!-- ==========================
+     MAIN CONTENT
+========================== -->
+<div class="container">
+
+    <h1 class="page-title">Products</h1>
+
+    {% if products %}
+
+    <div class="grid">
+
+        {% for p in products %}
+        <div class="card">
+
+            <!-- IMAGE -->
+            <div class="image-box">
+                <img src="{{ p.image.url }}" alt="{{ p.name }}">
+            </div>
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <h3>{{ p.name }}</h3>
+
+                <p class="price">₦{{ p.price }}</p>
+
+                <p class="farmer">
+                    Seller: {{ p.farmer.username }}
+                </p>
+
+                <div class="btn-group">
+
+                    <a href="/product/{{ p.id }}/" class="btn view-btn">
+                        View Product
+                    </a>
+
+                    <a href="/add-to-cart/{{ p.id }}/" class="btn cart-btn">
+                        Add to Cart 🛒
+                    </a>
+
+                    <a href="/chat/start/{{ p.farmer.id }}/" class="btn chat-btn">
+                        Chat Farmer 💬
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty">
+        <h2>No products available yet 🌱</h2>
+        <p style="margin-top:10px; color:#666;">
+            Farmers will list products here soon.
+        </p>
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

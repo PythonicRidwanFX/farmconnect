@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Product - FarmConnect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f4f6f9;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #2e7d32;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-weight: bold;
+        }
+
+        /* CONTAINER */
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: auto;
+            padding-top: 30px;
+        }
+
+        /* FORM CARD */
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1b5e20;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:600px){
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>🌾 FarmConnect Farmer</h2>
+
+    <div class="nav-links">
+        <a href="{% url 'farmer_dashboard' %}">Dashboard</a>
+        <a href="{% url 'add_product' %}">Add Product</a>
+        <a href="/marketplace/">Marketplace</a>
+        <a href="/logout/">Logout</a>
+    </div>
+</div>
+
+<!-- FORM -->
+<div class="container">
+
+    <div class="card">
+
+        <h2>➕ Add New Product</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label>Product Name</label>
+            <input type="text" name="name" placeholder="e.g. Tomato, Yam, Rice">
+
+            <label>Description</label>
+            <textarea name="description" placeholder="Describe your product..."></textarea>
+
+            <label>Price (₦)</label>
+            <input type="number" name="price">
+
+            <label>Quantity</label>
+            <input type="number" name="quantity">
+
+            <label>Product Image</label>
+            <input type="file" name="image">
+
+            <button type="submit">Upload Product 🚀</button>
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial;
+            background: #ece5dd;
+        }
+
+        .chat-container {
+            width: 400px;
+            margin: auto;
+            background: white;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+        }
+
+        .header {
+            background: #075e54;
+            color: white;
+            padding: 15px;
+        }
+
+        .messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: scroll;
+        }
+
+        .message {
+            margin: 5px;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+        }
+
+        .sent {
+            background: #dcf8c6;
+            align-self: flex-end;
+        }
+
+        .received {
+            background: #fff;
+            align-self: flex-start;
+        }
+
+        .input-box {
+            display: flex;
+            padding: 10px;
+            background: #f0f0f0;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background: #075e54;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="chat-container">
+
+    <div class="header">
+    <strong>{{ other_user.username }}</strong><br>
+
+    {% if profile.is_online %}
+        <small style="color:lightgreen;">● Online</small>
+    {% else %}
+        <small style="color:#ccc;">
+            {{ profile.last_seen_display }}
+        </small>
+    {% endif %}
+</div>
+    <input type="file" id="fileInput">
+    <div id="chat-box" class="messages"></div>
+
+    <div class="input-box">
+        <input type="text" id="message-input" placeholder="Type a message">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <div id="typing" style="color:gray; font-size:12px;"></div>
+
+</div>
+
+<script>
+    const roomId = "{{ room_id }}";
+    const username = "{{ request.user.username }}";
+
+    const socket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/' + roomId + '/'
+    );
+
+    socket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const msgBox = document.getElementById('chat-box');
+
+        let div = document.createElement('div');
+
+        if (data.sender === username) {
+            div.className = 'message sent';
+        } else {
+            div.className = 'message received';
+        }
+
+        div.innerText = data.message;
+        msgBox.appendChild(div);
+        msgBox.scrollTop = msgBox.scrollHeight;
+    };
+
+    function sendMessage() {
+        const input = document.getElementById('message-input');
+
+        socket.send(JSON.stringify({
+            'message': input.value,
+            'sender': username
+        }));
+
+        input.value = '';
+    }
+    setInterval(() => {
+    fetch(window.location.href)
+    .then(response => response.text())
+    .then(data => {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(data, 'text/html');
+
+        let newHeader = doc.querySelector('.header').innerHTML;
+        document.querySelector('.header').innerHTML = newHeader;
+    });
+}, 10000); // refresh every 10 seconds
+
+const input = document.getElementById("message-input");
+const socket = new WebSocket(
+    "ws://" + window.location.host + "/ws/chat/" + roomId + "/"
+);
+
+let typingTimeout;
+
+input.addEventListener("input", () => {
+    socket.send(JSON.stringify({
+        type: "typing",
+        sender: username,
+        is_typing: true
+    }));
+
+    clearTimeout(typingTimeout);
+
+    document.getElementById("fileInput").onchange = function() {
+    const file = this.files[0];
+
+    socket.send(JSON.stringify({
+        type: "file",
+        sender: username,
+        file: file.name
+    }));
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmConnect | Linking Farmers to Buyers</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            color: white;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                        url('https://images.unsplash.com/photo-1500595046743-cd271d694d30') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            max-width: 700px;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .buttons a {
+            text-decoration: none;
+            padding: 12px 25px;
+            margin: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-login {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-login:hover {
+            background-color: #218838;
+        }
+
+        .btn-register {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .btn-register:hover {
+            background-color: #e0a800;
+        }
+
+        /* ABOUT SECTION */
+        .about {
+            padding: 60px 20px;
+            background: #f8f9fa;
+            color: #333;
+            text-align: center;
+        }
+
+        .about h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .about p {
+            max-width: 800px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        /* FEATURES */
+        .features {
+            padding: 60px 20px;
+            background: white;
+            color: #333;
+        }
+
+        .features h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .feature-box {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            width: 300px;
+            margin: 15px;
+            padding: 20px;
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .feature h3 {
+            margin-bottom: 10px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #222;
+            color: #ccc;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>FarmConnect 🌾</h1>
+    <p>
+        A modern web-based platform designed to bridge the gap between farmers and buyers,
+        enabling seamless agricultural trade, improved market access, and fair pricing.
+    </p>
+
+    <div class="buttons">
+        <a href="/login/" class="btn-login">Login</a>
+        <a href="/register/" class="btn-register">Register</a>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+    <h2>About FarmConnect</h2>
+    <p>
+        FarmConnect is a digital solution focused on transforming the agricultural supply chain.
+        It connects farmers directly with buyers, eliminating middlemen and ensuring transparency.
+        Farmers can list their produce, while buyers can easily discover, negotiate, and purchase
+        products in real-time.
+    </p>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+    <h2>Key Features</h2>
+
+    <div class="feature-box">
+        <div class="feature">
+            <h3>🌱 Farmer Listings</h3>
+            <p>Farmers can upload and manage their products with pricing and availability.</p>
+        </div>
+
+        <div class="feature">
+            <h3>🛒 Buyer Marketplace</h3>
+            <p>Buyers can browse, search, and purchase farm produce easily.</p>
+        </div>
+
+        <div class="feature">
+            <h3>💬 Real-time Chat</h3>
+            <p>Direct communication between farmers and buyers for negotiation.</p>
+        </div>
+
+        <div class="feature">
+            <h3>📍 Location-Based Matching</h3>
+            <p>Find nearby farmers or buyers for faster transactions.</p>
+        </div>
+
+        <div class="feature">
+            <h3>📊 Market Insights</h3>
+            <p>Get real-time pricing trends and demand insights.</p>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2026 FarmConnect. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
