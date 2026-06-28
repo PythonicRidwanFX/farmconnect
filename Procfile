@@ -1,1 +1,1 @@
-web: gunicorn FarmConnect.wsgi
+web: gunicorn farmconnect.wsgi
