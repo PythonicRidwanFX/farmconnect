@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+       /*=========================================
+        GOOGLE FONT
+=========================================*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            font-family:'Poppins',sans-serif;
+
+            background:#edf1f7;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            min-height:100vh;
+
+            padding:20px;
+        }
+
+        /*=========================================
+                CHAT CONTAINER
+        =========================================*/
+
+        .chat-container{
+
+            width:100%;
+
+            max-width:500px;
+
+            height:90vh;
+
+            max-height:850px;
+
+            background:#fff;
+
+            border-radius:20px;
+
+            overflow:hidden;
+
+            display:flex;
+
+            flex-direction:column;
+
+            box-shadow:0 20px 45px rgba(0,0,0,.12);
+        }
+
+        /*=========================================
+                HEADER
+        =========================================*/
+
+        .header{
+
+            background:linear-gradient(135deg,#2e7d32,#43a047);
+
+            color:#fff;
+
+            padding:18px 22px;
+
+            display:flex;
+
+            align-items:center;
+
+            gap:15px;
+
+            box-shadow:0 3px 10px rgba(0,0,0,.12);
+        }
+
+        .header img{
+
+            width:50px;
+
+            height:50px;
+
+            border-radius:50%;
+
+            object-fit:cover;
+
+            border:2px solid rgba(255,255,255,.3);
+        }
+
+        .header h3{
+
+            font-size:20px;
+
+            font-weight:600;
+        }
+
+        .header span{
+
+            font-size:13px;
+
+            opacity:.9;
+        }
+
+        /*=========================================
+                MESSAGE AREA
+        =========================================*/
+
+        .messages{
+
+            flex:1;
+
+            padding:20px;
+
+            overflow-y:auto;
+
+            display:flex;
+
+            flex-direction:column;
+
+            gap:15px;
+
+            background:#f8fafc;
+        }
+
+        .messages::-webkit-scrollbar{
+
+            width:6px;
+        }
+
+        .messages::-webkit-scrollbar-thumb{
+
+            background:#43a047;
+
+            border-radius:20px;
+        }
+
+        /*=========================================
+                MESSAGE
+        =========================================*/
+
+        .message{
+
+            max-width:75%;
+
+            padding:12px 16px;
+
+            border-radius:16px;
+
+            font-size:15px;
+
+            line-height:1.6;
+
+            animation:fadeIn .3s ease;
+
+            word-wrap:break-word;
+
+            box-shadow:0 4px 12px rgba(0,0,0,.08);
+        }
+
+        @keyframes fadeIn{
+
+            from{
+
+                opacity:0;
+
+                transform:translateY(15px);
+            }
+
+            to{
+
+                opacity:1;
+
+                transform:translateY(0);
+            }
+
+        }
+
+        /*=========================================
+                SENT
+        =========================================*/
+
+        .sent{
+
+            align-self:flex-end;
+
+            background:linear-gradient(135deg,#2e7d32,#43a047);
+
+            color:#fff;
+
+            border-bottom-right-radius:5px;
+        }
+
+        /*=========================================
+                RECEIVED
+        =========================================*/
+
+        .received{
+
+            align-self:flex-start;
+
+            background:#ffffff;
+
+            color:#333;
+
+            border:1px solid #e5e7eb;
+
+            border-bottom-left-radius:5px;
+        }
+
+        /*=========================================
+                TIME
+        =========================================*/
+
+        .time{
+
+            display:block;
+
+            margin-top:8px;
+
+            font-size:11px;
+
+            opacity:.7;
+
+            text-align:right;
+        }
+
+        /*=========================================
+                INPUT AREA
+        =========================================*/
+
+        .input-box{
+
+            display:flex;
+
+            align-items:center;
+
+            gap:12px;
+
+            padding:15px 18px;
+
+            background:#fff;
+
+            border-top:1px solid #eee;
+        }
+
+        .input-box input{
+
+            flex:1;
+
+            padding:14px 18px;
+
+            border:1px solid #ddd;
+
+            border-radius:50px;
+
+            outline:none;
+
+            font-size:15px;
+
+            transition:.3s;
+        }
+
+        .input-box input:focus{
+
+            border-color:#2e7d32;
+
+            box-shadow:0 0 0 4px rgba(46,125,50,.12);
+        }
+
+        /*=========================================
+                SEND BUTTON
+        =========================================*/
+
+        .input-box button{
+
+            width:55px;
+
+            height:55px;
+
+            border:none;
+
+            border-radius:50%;
+
+            cursor:pointer;
+
+            background:linear-gradient(135deg,#2e7d32,#43a047);
+
+            color:#fff;
+
+            font-size:18px;
+
+            transition:.3s;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+        }
+
+        .input-box button:hover{
+
+            transform:scale(1.08);
+
+            box-shadow:0 10px 25px rgba(46,125,50,.25);
+        }
+
+        .input-box button:active{
+
+            transform:scale(.95);
+        }
+
+        /*=========================================
+                MOBILE
+        =========================================*/
+
+        @media(max-width:768px){
+
+        body{
+
+            padding:0;
+        }
+
+        .chat-container{
+
+            width:100%;
+
+            height:100vh;
+
+            max-width:none;
+
+            border-radius:0;
+        }
+
+        .header{
+
+            padding:15px;
+        }
+
+        .header h3{
+
+            font-size:18px;
+        }
+
+        .messages{
+
+            padding:15px;
+        }
+
+        .message{
+
+            max-width:85%;
+        }
+
+        .input-box{
+
+            padding:12px;
+        }
+
+        .input-box input{
+
+            font-size:14px;
+        }
+
+        .input-box button{
+
+            width:50px;
+
+            height:50px;
+        }
+
+        }
+
+        /*=========================================
+                SMALL MOBILE
+        =========================================*/
+
+        @media(max-width:480px){
+
+        .message{
+
+            font-size:14px;
+        }
+
+        .header img{
+
+            width:45px;
+
+            height:45px;
+        }
+
+        .header h3{
+
+            font-size:16px;
+        }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="chat-container">
+
+    <div class="header">
+    <strong>{{ other_user.username }}</strong><br>
+
+    {% if profile.is_online %}
+        <small style="color:lightgreen;">● Online</small>
+    {% else %}
+        <small style="color:#ccc;">
+            {{ profile.last_seen_display }}
+        </small>
+    {% endif %}
+</div>
+    <input type="file" id="fileInput">
+    <div id="chat-box" class="messages"></div>
+
+    <div class="input-box">
+        <input type="text" id="message-input" placeholder="Type a message">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <div id="typing" style="color:gray; font-size:12px;"></div>
+
+</div>
+
+<script>
+    const roomId = "{{ room_id }}";
+    const username = "{{ request.user.username }}";
+
+    const socket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/' + roomId + '/'
+    );
+
+    socket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const msgBox = document.getElementById('chat-box');
+
+        let div = document.createElement('div');
+
+        if (data.sender === username) {
+            div.className = 'message sent';
+        } else {
+            div.className = 'message received';
+        }
+
+        div.innerText = data.message;
+        msgBox.appendChild(div);
+        msgBox.scrollTop = msgBox.scrollHeight;
+    };
+
+    function sendMessage() {
+        const input = document.getElementById('message-input');
+
+        socket.send(JSON.stringify({
+            'message': input.value,
+            'sender': username
+        }));
+
+        input.value = '';
+    }
+    setInterval(() => {
+    fetch(window.location.href)
+    .then(response => response.text())
+    .then(data => {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(data, 'text/html');
+
+        let newHeader = doc.querySelector('.header').innerHTML;
+        document.querySelector('.header').innerHTML = newHeader;
+    });
+}, 10000); // refresh every 10 seconds
+
+const input = document.getElementById("message-input");
+const socket = new WebSocket(
+    "ws://" + window.location.host + "/ws/chat/" + roomId + "/"
+);
+
+let typingTimeout;
+
+input.addEventListener("input", () => {
+    socket.send(JSON.stringify({
+        type: "typing",
+        sender: username,
+        is_typing: true
+    }));
+
+    clearTimeout(typingTimeout);
+
+    document.getElementById("fileInput").onchange = function() {
+    const file = this.files[0];
+
+    socket.send(JSON.stringify({
+        type: "file",
+        sender: username,
+        file: file.name
+    }));
+};
+</script>
+
+</body>
+</html>

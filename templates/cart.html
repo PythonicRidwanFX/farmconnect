@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Shopping Cart - FarmConnect</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+       /*=========================================
+        GOOGLE FONT
+=========================================*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            font-family:'Poppins',sans-serif;
+
+            background:#f5f7fb;
+
+            color:#333;
+
+            min-height:100vh;
+        }
+
+        /*=========================================
+                NAVBAR
+        =========================================*/
+
+        .navbar{
+
+            background:linear-gradient(135deg,#2e7d32,#43a047);
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            padding:18px 6%;
+
+            position:sticky;
+
+            top:0;
+
+            z-index:1000;
+
+            box-shadow:0 10px 25px rgba(0,0,0,.12);
+        }
+
+        .navbar h2{
+
+            color:#fff;
+
+            font-size:28px;
+
+            font-weight:700;
+        }
+
+        .nav-links{
+
+            display:flex;
+
+            gap:12px;
+
+            flex-wrap:wrap;
+        }
+
+        .nav-links a{
+
+            color:#fff;
+
+            text-decoration:none;
+
+            padding:10px 18px;
+
+            border-radius:8px;
+
+            transition:.3s;
+
+            font-weight:500;
+        }
+
+        .nav-links a:hover{
+
+            background:rgba(255,255,255,.18);
+
+            transform:translateY(-2px);
+        }
+
+        /*=========================================
+                CONTAINER
+        =========================================*/
+
+        .container{
+
+            width:min(1400px,92%);
+
+            margin:40px auto;
+        }
+
+        .page-title{
+
+            font-size:38px;
+
+            color:#2e7d32;
+
+            margin-bottom:30px;
+
+            font-weight:700;
+        }
+
+        /*=========================================
+                CART BOX
+        =========================================*/
+
+        .cart-box{
+
+            background:#fff;
+
+            border-radius:18px;
+
+            overflow:hidden;
+
+            box-shadow:0 15px 40px rgba(0,0,0,.08);
+        }
+
+        /*=========================================
+                TABLE
+        =========================================*/
+
+        table{
+
+            width:100%;
+
+            border-collapse:collapse;
+        }
+
+        th{
+
+            background:#f8f9fa;
+
+            padding:18px;
+
+            text-align:left;
+
+            font-size:15px;
+
+            color:#555;
+
+            font-weight:600;
+        }
+
+        td{
+
+            padding:18px;
+
+            border-top:1px solid #eee;
+
+            vertical-align:middle;
+        }
+
+        tbody tr{
+
+            transition:.3s;
+        }
+
+        tbody tr:hover{
+
+            background:#fafafa;
+        }
+
+        /*=========================================
+                PRODUCT
+        =========================================*/
+
+        .product-info{
+
+            display:flex;
+
+            align-items:center;
+
+            gap:18px;
+        }
+
+        .product-info img{
+
+            width:90px;
+
+            height:90px;
+
+            object-fit:cover;
+
+            border-radius:12px;
+
+            background:#f5f5f5;
+
+            box-shadow:0 5px 15px rgba(0,0,0,.08);
+        }
+
+        .product-info h4{
+
+            font-size:18px;
+
+            margin-bottom:5px;
+        }
+
+        .qty{
+
+            font-weight:700;
+
+            color:#2e7d32;
+        }
+
+        .price{
+
+            font-weight:600;
+        }
+
+        .subtotal{
+
+            color:#1565c0;
+
+            font-weight:700;
+
+            font-size:18px;
+        }
+
+        /*=========================================
+                SUMMARY
+        =========================================*/
+
+        .summary{
+
+            margin-top:30px;
+
+            background:#fff;
+
+            padding:30px;
+
+            border-radius:18px;
+
+            box-shadow:0 15px 40px rgba(0,0,0,.08);
+        }
+
+        .summary h3{
+
+            font-size:26px;
+
+            margin-bottom:20px;
+
+            color:#2e7d32;
+        }
+
+        .total{
+
+            font-size:36px;
+
+            color:#2e7d32;
+
+            font-weight:700;
+
+            margin-bottom:25px;
+        }
+
+        /*=========================================
+                BUTTONS
+        =========================================*/
+
+        .btn-group{
+
+            display:flex;
+
+            gap:15px;
+
+            flex-wrap:wrap;
+        }
+
+        .btn{
+
+            text-decoration:none;
+
+            text-align:center;
+
+            padding:14px 22px;
+
+            border-radius:10px;
+
+            color:#fff;
+
+            font-weight:600;
+
+            transition:.3s;
+        }
+
+        .checkout-btn{
+
+            background:linear-gradient(135deg,#2e7d32,#43a047);
+        }
+
+        .checkout-btn:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:0 10px 20px rgba(46,125,50,.25);
+        }
+
+        .shop-btn{
+
+            background:linear-gradient(135deg,#1565c0,#42a5f5);
+        }
+
+        .shop-btn:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:0 10px 20px rgba(21,101,192,.25);
+        }
+
+        .remove-btn{
+
+            background:linear-gradient(135deg,#c62828,#ef5350);
+
+            padding:10px 15px;
+
+            border-radius:8px;
+
+            font-size:14px;
+        }
+
+        .remove-btn:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:0 10px 20px rgba(198,40,40,.25);
+        }
+
+        /*=========================================
+                EMPTY CART
+        =========================================*/
+
+        .empty{
+
+            background:#fff;
+
+            padding:70px 30px;
+
+            border-radius:18px;
+
+            text-align:center;
+
+            box-shadow:0 15px 40px rgba(0,0,0,.08);
+        }
+
+        .empty h3{
+
+            font-size:28px;
+
+            color:#777;
+
+            margin-bottom:20px;
+        }
+
+        .empty p{
+
+            color:#999;
+
+            margin-bottom:25px;
+        }
+
+        /*=========================================
+                SCROLLBAR
+        =========================================*/
+
+        ::-webkit-scrollbar{
+
+            width:8px;
+        }
+
+        ::-webkit-scrollbar-thumb{
+
+            background:#2e7d32;
+
+            border-radius:20px;
+        }
+
+        ::-webkit-scrollbar-track{
+
+            background:#eee;
+        }
+
+        /*=========================================
+                TABLET
+        =========================================*/
+
+        @media(max-width:992px){
+
+        .page-title{
+
+            font-size:32px;
+        }
+
+        }
+
+        /*=========================================
+                MOBILE
+        =========================================*/
+
+        @media(max-width:768px){
+
+        .navbar{
+
+            flex-direction:column;
+
+            gap:15px;
+
+            text-align:center;
+        }
+
+        .nav-links{
+
+            justify-content:center;
+        }
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr{
+
+            display:block;
+
+            width:100%;
+        }
+
+        thead{
+
+            display:none;
+        }
+
+        tr{
+
+            padding:18px;
+
+            border-bottom:1px solid #eee;
+        }
+
+        td{
+
+            border:none;
+
+            padding:10px 0;
+        }
+
+        .product-info{
+
+            flex-direction:column;
+
+            text-align:center;
+        }
+
+        .product-info img{
+
+            width:120px;
+
+            height:120px;
+        }
+
+        .summary{
+
+            padding:22px;
+        }
+
+        .btn-group{
+
+            flex-direction:column;
+        }
+
+        .btn{
+
+            width:100%;
+        }
+
+        }
+
+        /*=========================================
+                SMALL MOBILE
+        =========================================*/
+
+        @media(max-width:480px){
+
+        .container{
+
+            width:95%;
+        }
+
+        .page-title{
+
+            font-size:26px;
+        }
+
+        .total{
+
+            font-size:30px;
+        }
+
+        .summary h3{
+
+            font-size:22px;
+        }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ==========================
+     NAVBAR
+========================== -->
+<div class="navbar">
+    <h2>🌾 FarmConnect</h2>
+
+    <div class="nav-links">
+        <a href="/marketplace/">Marketplace</a>
+        <a href="/cart/">Cart</a>
+        <a href="/">Home</a>
+    </div>
+</div>
+
+<!-- ==========================
+     CONTENT
+========================== -->
+<div class="container">
+
+    <h1 class="page-title">🛒 Shopping Cart</h1>
+
+    {% if cart %}
+
+    <div class="cart-box">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Product</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for item in cart %}
+
+                <tr>
+
+                    <td>
+
+                        <div class="product-info">
+
+                            <img src="{{ item.product.image.url }}"
+                                 alt="{{ item.product.name }}">
+
+                            <div>
+
+                                <strong>{{ item.product.name }}</strong>
+
+                                <br>
+
+                                <small>
+                                    Farmer: {{ item.product.farmer.username }}
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                    <td class="price">
+
+                        ₦{{ item.product.price }}
+
+                    </td>
+
+                    <td class="qty">
+
+                        {{ item.quantity }} {{ item.product.get_unit_display }}
+
+                    </td>
+
+                    <td class="subtotal">
+
+                        ₦{{ item.subtotal }}
+
+                    </td>
+
+                    <td>
+
+                        <a href="{% url 'remove_from_cart' item.product.id %}" class="btn remove-btn">
+                            Remove
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- SUMMARY -->
+
+    <div class="summary">
+
+        <h3>Order Summary</h3>
+
+        <hr>
+
+        <p>
+
+            <strong>Total Items:</strong>
+
+            {{ cart|length }}
+
+        </p>
+
+        <p class="total">
+
+            Total: ₦{{ total }}
+
+        </p>
+
+        <div class="btn-group">
+
+            <a href="/checkout/" class="btn checkout-btn">
+                Checkout 💳
+            </a>
+
+            <a href="/marketplace/" class="btn shop-btn">
+                Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty">
+
+        <h3>Your cart is empty 🛒</h3>
+
+        <p>
+            Browse our marketplace and add fresh farm products to your cart.
+        </p>
+
+        <br>
+
+        <a href="/marketplace/" class="btn shop-btn">
+            Start Shopping
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

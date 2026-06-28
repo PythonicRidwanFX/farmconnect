@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Product</title>
+
+    <style>
+        /*=========================================
+        GOOGLE FONT
+=========================================*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            font-family:'Poppins',sans-serif;
+
+            background:#f4f7fb;
+
+            color:#333;
+
+            min-height:100vh;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            padding:30px;
+        }
+
+        /*=========================================
+                CONTAINER
+        =========================================*/
+
+        .container{
+
+            width:100%;
+
+            max-width:700px;
+        }
+
+        /*=========================================
+                CARD
+        =========================================*/
+
+        .card{
+
+            background:#fff;
+
+            padding:40px;
+
+            border-radius:20px;
+
+            box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+            animation:fadeIn .6s ease;
+        }
+
+        @keyframes fadeIn{
+
+            from{
+
+                opacity:0;
+
+                transform:translateY(25px);
+            }
+
+            to{
+
+                opacity:1;
+
+                transform:translateY(0);
+            }
+
+        }
+
+        .card h2{
+
+            text-align:center;
+
+            color:#2e7d32;
+
+            margin-bottom:30px;
+
+            font-size:32px;
+
+            font-weight:700;
+        }
+
+        /*=========================================
+                LABELS
+        =========================================*/
+
+        label{
+
+            display:block;
+
+            margin-bottom:8px;
+
+            margin-top:18px;
+
+            font-weight:600;
+
+            color:#444;
+        }
+
+        /*=========================================
+                INPUTS
+        =========================================*/
+
+        input,
+        textarea{
+
+            width:100%;
+
+            padding:14px 16px;
+
+            border:1px solid #ddd;
+
+            border-radius:10px;
+
+            outline:none;
+
+            font-size:15px;
+
+            transition:.3s;
+
+            background:#fafafa;
+        }
+
+        input:focus,
+        textarea:focus{
+
+            border-color:#2e7d32;
+
+            background:#fff;
+
+            box-shadow:0 0 0 4px rgba(46,125,50,.15);
+        }
+
+        textarea{
+
+            min-height:140px;
+
+            resize:vertical;
+        }
+
+        input[type=file]{
+
+            background:#fff;
+
+            padding:12px;
+
+            cursor:pointer;
+        }
+
+        /*=========================================
+                IMAGE PREVIEW
+        =========================================*/
+
+        .card img{
+
+            width:180px;
+
+            height:180px;
+
+            object-fit:cover;
+
+            display:block;
+
+            margin:15px auto;
+
+            border-radius:12px;
+
+            border:4px solid #eee;
+
+            box-shadow:0 10px 25px rgba(0,0,0,.08);
+        }
+
+        /*=========================================
+                BUTTON
+        =========================================*/
+
+        button{
+
+            width:100%;
+
+            margin-top:30px;
+
+            padding:15px;
+
+            border:none;
+
+            border-radius:12px;
+
+            cursor:pointer;
+
+            background:linear-gradient(135deg,#2e7d32,#43a047);
+
+            color:#fff;
+
+            font-size:17px;
+
+            font-weight:600;
+
+            transition:.3s;
+        }
+
+        button:hover{
+
+            transform:translateY(-3px);
+
+            box-shadow:0 12px 25px rgba(46,125,50,.25);
+        }
+
+        button:active{
+
+            transform:scale(.98);
+        }
+
+        /*=========================================
+                PARAGRAPH
+        =========================================*/
+
+        p{
+
+            margin-top:20px;
+
+            font-weight:600;
+
+            color:#555;
+
+            text-align:center;
+        }
+
+        /*=========================================
+                PLACEHOLDER
+        =========================================*/
+
+        ::placeholder{
+
+            color:#999;
+        }
+
+        /*=========================================
+                SCROLLBAR
+        =========================================*/
+
+        ::-webkit-scrollbar{
+
+            width:8px;
+        }
+
+        ::-webkit-scrollbar-thumb{
+
+            background:#2e7d32;
+
+            border-radius:20px;
+        }
+
+        ::-webkit-scrollbar-track{
+
+            background:#eee;
+        }
+
+        /*=========================================
+                TABLET
+        =========================================*/
+
+        @media(max-width:768px){
+
+        .card{
+
+            padding:30px 22px;
+        }
+
+        .card h2{
+
+            font-size:28px;
+        }
+
+        .card img{
+
+            width:150px;
+
+            height:150px;
+        }
+
+        }
+
+        /*=========================================
+                MOBILE
+        =========================================*/
+
+        @media(max-width:480px){
+
+        body{
+
+            padding:18px;
+        }
+
+        .card{
+
+            padding:22px 18px;
+        }
+
+        .card h2{
+
+            font-size:24px;
+        }
+
+        input,
+        textarea{
+
+            font-size:14px;
+        }
+
+        button{
+
+            font-size:16px;
+        }
+
+        .card img{
+
+            width:120px;
+
+            height:120px;
+        }
+
+        }
+        .quantity-group{
+            display:flex;
+            gap:15px;
+            margin-bottom:20px;
+        }
+
+        .quantity-group input{
+            flex:2;
+        }
+
+        .quantity-group select{
+            flex:1;
+            padding:12px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            font-size:15px;
+            font-family:'Poppins',sans-serif;
+            background:#fff;
+        }
+
+        .quantity-group select:focus,
+        .quantity-group input:focus{
+            outline:none;
+            border-color:#2e7d32;
+        }
+
+        @media(max-width:768px){
+
+            .quantity-group{
+                flex-direction:column;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Edit Product ✏️</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label>Product Name</label>
+            <input
+                type="text"
+                name="name"
+                value="{{ product.name }}"
+                required
+            >
+
+            <label>Description</label>
+            <textarea
+                name="description"
+                rows="5"
+                required
+            >{{ product.description }}</textarea>
+
+            <label>Price (₦)</label>
+            <input
+                type="number"
+                name="price"
+                step="0.01"
+                min="0"
+                value="{{ product.price }}"
+                required
+            >
+
+            <label>Quantity</label>
+
+            <div class="quantity-group">
+
+                <input
+                    type="number"
+                    name="quantity"
+                    step="0.01"
+                    min="0.01"
+                    value="{{ product.quantity }}"
+                    required
+                >
+
+                <select name="unit" required>
+
+                    <option value="kg" {% if product.unit == "kg" %}selected{% endif %}>
+                        Kilogram (Kg)
+                    </option>
+
+                    <option value="bag" {% if product.unit == "bag" %}selected{% endif %}>
+                        Bag
+                    </option>
+
+                    <option value="basket" {% if product.unit == "basket" %}selected{% endif %}>
+                        Basket
+                    </option>
+
+                    <option value="crate" {% if product.unit == "crate" %}selected{% endif %}>
+                        Crate
+                    </option>
+
+                    <option value="piece" {% if product.unit == "piece" %}selected{% endif %}>
+                        Piece
+                    </option>
+
+                    <option value="dozen" {% if product.unit == "dozen" %}selected{% endif %}>
+                        Dozen
+                    </option>
+
+                    <option value="litre" {% if product.unit == "litre" %}selected{% endif %}>
+                        Litre
+                    </option>
+
+                    <option value="ton" {% if product.unit == "ton" %}selected{% endif %}>
+                        Ton
+                    </option>
+
+                </select>
+
+            </div>
+
+            <label>Current Image</label>
+
+            <div style="margin-bottom:20px;">
+
+                <img
+                    src="{{ product.image.url }}"
+                    alt="{{ product.name }}"
+                    width="150"
+                    style="border-radius:12px; border:1px solid #ddd;"
+                >
+
+            </div>
+
+            <label>Change Image (Optional)</label>
+            <input type="file" name="image">
+
+            <button type="submit">
+                Update Product 🚀
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Product - FarmConnect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /*=========================================
+        GOOGLE FONT
+=========================================*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            font-family:'Poppins',sans-serif;
+
+            background:#f4f7fb;
+
+            color:#333;
+
+            min-height:100vh;
+        }
+
+        /*=========================================
+                NAVBAR
+        =========================================*/
+
+        .navbar{
+
+            background:linear-gradient(135deg,#2e7d32,#43a047);
+
+            padding:18px 6%;
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            position:sticky;
+
+            top:0;
+
+            z-index:1000;
+
+            box-shadow:0 10px 25px rgba(0,0,0,.12);
+        }
+
+        .navbar h2{
+
+            color:#fff;
+
+            font-size:28px;
+
+            font-weight:700;
+        }
+
+        .nav-links{
+
+            display:flex;
+
+            gap:12px;
+
+            flex-wrap:wrap;
+        }
+
+        .nav-links a{
+
+            color:#fff;
+
+            text-decoration:none;
+
+            padding:10px 18px;
+
+            border-radius:8px;
+
+            transition:.3s;
+
+            font-weight:500;
+        }
+
+        .nav-links a:hover{
+
+            background:rgba(255,255,255,.15);
+
+            transform:translateY(-2px);
+        }
+
+        /*=========================================
+                CONTAINER
+        =========================================*/
+
+        .container{
+
+            width:min(900px,92%);
+
+            margin:40px auto;
+        }
+
+        /*=========================================
+                CARD
+        =========================================*/
+
+        .card{
+
+            background:#fff;
+
+            padding:40px;
+
+            border-radius:20px;
+
+            box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+            animation:fadeIn .6s ease;
+        }
+
+        @keyframes fadeIn{
+
+            from{
+
+                opacity:0;
+
+                transform:translateY(30px);
+            }
+
+            to{
+
+                opacity:1;
+
+                transform:translateY(0);
+            }
+
+        }
+
+        .card h2{
+
+            text-align:center;
+
+            color:#2e7d32;
+
+            margin-bottom:30px;
+
+            font-size:32px;
+
+            font-weight:700;
+        }
+
+        /*=========================================
+                LABELS
+        =========================================*/
+
+        label{
+
+            display:block;
+
+            margin-bottom:8px;
+
+            margin-top:15px;
+
+            font-weight:600;
+
+            color:#444;
+        }
+
+        /*=========================================
+                INPUTS
+        =========================================*/
+
+        input,
+        textarea{
+
+            width:100%;
+
+            padding:14px 16px;
+
+            border:1px solid #ddd;
+
+            border-radius:10px;
+
+            font-size:15px;
+
+            transition:.3s;
+
+            outline:none;
+
+            background:#fafafa;
+        }
+
+        input:focus,
+        textarea:focus{
+
+            border-color:#2e7d32;
+
+            background:#fff;
+
+            box-shadow:0 0 0 4px rgba(46,125,50,.15);
+        }
+
+        textarea{
+
+            min-height:140px;
+
+            resize:vertical;
+        }
+
+        /*=========================================
+                FILE INPUT
+        =========================================*/
+
+        input[type=file]{
+
+            padding:12px;
+
+            background:#fff;
+
+            cursor:pointer;
+        }
+
+        /*=========================================
+                BUTTON
+        =========================================*/
+
+        button{
+
+            width:100%;
+
+            margin-top:30px;
+
+            padding:16px;
+
+            border:none;
+
+            border-radius:12px;
+
+            cursor:pointer;
+
+            font-size:17px;
+
+            font-weight:600;
+
+            color:#fff;
+
+            background:linear-gradient(135deg,#2e7d32,#43a047);
+
+            transition:.3s;
+        }
+
+        button:hover{
+
+            transform:translateY(-3px);
+
+            box-shadow:0 12px 25px rgba(46,125,50,.25);
+        }
+
+        button:active{
+
+            transform:scale(.98);
+        }
+
+        /*=========================================
+                PLACEHOLDER
+        =========================================*/
+
+        ::placeholder{
+
+            color:#999;
+        }
+
+        /*=========================================
+                SCROLLBAR
+        =========================================*/
+
+        ::-webkit-scrollbar{
+
+            width:8px;
+        }
+
+        ::-webkit-scrollbar-thumb{
+
+            background:#2e7d32;
+
+            border-radius:20px;
+        }
+
+        ::-webkit-scrollbar-track{
+
+            background:#eee;
+        }
+
+        /*=========================================
+                TABLET
+        =========================================*/
+
+        @media(max-width:768px){
+
+        .navbar{
+
+            flex-direction:column;
+
+            gap:15px;
+
+            text-align:center;
+        }
+
+        .nav-links{
+
+            justify-content:center;
+        }
+
+        .card{
+
+            padding:30px 22px;
+        }
+
+        .card h2{
+
+            font-size:28px;
+        }
+
+        }
+
+        /*=========================================
+                MOBILE
+        =========================================*/
+
+        @media(max-width:480px){
+
+        .container{
+
+            width:95%;
+        }
+
+        .card{
+
+            padding:22px 18px;
+        }
+
+        .card h2{
+
+            font-size:24px;
+        }
+
+        .navbar h2{
+
+            font-size:22px;
+        }
+
+        button{
+
+            font-size:16px;
+        }
+        }
+        .quantity-group{
+            display:flex;
+            gap:15px;
+            margin-bottom:20px;
+        }
+
+        .quantity-group input{
+            flex:2;
+        }
+
+        .quantity-group select{
+            flex:1;
+            padding:12px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            font-size:15px;
+            font-family:'Poppins',sans-serif;
+            background:#fff;
+        }
+
+        .quantity-group input:focus,
+        .quantity-group select:focus{
+            outline:none;
+            border-color:#2e7d32;
+        }
+
+        @media(max-width:768px){
+
+            .quantity-group{
+                flex-direction:column;
+            }
+
+            .quantity-group input,
+            .quantity-group select{
+                width:100%;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>🌾 FarmConnect Farmer</h2>
+
+    <div class="nav-links">
+        <a href="{% url 'farmer_dashboard' %}">Dashboard</a>
+        <a href="{% url 'add_product' %}">Add Product</a>
+        <a href="/marketplace/">Marketplace</a>
+        <a href="/logout/">Logout</a>
+    </div>
+</div>
+
+<!-- FORM -->
+<div class="container">
+
+    <div class="card">
+
+        <h2>➕ Add New Product</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label>Product Name</label>
+            <input
+                type="text"
+                name="name"
+                placeholder="e.g. Tomato, Yam, Rice"
+                required
+            >
+
+            <label>Description</label>
+            <textarea
+                name="description"
+                placeholder="Describe your product..."
+                rows="5"
+                required
+            ></textarea>
+
+            <label>Price (₦)</label>
+            <input
+                type="number"
+                name="price"
+                step="0.01"
+                min="0"
+                placeholder="Enter product price"
+                required
+            >
+
+            <label>Available Quantity</label>
+
+            <div class="quantity-group">
+
+                <input
+                    type="number"
+                    name="quantity"
+                    step="0.01"
+                    min="0.01"
+                    placeholder="Enter quantity"
+                    required
+                >
+
+                <select name="unit" required>
+
+                    <option value="">Select Unit</option>
+
+                    <option value="kg">Kilogram (Kg)</option>
+
+                    <option value="bag">Bag</option>
+
+                    <option value="basket">Basket</option>
+
+                    <option value="crate">Crate</option>
+
+                    <option value="piece">Piece</option>
+
+                    <option value="dozen">Dozen</option>
+
+                    <option value="litre">Litre</option>
+
+                    <option value="ton">Ton</option>
+
+                </select>
+
+            </div>
+
+            <label>Product Image</label>
+
+            <input
+                type="file"
+                name="image"
+                accept="image/*"
+                required
+            >
+
+            <button type="submit">
+                Upload Product 🚀
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | FarmConnect</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+                /* ===========================
+           GOOGLE FONT
+        =========================== */
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding:30px;
+            background:
+                linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+                url("https://images.unsplash.com/photo-1500595046743-cd271d694d30")
+                center center/cover no-repeat;
+        }
+
+        /* ===========================
+           REGISTER CARD
+        =========================== */
+
+        .register-container{
+
+            width:100%;
+            max-width:470px;
+
+            background:rgba(255,255,255,.15);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+
+            border:1px solid rgba(255,255,255,.25);
+
+            border-radius:20px;
+
+            padding:40px;
+
+            box-shadow:
+            0 15px 35px rgba(0,0,0,.35);
+
+            animation:fadeIn .7s ease;
+        }
+
+        @keyframes fadeIn{
+
+            from{
+                opacity:0;
+                transform:translateY(30px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+
+        }
+
+        .register-container h2{
+
+            text-align:center;
+            color:#fff;
+            font-size:30px;
+            margin-bottom:10px;
+            font-weight:700;
+        }
+
+        .register-container p{
+
+            color:#eee;
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        /* ===========================
+           FORM
+        =========================== */
+
+        form{
+
+            width:100%;
+        }
+
+        /* two inputs in same row */
+
+        .form-row{
+
+            display:flex;
+            gap:15px;
+        }
+
+        .form-row input{
+
+            flex:1;
+        }
+
+        /* ===========================
+           INPUTS
+        =========================== */
+
+        input,
+        select{
+
+            width:100%;
+            height:50px;
+
+            border:none;
+
+            outline:none;
+
+            border-radius:10px;
+
+            padding:0 16px;
+
+            margin-bottom:18px;
+
+            background:rgba(255,255,255,.90);
+
+            font-size:15px;
+
+            transition:.35s;
+        }
+
+        input::placeholder{
+
+            color:#777;
+        }
+
+        select{
+
+            cursor:pointer;
+        }
+
+        input:focus,
+        select:focus{
+
+            background:#fff;
+
+            box-shadow:
+
+            0 0 0 3px rgba(40,167,69,.30);
+
+            transform:translateY(-2px);
+        }
+
+        /* ===========================
+           BUTTON
+        =========================== */
+
+        button{
+
+            width:100%;
+            height:54px;
+
+            border:none;
+
+            border-radius:12px;
+
+            background:linear-gradient(135deg,#28a745,#20c997);
+
+            color:#fff;
+
+            font-size:17px;
+
+            font-weight:600;
+
+            cursor:pointer;
+
+            transition:.35s;
+        }
+
+        button:hover{
+
+            transform:translateY(-3px);
+
+            box-shadow:
+
+            0 12px 25px rgba(0,0,0,.25);
+
+            background:linear-gradient(135deg,#218838,#1ba784);
+        }
+
+        button:active{
+
+            transform:scale(.98);
+        }
+
+        /* ===========================
+           LOGIN LINK
+        =========================== */
+
+        .login-link{
+
+            display:block;
+
+            text-align:center;
+
+            margin-top:22px;
+
+            color:#fff;
+
+            text-decoration:none;
+
+            font-weight:500;
+
+            transition:.3s;
+        }
+
+        .login-link:hover{
+
+            color:#ffe082;
+
+            text-decoration:underline;
+        }
+
+        /* ===========================
+           ALERTS
+        =========================== */
+
+        .alert{
+
+            padding:14px;
+
+            margin-bottom:20px;
+
+            border-radius:10px;
+
+            font-size:14px;
+
+            font-weight:600;
+
+            animation:slideDown .4s ease;
+        }
+
+        @keyframes slideDown{
+
+            from{
+
+                opacity:0;
+
+                transform:translateY(-20px);
+            }
+
+            to{
+
+                opacity:1;
+
+                transform:translateY(0);
+            }
+
+        }
+
+        .alert.error{
+
+            background:#ffebee;
+
+            color:#c62828;
+
+            border-left:5px solid #f44336;
+        }
+
+        .alert.success{
+
+            background:#e8f5e9;
+
+            color:#2e7d32;
+
+            border-left:5px solid #43a047;
+        }
+
+        /* ===========================
+           SCROLLBAR
+        =========================== */
+
+        ::-webkit-scrollbar{
+
+            width:8px;
+        }
+
+        ::-webkit-scrollbar-thumb{
+
+            background:#28a745;
+
+            border-radius:20px;
+        }
+
+        ::-webkit-scrollbar-track{
+
+            background:#ddd;
+        }
+
+        /* ===========================
+           TABLETS
+        =========================== */
+
+        @media(max-width:992px){
+
+        .register-container{
+
+            max-width:500px;
+
+            padding:35px;
+        }
+
+        .register-container h2{
+
+            font-size:28px;
+        }
+
+        }
+
+        /* ===========================
+           MOBILE
+        =========================== */
+
+        @media(max-width:768px){
+
+        body{
+
+            padding:20px;
+        }
+
+        .register-container{
+
+            padding:30px 25px;
+        }
+
+        .form-row{
+
+            flex-direction:column;
+            gap:0;
+        }
+
+        .form-row input{
+
+            width:100%;
+        }
+
+        .register-container h2{
+
+            font-size:25px;
+        }
+
+        button{
+
+            height:50px;
+        }
+
+        }
+
+        /* ===========================
+           SMALL PHONES
+        =========================== */
+
+        @media(max-width:480px){
+
+        .register-container{
+
+            padding:25px 18px;
+        }
+
+        .register-container h2{
+
+            font-size:22px;
+        }
+
+        input,
+        select{
+
+            height:47px;
+
+            font-size:14px;
+        }
+
+        button{
+
+            font-size:16px;
+
+            height:48px;
+        }
+
+        .login-link{
+
+            font-size:14px;
+        }
+
+        .alert{
+
+            font-size:13px;
+        }
+
+        }
+
+        /* ===========================
+           LARGE DESKTOP
+        =========================== */
+
+        @media(min-width:1400px){
+
+        .register-container{
+
+            max-width:520px;
+        }
+
+    }
+    </style>
+</head>
+
+<body>
+
+<div class="register-container">
+    <h2>Create FarmConnect Account 🌾</h2>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Full Name -->
+        <input type="text" name="full_name" placeholder="Full Name" required>
+
+        <!-- Username + Email -->
+        <div class="form-row">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+        </div>
+
+        <!-- Phone -->
+        <input type="text" name="phone" placeholder="Phone Number" required>
+
+        <!-- Location -->
+        <input type="text" name="location" placeholder="Location (e.g Lagos, Nigeria)" required>
+
+        <!-- User Type -->
+        <select name="user_type" required>
+            <option value="">Select Account Type</option>
+            <option value="farmer">Farmer</option>
+            <option value="buyer">Buyer</option>
+        </select>
+
+        <!-- Password -->
+        <input type="password" name="password1" placeholder="Password" required>
+        <input type="password" name="password2" placeholder="Confirm Password" required>
+
+        <button type="submit">Create Account</button>
+    </form>
+
+    <a href="/login/" class="login-link">Already have an account? Login</a>
+</div>
+
+</body>
+</html>

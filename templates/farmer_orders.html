@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Customer Orders - FarmConnect</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f4f7fb;
+}
+
+/* NAVBAR */
+
+.navbar{
+    background:linear-gradient(135deg,#2e7d32,#43a047);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 6%;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+.navbar h2{
+    color:#fff;
+}
+
+.nav-links{
+    display:flex;
+    gap:15px;
+}
+
+.nav-links a{
+    color:white;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:8px;
+}
+
+.nav-links a:hover{
+    background:rgba(255,255,255,.2);
+}
+
+/* CONTAINER */
+
+.container{
+    width:95%;
+    max-width:1400px;
+    margin:40px auto;
+}
+
+.container h1{
+    margin-bottom:30px;
+    color:#2e7d32;
+}
+
+/* TABLE */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+th{
+    background:#2e7d32;
+    color:white;
+    padding:15px;
+}
+
+td{
+    padding:15px;
+    text-align:center;
+    border-bottom:1px solid #eee;
+}
+
+td img{
+    width:70px;
+    height:70px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+/* STATUS */
+
+.status{
+    color:white;
+    padding:8px 15px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.pending{
+    background:#ff9800;
+}
+
+.processing{
+    background:#1565c0;
+}
+
+.delivered{
+    background:#4caf50;
+}
+
+/* BUTTON */
+
+.btn{
+
+    padding:10px 18px;
+
+    border-radius:8px;
+
+    text-decoration:none;
+
+    color:white;
+
+    font-weight:600;
+}
+
+.view{
+    background:#2e7d32;
+}
+
+.view:hover{
+    opacity:.9;
+}
+
+/* EMPTY */
+
+.empty{
+    background:white;
+    padding:80px;
+    text-align:center;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+@media(max-width:900px){
+
+table{
+    display:block;
+    overflow-x:auto;
+}
+
+.navbar{
+    flex-direction:column;
+    gap:15px;
+}
+
+}
+.processing{
+
+    background:#1565c0;
+
+}
+
+.processing:hover{
+
+    opacity:.9;
+
+}
+
+.delivered{
+
+    background:#4caf50;
+
+}
+
+.delivered:hover{
+
+    opacity:.9;
+
+}
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <h2>🌾 FarmConnect Farmer</h2>
+
+        <div class="nav-links">
+
+            <a href="{% url 'farmer_dashboard' %}">Dashboard</a>
+
+            <a href="{% url 'add_product' %}">Add Product</a>
+
+            <a href="{% url 'farmer_orders' %}">Orders</a>
+
+            <a href="/logout/">Logout</a>
+
+        </div>
+
+    </div>
+
+    <div class="container">
+
+    <h1>📦 Customer Orders</h1>
+
+    {% if orders %}
+
+    <table>
+
+    <tr>
+
+    <th>Order</th>
+
+    <th>Buyer</th>
+
+    <th>Phone</th>
+
+    <th>Product</th>
+
+    <th>Image</th>
+
+    <th>Quantity</th>
+
+    <th>Total</th>
+
+    <th>Status</th>
+
+    <th>Date</th>
+    <th>Action</th>
+
+    </tr>
+
+    {% for order in orders %}
+
+    <tr>
+
+    <td>#FC{{ order.id }}</td>
+
+    <td>
+
+    {{ order.buyer.first_name }}
+    {{ order.buyer.last_name }}
+
+    <br>
+
+    <small>{{ order.buyer.username }}</small>
+
+    </td>
+
+    <td>
+
+    {{ order.buyer.profile.phone }}
+
+    </td>
+
+    <td>
+
+    {{ order.product.name }}
+
+    </td>
+
+    <td>
+
+    <img src="{{ order.product.image.url }}">
+
+    </td>
+
+    <td>
+
+    {{ order.quantity }}
+    {{ order.product.get_unit_display }}
+
+    </td>
+
+    <td>
+
+    ₦{{ order.total_price }}
+
+    </td>
+
+    <td>
+
+    {% if order.status == "Pending" %}
+
+    <span class="status pending">
+
+    {{ order.status }}
+
+    </span>
+
+    {% elif order.status == "Processing" %}
+
+    <span class="status processing">
+
+    {{ order.status }}
+
+    </span>
+
+    {% else %}
+
+    <span class="status delivered">
+
+    {{ order.status }}
+
+    </span>
+
+    {% endif %}
+
+    </td>
+
+    <td>
+
+        {{ order.created_at|date:"d M Y" }}
+
+    </td>
+
+    <td>
+
+    {% if order.status == "Pending" %}
+
+        <a class="btn processing"
+           href="{% url 'update_order_status' order.id 'Processing' %}">
+            Accept
+        </a>
+
+    {% elif order.status == "Processing" %}
+
+        <a class="btn delivered"
+           href="{% url 'update_order_status' order.id 'Delivered' %}">
+            Mark Delivered
+        </a>
+
+    {% else %}
+
+        <span style="color:green;font-weight:bold;">
+            ✔ Completed
+        </span>
+
+    {% endif %}
+
+    </td>
+    </tr>
+
+    {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <div class="empty">
+
+    <h2>No Customer Orders Yet 📦</h2>
+
+    <p>When buyers purchase your products, they will appear here.</p>
+
+    </div>
+
+    {% endif %}
+
+    </div>
+
+</body>
+
+</html>

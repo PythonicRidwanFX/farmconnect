@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - FarmConnect</title>
+
+    <style>
+        body{
+            font-family:Arial,sans-serif;
+            background:#f4f6f9;
+            margin:0;
+            padding:40px;
+        }
+
+        .container{
+            max-width:900px;
+            margin:auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 15px rgba(0,0,0,.1);
+        }
+
+        h1{
+            color:#2e7d32;
+        }
+
+        h2{
+            margin-top:30px;
+            color:#444;
+        }
+
+        .item{
+            display:flex;
+            justify-content:space-between;
+            padding:10px 0;
+            border-bottom:1px solid #ddd;
+        }
+
+        .total{
+            font-size:24px;
+            color:#2e7d32;
+            font-weight:bold;
+            margin-top:20px;
+        }
+
+        input,
+        textarea{
+            width:100%;
+            padding:12px;
+            margin-top:8px;
+            margin-bottom:20px;
+            border:1px solid #ccc;
+            border-radius:6px;
+            box-sizing:border-box;
+        }
+
+        button{
+            background:#2e7d32;
+            color:white;
+            padding:15px 25px;
+            border:none;
+            border-radius:6px;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#256628;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🌾 FarmConnect Checkout</h1>
+
+    <p style="color:#666; margin-bottom:30px;">
+        Please review your order carefully and provide your delivery information before proceeding to payment.
+    </p>
+
+    <!-- ===========================
+            ORDER SUMMARY
+    ============================ -->
+
+    <div style="
+        background:#f8f9fa;
+        border-radius:12px;
+        padding:25px;
+        margin-bottom:35px;
+        border:1px solid #ddd;
+    ">
+
+        <h2 style="color:#2e7d32; margin-bottom:25px;">
+            📦 Order Summary
+        </h2>
+
+        {% for item in cart %}
+
+        <div class="item" style="
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            padding:18px 0;
+            border-bottom:1px solid #ddd;
+        ">
+
+            <div>
+
+                <h3 style="margin-bottom:8px;">
+                    {{ item.product.name }}
+                </h3>
+
+                <p style="margin:4px 0;color:#555;">
+                    👨‍🌾 Farmer:
+                    <strong>{{ item.product.farmer.username }}</strong>
+                </p>
+
+                <p style="margin:4px 0;color:#555;">
+                    💰 Unit Price:
+                    ₦{{ item.product.price }}
+                </p>
+
+                <p style="margin:4px 0;color:#555;">
+                    📦 Quantity:
+                    {{ item.quantity }} {{ item.product.unit|title }}
+                </p>
+
+            </div>
+
+            <div style="
+                text-align:right;
+                font-size:20px;
+                font-weight:bold;
+                color:#2e7d32;
+            ">
+
+                ₦{{ item.total_price }}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            margin-top:25px;
+            font-size:26px;
+            font-weight:bold;
+            color:#2e7d32;
+        ">
+
+            <span>Total</span>
+
+            <span>₦{{ total }}</span>
+
+        </div>
+
+    </div>
+
+    <!-- ===========================
+        DELIVERY INFORMATION
+    ============================ -->
+
+    <div style="
+        background:white;
+        border:1px solid #ddd;
+        border-radius:12px;
+        padding:25px;
+    ">
+
+        <h2 style="color:#2e7d32; margin-bottom:25px;">
+            🚚 Delivery Information
+        </h2>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label><strong>Full Name</strong></label>
+
+            <input
+                type="text"
+                name="full_name"
+                placeholder="Enter your full name"
+                required
+            >
+
+            <label><strong>Phone Number</strong></label>
+
+            <input
+                type="text"
+                name="phone"
+                placeholder="08012345678"
+                required
+            >
+
+            <div style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:20px;
+            ">
+
+                <div>
+
+                    <label><strong>State</strong></label>
+
+                    <input
+                        type="text"
+                        name="state"
+                        placeholder="Lagos"
+                        required
+                    >
+
+                </div>
+
+                <div>
+
+                    <label><strong>City</strong></label>
+
+                    <input
+                        type="text"
+                        name="city"
+                        placeholder="Ikeja"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+            <label><strong>Delivery Address</strong></label>
+
+            <textarea
+                name="address"
+                rows="4"
+                placeholder="House Number, Street, Area..."
+                required
+            ></textarea>
+
+            <label><strong>Additional Notes</strong></label>
+
+            <textarea
+                name="notes"
+                rows="4"
+                placeholder="Optional delivery instructions..."
+            ></textarea>
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                margin-top:35px;
+                flex-wrap:wrap;
+                gap:15px;
+            ">
+
+                <a
+                    href="/cart/"
+                    style="
+                        text-decoration:none;
+                        background:#6c757d;
+                        color:white;
+                        padding:14px 30px;
+                        border-radius:8px;
+                        font-weight:600;
+                    "
+                >
+                    ← Back to Cart
+                </a>
+
+                <button
+                    type="submit"
+                    style="
+                        background:#2e7d32;
+                        color:white;
+                        padding:15px 35px;
+                        border:none;
+                        border-radius:8px;
+                        font-size:16px;
+                        font-weight:bold;
+                        cursor:pointer;
+                    ">
+                    Continue to Payment →
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

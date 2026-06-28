@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Farmer Dashboard | FarmConnect</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+
+    /*====================================================
+                    RESET
+    ====================================================*/
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    html{
+        scroll-behavior:smooth;
+    }
+
+    body{
+
+        font-family:'Poppins',sans-serif;
+        background:#f4f7fb;
+        color:#333;
+        min-height:100vh;
+        overflow-x:hidden;
+
+    }
+
+    a{
+        text-decoration:none;
+    }
+
+    img{
+        max-width:100%;
+        display:block;
+    }
+
+    button{
+        font-family:'Poppins',sans-serif;
+    }
+
+    /*====================================================
+                    ROOT COLORS
+    ====================================================*/
+
+    :root{
+
+        --primary:#2e7d32;
+        --primary-light:#43a047;
+        --secondary:#1b5e20;
+
+        --blue:#1976d2;
+        --blue-light:#42a5f5;
+
+        --danger:#d32f2f;
+        --danger-light:#ef5350;
+
+        --warning:#f9a825;
+
+        --white:#ffffff;
+
+        --dark:#222;
+
+        --gray:#777;
+
+        --border:#ececec;
+
+        --shadow:
+            0 10px 25px rgba(0,0,0,.08);
+
+        --shadow-hover:
+            0 18px 40px rgba(0,0,0,.15);
+
+        --radius:18px;
+
+    }
+
+    /*====================================================
+                    NAVBAR
+    ====================================================*/
+
+    .navbar{
+
+        position:sticky;
+        top:0;
+        z-index:1000;
+
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+
+        padding:18px 6%;
+
+        background:linear-gradient(
+            135deg,
+            var(--primary),
+            var(--primary-light)
+        );
+
+        box-shadow:0 10px 25px rgba(0,0,0,.12);
+
+    }
+
+    .logo{
+
+        display:flex;
+        align-items:center;
+        gap:12px;
+
+    }
+
+    .logo h2{
+
+        color:#fff;
+        font-size:28px;
+        font-weight:700;
+        letter-spacing:.5px;
+
+    }
+
+    .nav-links{
+
+        display:flex;
+        align-items:center;
+        gap:14px;
+
+    }
+
+    .nav-links a{
+
+        color:#fff;
+        padding:11px 18px;
+        border-radius:10px;
+        font-size:15px;
+        font-weight:500;
+        transition:.35s;
+
+    }
+
+    .nav-links a:hover{
+
+        background:rgba(255,255,255,.15);
+        transform:translateY(-3px);
+
+    }
+
+    /*====================================================
+                    PAGE CONTAINER
+    ====================================================*/
+
+    .container{
+
+        width:min(1400px,92%);
+        margin:auto;
+        padding:40px 0 60px;
+
+    }
+
+    /*====================================================
+                    PAGE HEADER
+    ====================================================*/
+
+    .page-header{
+
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        flex-wrap:wrap;
+        gap:20px;
+
+        margin-bottom:35px;
+
+    }
+
+    .page-title h1{
+
+        font-size:34px;
+        color:var(--dark);
+        font-weight:700;
+
+    }
+
+    .page-title p{
+
+        color:var(--gray);
+        margin-top:8px;
+        font-size:15px;
+
+    }
+
+    /*====================================================
+                    ACTION BUTTONS
+    ====================================================*/
+
+    .button-group{
+
+        display:flex;
+        gap:15px;
+        flex-wrap:wrap;
+
+    }
+
+    .btn{
+
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+
+        gap:8px;
+
+        padding:14px 24px;
+
+        border:none;
+        border-radius:12px;
+
+        color:#fff;
+        font-size:15px;
+        font-weight:600;
+
+        cursor:pointer;
+
+        transition:.35s;
+
+        background:linear-gradient(
+            135deg,
+            var(--primary),
+            var(--primary-light)
+        );
+
+        box-shadow:0 10px 20px rgba(46,125,50,.20);
+
+    }
+
+    .btn:hover{
+
+        transform:translateY(-4px);
+
+        box-shadow:
+            0 18px 30px rgba(46,125,50,.28);
+
+    }
+
+    .btn.secondary{
+
+        background:linear-gradient(
+            135deg,
+            var(--blue),
+            var(--blue-light)
+        );
+
+    }
+
+    .btn.secondary:hover{
+
+        box-shadow:
+        0 18px 30px rgba(25,118,210,.25);
+
+    }
+
+    /*====================================================
+                    DASHBOARD STATS
+    ====================================================*/
+
+    .stats{
+
+        display:grid;
+
+        grid-template-columns:
+        repeat(auto-fit,minmax(250px,1fr));
+
+        gap:25px;
+
+        margin-bottom:40px;
+
+    }
+
+    .stat-card{
+
+        background:#fff;
+
+        border-radius:20px;
+
+        padding:28px;
+
+        box-shadow:var(--shadow);
+
+        transition:.35s;
+
+        position:relative;
+
+        overflow:hidden;
+
+    }
+
+    .stat-card::before{
+
+        content:"";
+
+        position:absolute;
+
+        left:0;
+        top:0;
+
+        width:6px;
+        height:100%;
+
+        background:var(--primary);
+
+    }
+
+    .stat-card:hover{
+
+        transform:translateY(-8px);
+
+        box-shadow:var(--shadow-hover);
+
+    }
+
+    .stat-title{
+
+        color:var(--gray);
+
+        font-size:15px;
+
+        margin-bottom:10px;
+
+    }
+
+    .stat-value{
+
+        color:var(--primary);
+
+        font-size:34px;
+
+        font-weight:700;
+
+    }
+
+    /*====================================================
+        SEARCH BAR
+    ====================================================*/
+
+    .toolbar{
+
+        display:flex;
+
+        justify-content:space-between;
+
+        align-items:center;
+
+        gap:20px;
+
+        flex-wrap:wrap;
+
+        margin-bottom:35px;
+
+    }
+
+    .search-box{
+
+        width:350px;
+        max-width:100%;
+        position:relative;
+
+    }
+
+    .search-box input{
+
+        width:100%;
+
+        padding:14px 18px;
+
+        border:1px solid var(--border);
+
+        border-radius:12px;
+
+        outline:none;
+
+        font-size:15px;
+
+        transition:.30s;
+
+    }
+
+    .search-box input:focus{
+
+        border-color:var(--primary);
+
+        box-shadow:0 0 0 4px rgba(46,125,50,.10);
+
+    }
+    /*====================================================
+                    PRODUCT GRID
+    ====================================================*/
+
+    .grid{
+
+        display:grid;
+
+        grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+
+        gap:30px;
+
+        align-items:stretch;
+
+    }
+
+    /*====================================================
+                    PRODUCT CARD
+    ====================================================*/
+
+    .card{
+
+        background:#fff;
+
+        border-radius:20px;
+
+        overflow:hidden;
+
+        box-shadow:var(--shadow);
+
+        transition:.35s;
+
+        display:flex;
+
+        flex-direction:column;
+
+        height:100%;
+
+        position:relative;
+
+    }
+
+    .card:hover{
+
+        transform:translateY(-10px);
+
+        box-shadow:var(--shadow-hover);
+
+    }
+
+    /*====================================================
+                    PRODUCT IMAGE
+    ====================================================*/
+
+    .image-box{
+
+        width:100%;
+
+        height:240px;
+
+        background:#f8f9fa;
+
+        overflow:hidden;
+
+        position:relative;
+
+    }
+
+    .image-box img{
+
+        width:100%;
+
+        height:100%;
+
+        object-fit:cover;
+
+        transition:.5s;
+
+    }
+
+    .card:hover .image-box img{
+
+        transform:scale(1.08);
+
+    }
+
+    /*====================================================
+                    PRODUCT BADGE
+    ====================================================*/
+
+    .badge{
+
+        position:absolute;
+
+        top:15px;
+
+        left:15px;
+
+        padding:8px 14px;
+
+        border-radius:30px;
+
+        color:#fff;
+
+        font-size:12px;
+
+        font-weight:600;
+
+        background:var(--primary);
+
+        box-shadow:0 8px 18px rgba(0,0,0,.18);
+
+    }
+
+    .badge.out{
+
+        background:var(--danger);
+
+    }
+
+    /*====================================================
+                    CARD CONTENT
+    ====================================================*/
+
+    .content{
+
+        padding:22px;
+
+        display:flex;
+
+        flex-direction:column;
+
+        flex:1;
+
+    }
+
+    .product-title{
+
+        font-size:22px;
+
+        font-weight:700;
+
+        color:#222;
+
+        margin-bottom:10px;
+
+        line-height:1.4;
+
+    }
+
+    .price{
+
+        color:var(--primary);
+
+        font-size:28px;
+
+        font-weight:700;
+
+        margin-bottom:15px;
+
+    }
+
+    /*====================================================
+                    PRODUCT META
+    ====================================================*/
+
+    .meta{
+
+        display:flex;
+
+        flex-wrap:wrap;
+
+        gap:10px;
+
+        margin-bottom:18px;
+
+    }
+
+    .meta span{
+
+        background:#eef7ee;
+
+        color:var(--primary);
+
+        padding:8px 14px;
+
+        border-radius:30px;
+
+        font-size:13px;
+
+        font-weight:600;
+
+    }
+
+    .meta .qty{
+
+        background:#eef4ff;
+
+        color:var(--blue);
+
+    }
+
+    /*====================================================
+                    DESCRIPTION
+    ====================================================*/
+
+    .description{
+
+        color:#666;
+
+        line-height:1.8;
+
+        font-size:14px;
+
+        margin-bottom:25px;
+
+        flex:1;
+
+    }
+
+    /*====================================================
+                    CARD FOOTER
+    ====================================================*/
+
+    .card-footer{
+
+        margin-top:auto;
+
+        border-top:1px solid #eee;
+
+        padding-top:18px;
+
+    }
+
+    /*====================================================
+                    ACTION BUTTONS
+    ====================================================*/
+
+    .actions{
+
+        display:flex;
+
+        gap:12px;
+
+    }
+
+    .actions a{
+
+        flex:1;
+
+        text-align:center;
+
+        padding:13px;
+
+        border-radius:12px;
+
+        color:#fff;
+
+        font-size:14px;
+
+        font-weight:600;
+
+        transition:.35s;
+
+    }
+
+    .edit-btn{
+
+        background:linear-gradient(
+            135deg,
+            var(--blue),
+            var(--blue-light)
+        );
+
+    }
+
+    .edit-btn:hover{
+
+        transform:translateY(-3px);
+
+        box-shadow:0 12px 25px rgba(25,118,210,.25);
+
+    }
+
+    .delete-btn{
+
+        background:linear-gradient(
+            135deg,
+            var(--danger),
+            var(--danger-light)
+        );
+
+    }
+
+    .delete-btn:hover{
+
+        transform:translateY(-3px);
+
+        box-shadow:0 12px 25px rgba(211,47,47,.25);
+
+    }
+
+    /*====================================================
+                    EMPTY STATE
+    ====================================================*/
+
+    .empty{
+
+        grid-column:1/-1;
+
+        background:#fff;
+
+        padding:70px 30px;
+
+        text-align:center;
+
+        border-radius:20px;
+
+        box-shadow:var(--shadow);
+
+    }
+
+    .empty h2{
+
+        color:#444;
+
+        margin-bottom:15px;
+
+    }
+
+    .empty p{
+
+        color:#777;
+
+        margin-bottom:25px;
+
+    }
+
+    /*====================================================
+                    SCROLLBAR
+    ====================================================*/
+
+    ::-webkit-scrollbar{
+
+        width:8px;
+
+    }
+
+    ::-webkit-scrollbar-thumb{
+
+        background:var(--primary);
+
+        border-radius:20px;
+
+    }
+
+    ::-webkit-scrollbar-track{
+
+        background:#ddd;
+
+    }
+
+    /*====================================================
+                    TABLET
+    ====================================================*/
+
+    @media(max-width:992px){
+
+        .navbar{
+
+            padding:18px 5%;
+
+            flex-wrap:wrap;
+
+            gap:20px;
+
+        }
+
+        .page-header{
+
+            flex-direction:column;
+
+            align-items:flex-start;
+
+        }
+
+        .grid{
+
+            grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+
+        }
+
+    }
+
+    /*====================================================
+                    MOBILE
+    ====================================================*/
+
+    @media(max-width:768px){
+
+        .navbar{
+
+            flex-direction:column;
+
+            text-align:center;
+
+        }
+
+        .nav-links{
+
+            flex-wrap:wrap;
+
+            justify-content:center;
+
+        }
+
+        .stats{
+
+            grid-template-columns:1fr;
+
+        }
+
+        .toolbar{
+
+            flex-direction:column;
+
+            align-items:stretch;
+
+        }
+
+        .search-box{
+
+            width:100%;
+
+        }
+
+        .grid{
+
+            grid-template-columns:1fr;
+
+        }
+
+        .image-box{
+
+            height:220px;
+
+        }
+
+    }
+
+    /*====================================================
+                    SMALL MOBILE
+    ====================================================*/
+
+    @media(max-width:480px){
+
+        .container{
+
+            width:95%;
+
+        }
+
+        .logo h2{
+
+            font-size:22px;
+
+        }
+
+        .page-title h1{
+
+            font-size:28px;
+
+        }
+
+        .content{
+
+            padding:18px;
+
+        }
+
+        .product-title{
+
+            font-size:20px;
+
+        }
+
+        .price{
+
+            font-size:24px;
+
+        }
+
+        .actions{
+
+            flex-direction:column;
+
+        }
+
+    }
+
+    </style>
+
+</head>
+<body>
+
+<!--=========================================
+                NAVBAR
+==========================================-->
+
+<nav class="navbar">
+
+    <div class="logo">
+        <h2>🌾 FarmConnect Farmer</h2>
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'farmer_dashboard' %}">
+            🏠 Dashboard
+        </a>
+
+        <a href="{% url 'add_product' %}">
+            ➕ Add Product
+        </a>
+
+        <a href="{% url 'farmer_orders' %}">
+            📦 Orders
+        </a>
+
+        <a href="/logout/">
+            🚪 Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!--=========================================
+                MAIN CONTAINER
+==========================================-->
+
+<div class="container">
+
+
+    <!--=========================================
+                    PAGE HEADER
+    ==========================================-->
+
+    <div class="page-header">
+
+        <div class="page-title">
+
+            <h1>Farmer Dashboard 👨‍🌾</h1>
+
+            <p>
+                Manage your farm products, monitor inventory,
+                and keep track of customer orders from one place.
+            </p>
+
+        </div>
+
+        <div class="button-group">
+
+            <a href="{% url 'add_product' %}" class="btn">
+                ➕ Add New Product
+            </a>
+
+            <a href="{% url 'farmer_orders' %}" class="btn secondary">
+                📦 View Orders
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!--=========================================
+                    DASHBOARD STATS
+    ==========================================-->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Total Products
+            </div>
+
+            <div class="stat-value">
+                {{ products|length }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Total Inventory Value
+            </div>
+
+            <div class="stat-value">
+                ₦{{ total_value }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Available Products
+            </div>
+
+            <div class="stat-value">
+                {{ products|length }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!--=========================================
+                    TOOLBAR
+    ==========================================-->
+
+    <div class="toolbar">
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchProduct"
+                placeholder="Search products..."
+            >
+
+        </div>
+
+    </div>
+
+
+
+    <!--=========================================
+                    PRODUCT GRID
+    ==========================================-->
+
+    <div class="grid">
+
+        {% for p in products %}
+
+        <div class="card">
+
+
+            <!--=========================================
+                        PRODUCT IMAGE
+            ==========================================-->
+
+            <div class="image-box">
+
+                <a href="{{ p.image.url }}" target="_blank">
+
+                    <img
+                        src="{{ p.image.url }}"
+                        alt="{{ p.name }}"
+                    >
+
+                </a>
+
+
+                {% if p.quantity > 0 %}
+
+                    <span class="badge">
+                        Available
+                    </span>
+
+                {% else %}
+
+                    <span class="badge out">
+                        Out of Stock
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!--=========================================
+                        PRODUCT CONTENT
+            ==========================================-->
+
+            <div class="content">
+
+
+                <h3 class="product-title">
+
+                    {{ p.name }}
+
+                </h3>
+
+
+                <div class="price">
+
+                    ₦{{ p.price }}
+
+                </div>
+
+
+                <div class="meta">
+
+                    <span class="qty">
+
+                        Qty:
+                        {{ p.quantity }}
+
+                        {{ p.get_unit_display }}
+
+                    </span>
+
+                </div>
+
+
+                <div class="description">
+
+                    {{ p.description|truncatewords:25 }}
+
+                </div>
+
+
+                <div class="card-footer">
+
+                    <div class="actions">
+
+                        <a
+                            href="/product/edit/{{ p.id }}/"
+                            class="edit-btn"
+                        >
+
+                            ✏ Edit
+
+                        </a>
+
+                        <a
+                            href="/product/delete/{{ p.id }}/"
+                            class="delete-btn"
+                            onclick="return confirm('Delete this product?')"
+                        >
+
+                            🗑 Delete
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+                <div class="empty">
+
+            <h2>🌾 No Products Available</h2>
+
+            <p>
+                You haven't added any products yet.
+                Click the button below to start selling your farm produce.
+            </p>
+
+            <a href="{% url 'add_product' %}" class="btn">
+                ➕ Add Your First Product
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+<!--=========================================
+                FOOTER
+==========================================-->
+
+<footer
+    style="
+        margin-top:60px;
+        padding:25px;
+        text-align:center;
+        color:#777;
+        border-top:1px solid #e5e5e5;
+        background:#fff;
+    "
+>
+
+    <p>
+
+        © {% now "Y" %} <strong>FarmConnect</strong>.
+        All Rights Reserved.
+
+    </p>
+
+</footer>
+
+
+<!--=========================================
+            SEARCH PRODUCT SCRIPT
+==========================================-->
+
+<script>
+
+const searchInput = document.getElementById("searchProduct");
+
+if(searchInput){
+
+    searchInput.addEventListener("keyup", function(){
+
+        let value = this.value.toLowerCase();
+
+        let cards = document.querySelectorAll(".card");
+
+        cards.forEach(function(card){
+
+            let product = card.querySelector(".product-title")
+                              .textContent
+                              .toLowerCase();
+
+            if(product.indexOf(value) > -1){
+
+                card.style.display="flex";
+
+            }
+
+            else{
+
+                card.style.display="none";
+
+            }
+
+        });
+
+    });
+
+}
+
+
+/*=========================================
+        CARD ANIMATION
+=========================================*/
+
+const observer = new IntersectionObserver(entries=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+
+            entry.target.style.opacity="1";
+
+            entry.target.style.transform="translateY(0)";
+
+        }
+
+    });
+
+});
+
+document.querySelectorAll(".card").forEach(card=>{
+
+    card.style.opacity="0";
+
+    card.style.transform="translateY(30px)";
+
+    card.style.transition=".6s ease";
+
+    observer.observe(card);
+
+});
+
+
+/*=========================================
+        IMAGE PREVIEW EFFECT
+=========================================*/
+
+document.querySelectorAll(".image-box img").forEach(image=>{
+
+    image.addEventListener("mouseover",()=>{
+
+        image.style.cursor="zoom-in";
+
+    });
+
+});
+
+</script>
+
+</body>
+
+</html>

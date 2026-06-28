@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Products - FarmConnect</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /*=========================================
+        GOOGLE FONT
+=========================================*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            font-family:'Poppins',sans-serif;
+
+            background:#f5f7fb;
+
+            color:#333;
+
+            min-height:100vh;
+        }
+
+        /*=========================================
+                NAVBAR
+        =========================================*/
+
+        .navbar{
+
+            background:linear-gradient(135deg,#2e7d32,#43a047);
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            padding:18px 6%;
+
+            position:sticky;
+
+            top:0;
+
+            z-index:1000;
+
+            box-shadow:0 10px 25px rgba(0,0,0,.12);
+        }
+
+        .navbar h2{
+
+            color:#fff;
+
+            font-size:30px;
+
+            font-weight:700;
+        }
+
+        .nav-links{
+
+            display:flex;
+
+            gap:12px;
+
+            flex-wrap:wrap;
+        }
+
+        .nav-links a{
+
+            text-decoration:none;
+
+            color:#fff;
+
+            padding:10px 18px;
+
+            border-radius:8px;
+
+            font-weight:500;
+
+            transition:.3s;
+        }
+
+        .nav-links a:hover{
+
+            background:rgba(255,255,255,.18);
+
+            transform:translateY(-2px);
+        }
+
+        /*=========================================
+                CONTAINER
+        =========================================*/
+
+        .container{
+
+            width:min(1400px,92%);
+
+            margin:40px auto;
+        }
+
+        .page-title{
+
+            font-size:38px;
+
+            font-weight:700;
+
+            color:#2e7d32;
+
+            margin-bottom:35px;
+        }
+
+        /*=========================================
+                PRODUCT GRID
+        =========================================*/
+
+        .grid{
+
+            display:grid;
+
+            grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+
+            gap:30px;
+        }
+
+        /*=========================================
+                PRODUCT CARD
+        =========================================*/
+
+        .card{
+
+            background:#fff;
+
+            border-radius:20px;
+
+            overflow:hidden;
+
+            box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+            transition:.35s;
+
+            display:flex;
+
+            flex-direction:column;
+        }
+
+        .card:hover{
+
+            transform:translateY(-10px);
+
+            box-shadow:0 20px 40px rgba(0,0,0,.15);
+        }
+
+        /*=========================================
+                IMAGE
+        =========================================*/
+
+        .image-box{
+
+            width:100%;
+
+            height:240px;
+
+            background:#f8f8f8;
+
+            overflow:hidden;
+        }
+
+        .image-box img{
+
+            width:100%;
+
+            height:100%;
+
+            object-fit:cover;
+
+            transition:.4s;
+        }
+
+        .card:hover img{
+
+            transform:scale(1.08);
+        }
+
+        /*=========================================
+                CONTENT
+        =========================================*/
+
+        .content{
+
+            padding:22px;
+
+            display:flex;
+
+            flex-direction:column;
+
+            flex:1;
+        }
+
+        .content h3{
+
+            font-size:22px;
+
+            margin-bottom:10px;
+
+            color:#222;
+
+            font-weight:600;
+        }
+
+        .price{
+
+            color:#2e7d32;
+
+            font-size:28px;
+
+            font-weight:700;
+
+            margin-bottom:10px;
+        }
+
+        .farmer{
+
+            color:#777;
+
+            font-size:15px;
+
+            margin-bottom:20px;
+        }
+
+        /*=========================================
+                BUTTON GROUP
+        =========================================*/
+
+        .btn-group{
+
+            display:flex;
+
+            flex-direction:column;
+
+            gap:12px;
+
+            margin-top:auto;
+        }
+
+        .btn{
+
+            text-decoration:none;
+
+            text-align:center;
+
+            padding:13px;
+
+            border-radius:10px;
+
+            color:#fff;
+
+            font-weight:600;
+
+            transition:.3s;
+        }
+
+        .cart-btn{
+
+            background:linear-gradient(135deg,#2e7d32,#43a047);
+        }
+
+        .cart-btn:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:0 10px 20px rgba(46,125,50,.25);
+        }
+
+        .chat-btn{
+
+            background:linear-gradient(135deg,#1565c0,#42a5f5);
+        }
+
+        .chat-btn:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:0 10px 20px rgba(21,101,192,.25);
+        }
+
+        .view-btn{
+
+            background:linear-gradient(135deg,#6c757d,#8a939b);
+        }
+
+        .view-btn:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:0 10px 20px rgba(108,117,125,.25);
+        }
+
+        /*=========================================
+                EMPTY PRODUCTS
+        =========================================*/
+
+        .empty{
+
+            background:#fff;
+
+            padding:70px 25px;
+
+            text-align:center;
+
+            border-radius:20px;
+
+            font-size:18px;
+
+            color:#666;
+
+            box-shadow:0 10px 30px rgba(0,0,0,.08);
+        }
+
+        /*=========================================
+                SCROLLBAR
+        =========================================*/
+
+        ::-webkit-scrollbar{
+
+            width:8px;
+        }
+
+        ::-webkit-scrollbar-thumb{
+
+            background:#2e7d32;
+
+            border-radius:20px;
+        }
+
+        ::-webkit-scrollbar-track{
+
+            background:#eee;
+        }
+
+        /*=========================================
+                TABLET
+        =========================================*/
+
+        @media(max-width:992px){
+
+        .grid{
+
+            grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+        }
+
+        .page-title{
+
+            font-size:34px;
+        }
+
+        }
+
+        /*=========================================
+                MOBILE
+        =========================================*/
+
+        @media(max-width:768px){
+
+        .navbar{
+
+            flex-direction:column;
+
+            gap:15px;
+
+            text-align:center;
+        }
+
+        .nav-links{
+
+            justify-content:center;
+        }
+
+        .grid{
+
+            grid-template-columns:1fr;
+        }
+
+        .page-title{
+
+            font-size:30px;
+        }
+
+        .image-box{
+
+            height:220px;
+        }
+
+        }
+
+        /*=========================================
+                SMALL MOBILE
+        =========================================*/
+
+        @media(max-width:480px){
+
+        .container{
+
+            width:95%;
+        }
+
+        .navbar h2{
+
+            font-size:24px;
+        }
+
+        .page-title{
+
+            font-size:26px;
+        }
+
+        .content{
+
+            padding:18px;
+        }
+
+        .content h3{
+
+            font-size:20px;
+        }
+
+        .price{
+
+            font-size:24px;
+        }
+
+        .btn{
+
+            padding:12px;
+
+            font-size:15px;
+        }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ==========================
+     NAVBAR
+========================== -->
+<div class="navbar">
+    <h2>🌾 FarmConnect</h2>
+
+    <div class="nav-links">
+        <a href="/add-product/">Add Product</a>
+        <a href="/cart/">Cart 🛒</a>
+        <a href="/">Home</a>
+    </div>
+</div>
+
+<!-- ==========================
+     MAIN CONTENT
+========================== -->
+<div class="container">
+
+    <h1 class="page-title">Products</h1>
+
+    {% if products %}
+
+    <div class="grid">
+
+        {% for p in products %}
+        <div class="card">
+
+            <!-- IMAGE -->
+            <div class="image-box">
+                <img src="{{ p.image.url }}" alt="{{ p.name }}">
+            </div>
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <h3>{{ p.name }}</h3>
+
+                <p class="price">₦{{ p.price }}</p>
+
+                <p class="farmer">
+                    Seller: {{ p.farmer.username }}
+                </p>
+
+                <div class="btn-group">
+
+                    <a href="/product/{{ p.id }}/" class="btn view-btn">
+                        View Product
+                    </a>
+
+                    <a href="/add-to-cart/{{ p.id }}/" class="btn cart-btn">
+                        Add to Cart 🛒
+                    </a>
+
+                    <a href="/chat/start/{{ p.farmer.id }}/" class="btn chat-btn">
+                        Chat Farmer 💬
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty">
+        <h2>No products available yet 🌱</h2>
+        <p style="margin-top:10px; color:#666;">
+            Farmers will list products here soon.
+        </p>
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

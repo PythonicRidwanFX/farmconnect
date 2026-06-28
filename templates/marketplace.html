@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FarmConnect Marketplace</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/*=====================================================
+                    RESET
+======================================================*/
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:#f4f7fb;
+
+    color:#333;
+
+    overflow-x:hidden;
+
+    min-height:100vh;
+
+}
+
+a{
+
+    text-decoration:none;
+
+}
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+}
+
+button{
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+/*=====================================================
+                    ROOT COLORS
+======================================================*/
+
+:root{
+
+    --primary:#2e7d32;
+
+    --primary-light:#43a047;
+
+    --secondary:#1b5e20;
+
+    --blue:#1976d2;
+
+    --blue-light:#42a5f5;
+
+    --orange:#ff9800;
+
+    --danger:#d32f2f;
+
+    --danger-light:#ef5350;
+
+    --gray:#777;
+
+    --dark:#222;
+
+    --border:#ececec;
+
+    --white:#fff;
+
+    --shadow:
+
+        0 10px 25px rgba(0,0,0,.08);
+
+    --shadow-hover:
+
+        0 18px 40px rgba(0,0,0,.15);
+
+}
+
+/*=====================================================
+                    NAVBAR
+======================================================*/
+
+.navbar{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--primary-light)
+    );
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 6%;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.logo h2{
+
+    color:#fff;
+
+    font-size:30px;
+
+    font-weight:700;
+
+}
+
+.nav-links{
+
+    display:flex;
+
+    gap:14px;
+
+    align-items:center;
+
+}
+
+.nav-links a{
+
+    color:#fff;
+
+    padding:11px 18px;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    font-weight:500;
+
+    transition:.35s;
+
+}
+
+.nav-links a:hover{
+
+    background:rgba(255,255,255,.18);
+
+    transform:translateY(-3px);
+
+}
+
+/*=====================================================
+                PAGE CONTAINER
+======================================================*/
+
+.container{
+
+    width:min(1450px,92%);
+
+    margin:auto;
+
+    padding:40px 0 70px;
+
+}
+
+/*=====================================================
+                HERO SECTION
+======================================================*/
+
+.hero{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:30px;
+
+    margin-bottom:40px;
+
+}
+
+.hero-text h1{
+
+    font-size:38px;
+
+    color:var(--dark);
+
+    font-weight:700;
+
+}
+
+.hero-text p{
+
+    margin-top:12px;
+
+    color:var(--gray);
+
+    font-size:16px;
+
+    line-height:1.8;
+
+    max-width:650px;
+
+}
+
+.hero-badge{
+
+    display:inline-block;
+
+    margin-top:20px;
+
+    background:#eef7ee;
+
+    color:var(--primary);
+
+    padding:10px 18px;
+
+    border-radius:30px;
+
+    font-weight:600;
+
+}
+
+/*=====================================================
+                SEARCH SECTION
+======================================================*/
+
+.search-section{
+
+    background:#fff;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+
+    margin-bottom:40px;
+
+}
+
+.search-form{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(220px,1fr));
+
+    gap:18px;
+
+}
+
+.search-form input{
+
+    height:55px;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    padding:0 18px;
+
+    font-size:15px;
+
+    transition:.30s;
+
+}
+
+.search-form input:focus{
+
+    outline:none;
+
+    border-color:var(--primary);
+
+    box-shadow:
+        0 0 0 4px rgba(46,125,50,.10);
+
+}
+
+.search-btn{
+
+    border:none;
+
+    border-radius:12px;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--primary-light)
+    );
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+.search-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 12px 25px rgba(46,125,50,.25);
+
+}
+
+/*=====================================================
+                MARKET INFO
+======================================================*/
+
+.market-info{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(240px,1fr));
+
+    gap:25px;
+
+    margin-bottom:45px;
+
+}
+
+.info-card{
+
+    background:#fff;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+
+    transition:.35s;
+
+}
+
+.info-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow-hover);
+
+}
+
+.info-card h3{
+
+    color:var(--primary);
+
+    margin-bottom:10px;
+
+    font-size:18px;
+
+}
+
+.info-card p{
+
+    color:var(--gray);
+
+    line-height:1.7;
+
+}
+
+/*=====================================================
+                PRODUCT SECTION TITLE
+======================================================*/
+
+.section-title{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+    flex-wrap:wrap;
+
+    gap:20px;
+
+}
+
+.section-title h2{
+
+    font-size:32px;
+
+    color:#222;
+
+}
+
+.product-count{
+
+    background:#eef7ee;
+
+    color:var(--primary);
+
+    padding:10px 18px;
+
+    border-radius:30px;
+
+    font-weight:600;
+
+}
+    /*=====================================================
+                PRODUCT GRID
+======================================================*/
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+
+    gap:30px;
+
+    align-items:stretch;
+
+}
+
+/*=====================================================
+                PRODUCT CARD
+======================================================*/
+
+.card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    display:flex;
+
+    flex-direction:column;
+
+    box-shadow:var(--shadow);
+
+    transition:.35s;
+
+    position:relative;
+
+    height:100%;
+
+}
+
+.card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:var(--shadow-hover);
+
+}
+
+/*=====================================================
+                PRODUCT IMAGE
+======================================================*/
+
+.image-box{
+
+    width:100%;
+
+    height:260px;
+
+    overflow:hidden;
+
+    background:#f7f7f7;
+
+    position:relative;
+
+}
+
+.image-box img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.5s;
+
+}
+
+.card:hover .image-box img{
+
+    transform:scale(1.08);
+
+}
+
+/*=====================================================
+                PRODUCT BADGE
+======================================================*/
+
+.badge{
+
+    position:absolute;
+
+    top:18px;
+
+    left:18px;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.18);
+
+}
+
+.badge.out{
+
+    background:var(--danger);
+
+}
+
+/*=====================================================
+                CARD BODY
+======================================================*/
+
+.card-body{
+
+    display:flex;
+
+    flex-direction:column;
+
+    flex:1;
+
+    padding:24px;
+
+}
+
+.product-name{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#222;
+
+    margin-bottom:12px;
+
+    line-height:1.5;
+
+}
+
+.price{
+
+    font-size:30px;
+
+    font-weight:700;
+
+    color:var(--primary);
+
+    margin-bottom:18px;
+
+}
+
+/*=====================================================
+                PRODUCT DETAILS
+======================================================*/
+
+.product-details{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-bottom:18px;
+
+}
+
+.product-details span{
+
+    background:#eef7ee;
+
+    color:var(--primary);
+
+    padding:8px 14px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.description{
+
+    color:#666;
+
+    line-height:1.8;
+
+    font-size:14px;
+
+    margin-bottom:25px;
+
+    flex:1;
+
+}
+
+/*=====================================================
+                BUTTON AREA
+======================================================*/
+
+.button-area{
+
+    margin-top:auto;
+
+    border-top:1px solid #eeeeee;
+
+    padding-top:20px;
+
+}
+
+.buttons{
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+.btn{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    color:#fff;
+
+    font-weight:600;
+
+    transition:.35s;
+
+}
+
+.details-btn{
+
+    background:linear-gradient(
+        135deg,
+        var(--blue),
+        var(--blue-light)
+    );
+
+}
+
+.details-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 25px rgba(25,118,210,.25);
+
+}
+
+.cart-btn{
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--primary-light)
+    );
+
+}
+
+.cart-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 25px rgba(46,125,50,.25);
+
+}
+
+/*=====================================================
+                EMPTY STATE
+======================================================*/
+
+.empty{
+
+    grid-column:1/-1;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:80px 30px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+.empty h2{
+
+    color:#333;
+
+    margin-bottom:15px;
+
+}
+
+.empty p{
+
+    color:#777;
+
+    margin-bottom:25px;
+
+    line-height:1.8;
+
+}
+
+.empty a{
+
+    display:inline-block;
+
+    padding:14px 26px;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--primary-light)
+    );
+
+    color:#fff;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+}
+
+/*=====================================================
+                FOOTER
+======================================================*/
+
+.footer{
+
+    margin-top:70px;
+
+    background:#fff;
+
+    border-top:1px solid #ececec;
+
+    padding:25px;
+
+    text-align:center;
+
+    color:#777;
+
+}
+
+/*=====================================================
+                SCROLLBAR
+======================================================*/
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:var(--primary);
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#ececec;
+
+}
+
+/*=====================================================
+                TABLET
+======================================================*/
+
+@media(max-width:992px){
+
+    .navbar{
+
+        padding:18px 5%;
+
+        flex-wrap:wrap;
+
+        gap:20px;
+
+    }
+
+    .hero{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .grid{
+
+        grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+
+    }
+
+}
+
+/*=====================================================
+                MOBILE
+======================================================*/
+
+@media(max-width:768px){
+
+    .navbar{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .nav-links{
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+    }
+
+    .search-form{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .image-box{
+
+        height:230px;
+
+    }
+
+}
+
+/*=====================================================
+                SMALL MOBILE
+======================================================*/
+
+@media(max-width:480px){
+
+    .container{
+
+        width:95%;
+
+    }
+
+    .logo h2{
+
+        font-size:24px;
+
+    }
+
+    .hero-text h1{
+
+        font-size:30px;
+
+    }
+
+    .card-body{
+
+        padding:18px;
+
+    }
+
+    .product-name{
+
+        font-size:20px;
+
+    }
+
+    .price{
+
+        font-size:26px;
+
+    }
+
+    .buttons{
+
+        flex-direction:column;
+
+    }
+
+}
+
+</style>
+
+</head>
+<body>
+
+<!--====================================================
+                    NAVBAR
+=====================================================-->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <h2>🌾 FarmConnect Marketplace</h2>
+
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/marketplace/">
+            🏪 Marketplace
+        </a>
+
+        <a href="/cart/">
+            🛒 Cart
+        </a>
+
+        <a href="/orders/">
+            📦 My Orders
+        </a>
+
+        <a href="/logout/">
+            🚪 Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!--====================================================
+                MAIN CONTAINER
+=====================================================-->
+
+<div class="container">
+
+
+    <!--====================================================
+                    HERO SECTION
+    =====================================================-->
+
+    <div class="hero">
+
+        <div class="hero-text">
+
+            <h1>
+
+                Fresh Farm Products Delivered To You 🌾
+
+            </h1>
+
+            <p>
+
+                Shop directly from trusted farmers across Nigeria.
+                Browse fresh vegetables, fruits, grains, livestock,
+                and many more agricultural products at affordable prices.
+
+            </p>
+
+            <span class="hero-badge">
+
+                🚜 Buy Fresh • Support Local Farmers
+
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!--====================================================
+                    MARKET INFO
+    =====================================================-->
+
+    <div class="market-info">
+
+        <div class="info-card">
+
+            <h3>🌱 Fresh Products</h3>
+
+            <p>
+
+                Every product is supplied directly by verified farmers.
+
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <h3>🚚 Fast Delivery</h3>
+
+            <p>
+
+                Get your orders delivered safely to your preferred location.
+
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <h3>💳 Secure Shopping</h3>
+
+            <p>
+
+                Shop confidently with a simple and secure ordering process.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!--====================================================
+                    SEARCH AREA
+    =====================================================-->
+
+    <div class="search-section">
+
+        <form method="GET" class="search-form">
+
+            <input
+                type="text"
+                name="q"
+                placeholder="🔍 Search products..."
+                value="{{ request.GET.q }}"
+            >
+
+            <input
+                type="number"
+                name="min"
+                placeholder="Minimum Price"
+                value="{{ request.GET.min }}"
+            >
+
+            <input
+                type="number"
+                name="max"
+                placeholder="Maximum Price"
+                value="{{ request.GET.max }}"
+            >
+
+            <button
+                type="submit"
+                class="search-btn"
+            >
+
+                🔎 Search
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+
+    <!--====================================================
+                    PRODUCT TITLE
+    =====================================================-->
+
+    <div class="section-title">
+
+        <h2>
+
+            🛒 Available Products
+
+        </h2>
+
+        <span class="product-count">
+
+            {{ products|length }} Products Available
+
+        </span>
+
+    </div>
+
+
+
+    <!--====================================================
+                    PRODUCT GRID
+    =====================================================-->
+
+    <div class="grid">
+
+        {% for p in products %}
+
+
+        <!--====================================================
+                        PRODUCT CARD
+        =====================================================-->
+
+        <div class="card">
+
+            <div class="image-box">
+
+                {% if p.image %}
+
+                    <img
+                        src="{{ p.image.url }}"
+                        alt="{{ p.name }}"
+                    >
+
+                {% else %}
+
+                    <img
+                        src="https://via.placeholder.com/500x350?text=FarmConnect"
+                        alt="No Image"
+                    >
+
+                {% endif %}
+
+
+                {% if p.quantity > 0 %}
+
+                    <span class="badge">
+
+                        Available
+
+                    </span>
+
+                {% else %}
+
+                    <span class="badge out">
+
+                        Out of Stock
+
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+
+            <div class="card-body">
+
+
+                <h3 class="product-name">
+
+                    {{ p.name }}
+
+                </h3>
+
+
+                <div class="price">
+
+                    ₦{{ p.price }}
+
+                </div>
+
+
+                <div class="product-details">
+
+                    <span>
+
+                        📦 {{ p.quantity }}
+
+                        {{ p.get_unit_display }}
+
+                    </span>
+
+                </div>
+
+
+                <div class="description">
+
+                    {{ p.description|truncatewords:25 }}
+
+                </div>
+
+
+                <div class="button-area">
+
+                    <div class="buttons">
+
+                        <a
+                            href="/product/{{ p.id }}/"
+                            class="btn details-btn"
+                        >
+
+                            👁 View Details
+
+                        </a>
+
+                        <a
+                            href="/add-to-cart/{{ p.id }}/"
+                            class="btn cart-btn"
+                        >
+
+                            🛒 Add To Cart
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+                <div class="empty">
+
+            <h2>😔 No Products Found</h2>
+
+            <p>
+
+                Sorry, we couldn't find any products matching your search.
+                Try using different keywords or adjusting your price range.
+
+            </p>
+
+            <a href="/marketplace/">
+
+                🔄 View All Products
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+<!--====================================================
+                        FOOTER
+=====================================================-->
+
+<footer class="footer">
+
+    <p>
+
+        © {% now "Y" %} <strong>FarmConnect Marketplace</strong>
+
+        <br><br>
+
+        Fresh Farm Products • Trusted Farmers • Fast Delivery
+
+    </p>
+
+</footer>
+
+
+<!--====================================================
+                    JAVASCRIPT
+=====================================================-->
+
+<script>
+
+/*==========================================
+        LIVE SEARCH FILTER
+===========================================*/
+
+const searchInput = document.querySelector(
+    'input[name="q"]'
+);
+
+if(searchInput){
+
+    searchInput.addEventListener("keyup", function(){
+
+        const keyword = this.value.toLowerCase();
+
+        const cards = document.querySelectorAll(".card");
+
+        cards.forEach(card=>{
+
+            const name = card.querySelector(".product-name")
+                             .textContent
+                             .toLowerCase();
+
+            if(name.includes(keyword)){
+
+                card.style.display="flex";
+
+            }
+
+            else{
+
+                card.style.display="none";
+
+            }
+
+        });
+
+    });
+
+}
+
+
+/*==========================================
+        CARD ANIMATION
+===========================================*/
+
+const observer = new IntersectionObserver(entries=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+
+            entry.target.style.opacity="1";
+
+            entry.target.style.transform="translateY(0)";
+
+        }
+
+    });
+
+});
+
+
+document.querySelectorAll(".card").forEach(card=>{
+
+    card.style.opacity="0";
+
+    card.style.transform="translateY(40px)";
+
+    card.style.transition=".6s ease";
+
+    observer.observe(card);
+
+});
+
+
+/*==========================================
+        BUTTON RIPPLE EFFECT
+===========================================*/
+
+document.querySelectorAll(".btn").forEach(button=>{
+
+    button.addEventListener("mouseenter",()=>{
+
+        button.style.transform="translateY(-3px)";
+
+    });
+
+    button.addEventListener("mouseleave",()=>{
+
+        button.style.transform="translateY(0px)";
+
+    });
+
+});
+
+
+/*==========================================
+        IMAGE ZOOM CURSOR
+===========================================*/
+
+document.querySelectorAll(".image-box img").forEach(image=>{
+
+    image.addEventListener("mouseover",()=>{
+
+        image.style.cursor="zoom-in";
+
+    });
+
+});
+
+
+/*==========================================
+        SMOOTH PAGE LOAD
+===========================================*/
+
+window.addEventListener("load",()=>{
+
+    document.body.style.opacity="1";
+
+});
+
+</script>
+
+</body>
+
+</html>

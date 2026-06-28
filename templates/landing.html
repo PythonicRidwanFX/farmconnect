@@ -1,0 +1,2313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="FarmConnect is a modern agricultural marketplace that connects farmers directly with buyers across Nigeria.">
+
+    <meta name="keywords"
+          content="Agriculture, FarmConnect, Farmers, Buyers, Marketplace, Farm Produce, Nigeria">
+
+    <meta name="author"
+          content="FarmConnect">
+
+    <title>FarmConnect | Smart Agricultural Marketplace</title>
+
+    <!-- Google Font -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+/*==========================================================
+                    ROOT VARIABLES
+===========================================================*/
+
+:root{
+    --primary:#2E7D32;
+    --primary-light:#43A047;
+    --secondary:#1B5E20;
+    --accent:#FFB300;
+    --blue:#1565C0;
+    --danger:#D32F2F;
+    --white:#ffffff;
+    --light:#f7f9fb;
+    --gray:#777777;
+    --dark:#222222;
+    --border:#ececec;
+    --shadow:0 12px 35px rgba(0,0,0,.08);
+    --shadow-hover:0 20px 45px rgba(0,0,0,.15);
+    --transition:.35s;
+}
+
+/*==========================================================
+                        RESET
+===========================================================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{ scroll-behavior:smooth; }
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:var(--white);
+    color:var(--dark);
+    overflow-x:hidden;
+    line-height:1.7;
+}
+
+img{ width:100%; display:block; }
+a{ text-decoration:none; }
+ul{ list-style:none; }
+
+.container{
+    width:min(1400px,92%);
+    margin:auto;
+}
+
+/*==========================================================
+                    NAVBAR
+===========================================================*/
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding:18px 6%;
+    background:rgba(255,255,255,.96);
+    backdrop-filter:blur(15px);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:999;
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo i{
+    color:var(--primary);
+    font-size:30px;
+}
+
+.logo h2{
+    color:var(--primary);
+    font-size:30px;
+    font-weight:700;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.nav-links a{
+    color:var(--dark);
+    padding:10px 18px;
+    border-radius:10px;
+    font-weight:500;
+    transition:var(--transition);
+}
+
+.nav-links a:hover{
+    background:var(--primary);
+    color:#fff;
+}
+
+.login-btn{
+    background:var(--primary);
+    color:#fff !important;
+}
+
+.register-btn{
+    background:var(--accent);
+    color:#222 !important;
+}
+
+/*==========================================================
+                    HERO
+===========================================================*/
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    background:
+    linear-gradient(rgba(0,0,0,.60),rgba(0,0,0,.60)),
+    url("https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1800&q=80")
+    center/cover;
+    color:#fff;
+}
+
+.hero-content{
+    width:min(760px,95%);
+}
+
+.hero span{
+    display:inline-block;
+    background:rgba(255,255,255,.15);
+    padding:10px 20px;
+    border-radius:30px;
+    margin-bottom:25px;
+    font-weight:600;
+}
+
+.hero h1{
+    font-size:68px;
+    line-height:1.2;
+    margin-bottom:25px;
+    font-weight:800;
+}
+
+.hero p{
+    font-size:19px;
+    color:#f2f2f2;
+    margin-bottom:40px;
+}
+
+.hero-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+}
+
+/*==========================================================
+                    BUTTONS
+===========================================================*/
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:16px 32px;
+    border-radius:12px;
+    font-weight:600;
+    transition:var(--transition);
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:#fff;
+}
+
+.btn-primary:hover{
+    transform:translateY(-4px);
+    box-shadow:0 15px 35px rgba(46,125,50,.35);
+}
+
+.btn-secondary{
+    background:#fff;
+    color:var(--primary);
+}
+
+.btn-secondary:hover{
+    transform:translateY(-4px);
+}
+
+.btn-outline{
+    border:2px solid #fff;
+    color:#fff;
+}
+
+.btn-outline:hover{
+    background:#fff;
+    color:var(--primary);
+}
+
+/*==========================================================
+                SECTIONS (GLOBAL)
+===========================================================*/
+
+section{
+    padding:90px 0;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.section-title h2{
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.section-title p{
+    color:var(--gray);
+}
+
+/*==========================================================
+                TESTIMONIALS
+===========================================================*/
+
+.testimonial-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+}
+
+.testimonial-card{
+    background:#fff;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:var(--shadow);
+    transition:var(--transition);
+}
+
+.testimonial-card:hover{
+    transform:translateY(-6px);
+    box-shadow:var(--shadow-hover);
+}
+
+.stars{
+    color:var(--accent);
+    margin-bottom:10px;
+}
+
+/*==========================================================
+                FAQ
+===========================================================*/
+
+.faq-container{
+    display:grid;
+    gap:20px;
+    max-width:800px;
+    margin:auto;
+}
+
+.faq-item{
+    background:#fff;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:var(--shadow);
+}
+
+.faq-item h3{
+    margin-bottom:10px;
+}
+
+/*==========================================================
+                NEWSLETTER
+===========================================================*/
+
+.newsletter{
+    background:var(--primary);
+    color:#fff;
+    text-align:center;
+}
+
+.newsletter-box form{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+}
+
+.newsletter input{
+    padding:14px;
+    width:280px;
+    border:none;
+    border-radius:8px;
+}
+
+.newsletter button{
+    padding:14px 25px;
+    border:none;
+    background:var(--accent);
+    color:#000;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/*==========================================================
+                CONTACT
+===========================================================*/
+
+.contact-wrapper{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+}
+
+.contact-card{
+    background:#fff;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    margin-bottom:15px;
+}
+
+.contact-form input,
+.contact-form textarea{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border:1px solid var(--border);
+    border-radius:8px;
+}
+
+/*==========================================================
+                CTA
+===========================================================*/
+
+.cta{
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    color:#fff;
+    text-align:center;
+}
+
+.cta-content p{
+    max-width:700px;
+    margin:auto;
+}
+
+/*==========================================================
+                FOOTER
+===========================================================*/
+
+.footer{
+    background:#111;
+    color:#ddd;
+    padding:60px 0 20px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:30px;
+}
+
+.footer h3{
+    color:#fff;
+    margin-bottom:15px;
+}
+
+.footer-bottom{
+    text-align:center;
+    margin-top:20px;
+    font-size:14px;
+}
+
+/*==========================================================
+                FLOATING BUTTONS
+===========================================================*/
+
+#topBtn{
+    position:fixed;
+    bottom:80px;
+    right:25px;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    padding:12px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+.whatsapp{
+    position:fixed;
+    bottom:20px;
+    right:25px;
+    background:#25D366;
+    color:#fff;
+    padding:14px;
+    border-radius:50%;
+    font-size:20px;
+}
+
+/*==========================================================
+                LOADER
+===========================================================*/
+
+#loader{
+    position:fixed;
+    inset:0;
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+.loader-circle{
+    width:50px;
+    height:50px;
+    border:5px solid #eee;
+    border-top:5px solid var(--primary);
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{ transform:rotate(360deg); }
+}
+
+/*==========================================================
+                RESPONSIVE
+===========================================================*/
+
+@media(max-width:992px){
+    .hero h1{ font-size:52px; }
+}
+
+@media(max-width:768px){
+    .contact-wrapper{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        text-align:center;
+    }
+
+    .hero h1{ font-size:40px; }
+}
+
+@media(max-width:480px){
+    .hero h1{ font-size:32px; }
+
+    .btn{
+        width:100%;
+        justify-content:center;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<!--==========================================================
+                        NAVIGATION BAR
+===========================================================-->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <i class="fas fa-seedling"></i>
+
+        <h2>FarmConnect</h2>
+
+    </div>
+
+    <div class="nav-links">
+
+        <a href="#">Home</a>
+
+        <a href="#about">About</a>
+
+        <a href="#features">Features</a>
+
+        <a href="#marketplace">Marketplace</a>
+
+        <a href="#contact">Contact</a>
+
+        <a href="/login/" class="login-btn">
+
+            Login
+
+        </a>
+
+        <a href="/register/" class="register-btn">
+
+            Register
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!--==========================================================
+                        HERO SECTION
+===========================================================-->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <span>
+
+                🌾 Nigeria's Smart Agricultural Marketplace
+
+            </span>
+
+            <h1>
+
+                Connecting Farmers
+
+                <br>
+
+                Directly With Buyers
+
+            </h1>
+
+            <p>
+
+                FarmConnect is a modern digital marketplace that empowers
+                farmers to showcase and sell their agricultural products
+                directly to consumers, wholesalers, retailers, and businesses.
+                Eliminate unnecessary middlemen, enjoy fair pricing, and
+                trade securely from anywhere.
+
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="/register/" class="btn btn-primary">
+
+                    <i class="fas fa-user-plus"></i>
+
+                    Get Started
+
+                </a>
+
+                <a href="/login/" class="btn btn-secondary">
+
+                    <i class="fas fa-right-to-bracket"></i>
+
+                    Login
+
+                </a>
+
+                <a href="/marketplace/" class="btn btn-outline">
+
+                    <i class="fas fa-store"></i>
+
+                    Browse Marketplace
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="scroll-down">
+
+        <i class="fas fa-angle-down"></i>
+
+    </div>
+
+</section>
+
+
+
+<!--==========================================================
+                        STATISTICS
+===========================================================-->
+
+<section class="statistics">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>
+
+                FarmConnect in Numbers
+
+            </h2>
+
+            <p>
+
+                Helping farmers grow and connecting buyers with fresh
+                agricultural products every day.
+
+            </p>
+
+        </div>
+
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <i class="fas fa-users"></i>
+
+                <h2 class="counter">
+
+                    500+
+
+                </h2>
+
+                <p>
+
+                    Registered Farmers
+
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <i class="fas fa-shopping-cart"></i>
+
+                <h2 class="counter">
+
+                    5,000+
+
+                </h2>
+
+                <p>
+
+                    Successful Orders
+
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <i class="fas fa-leaf"></i>
+
+                <h2 class="counter">
+
+                    1,200+
+
+                </h2>
+
+                <p>
+
+                    Farm Products
+
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <i class="fas fa-handshake"></i>
+
+                <h2 class="counter">
+
+                    98%
+
+                </h2>
+
+                <p>
+
+                    Customer Satisfaction
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!--==========================================================
+                        ABOUT SECTION
+===========================================================-->
+
+<section class="about" id="about">
+
+    <div class="container">
+
+        <div class="about-wrapper">
+
+            <div class="about-image">
+
+                <img
+
+                src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=900&q=80"
+
+                alt="FarmConnect Farmers">
+
+            </div>
+
+
+            <div class="about-content">
+
+                <span>
+
+                    ABOUT FARMCONNECT
+
+                </span>
+
+                <h2>
+
+                    Revolutionising Agricultural Trade
+
+                </h2>
+
+                <p>
+
+                    FarmConnect is an innovative agricultural marketplace
+                    designed to bridge the communication gap between
+                    farmers and buyers. The platform allows farmers to
+                    advertise their products while buyers conveniently
+                    browse, compare prices, and purchase quality produce.
+
+                </p>
+
+                <p>
+
+                    Our goal is to improve food distribution,
+                    increase farmers' income,
+                    reduce post-harvest losses,
+                    and make agricultural products easily accessible
+                    across Nigeria.
+
+                </p>
+
+
+                <div class="about-highlights">
+
+                    <div>
+
+                        <i class="fas fa-check-circle"></i>
+
+                        Direct Farmer-to-Buyer Trading
+
+                    </div>
+
+                    <div>
+
+                        <i class="fas fa-check-circle"></i>
+
+                        Fair Product Pricing
+
+                    </div>
+
+                    <div>
+
+                        <i class="fas fa-check-circle"></i>
+
+                        Secure Online Marketplace
+
+                    </div>
+
+                    <div>
+
+                        <i class="fas fa-check-circle"></i>
+
+                        Easy Product Management
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section><!--==========================================================
+                    WHY CHOOSE US
+===========================================================-->
+
+<section class="features" id="features">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>
+
+                Why Choose FarmConnect?
+
+            </h2>
+
+            <p>
+
+                We provide a smarter, faster, and more transparent way
+                to connect farmers with buyers across Nigeria.
+
+            </p>
+
+        </div>
+
+        <div class="feature-grid">
+
+
+            <div class="feature-card">
+
+                <i class="fas fa-seedling"></i>
+
+                <h3>
+
+                    Fresh Farm Produce
+
+                </h3>
+
+                <p>
+
+                    Buy directly from trusted farmers and enjoy
+                    fresh, healthy agricultural products.
+
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <i class="fas fa-hand-holding-dollar"></i>
+
+                <h3>
+
+                    Fair Pricing
+
+                </h3>
+
+                <p>
+
+                    Eliminate unnecessary middlemen and ensure
+                    farmers receive fair value for their products.
+
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <i class="fas fa-shield-halved"></i>
+
+                <h3>
+
+                    Secure Transactions
+
+                </h3>
+
+                <p>
+
+                    Safe and reliable buying and selling
+                    with transparent order management.
+
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <i class="fas fa-truck-fast"></i>
+
+                <h3>
+
+                    Fast Delivery
+
+                </h3>
+
+                <p>
+
+                    Receive agricultural products quickly through
+                    trusted logistics partners.
+
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <i class="fas fa-chart-line"></i>
+
+                <h3>
+
+                    Market Insights
+
+                </h3>
+
+                <p>
+
+                    Access pricing trends and demand information
+                    to make better selling decisions.
+
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <i class="fas fa-headset"></i>
+
+                <h3>
+
+                    Customer Support
+
+                </h3>
+
+                <p>
+
+                    Dedicated support team ready to help
+                    farmers and buyers whenever needed.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!--==========================================================
+                    HOW IT WORKS
+===========================================================-->
+
+<section class="how-it-works">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>
+
+                How FarmConnect Works
+
+            </h2>
+
+            <p>
+
+                Buying and selling agricultural products has never been easier.
+
+            </p>
+
+        </div>
+
+        <div class="steps">
+
+
+            <div class="step">
+
+                <div class="number">
+
+                    1
+
+                </div>
+
+                <h3>
+
+                    Create an Account
+
+                </h3>
+
+                <p>
+
+                    Register as a farmer or buyer within minutes.
+
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="number">
+
+                    2
+
+                </div>
+
+                <h3>
+
+                    Upload Products
+
+                </h3>
+
+                <p>
+
+                    Farmers list products with images,
+                    prices and quantities.
+
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="number">
+
+                    3
+
+                </div>
+
+                <h3>
+
+                    Browse Marketplace
+
+                </h3>
+
+                <p>
+
+                    Buyers search, compare,
+                    and choose quality products.
+
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="number">
+
+                    4
+
+                </div>
+
+                <h3>
+
+                    Place Orders
+
+                </h3>
+
+                <p>
+
+                    Complete orders securely and
+                    communicate with farmers.
+
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="number">
+
+                    5
+
+                </div>
+
+                <h3>
+
+                    Receive Delivery
+
+                </h3>
+
+                <p>
+
+                    Products are delivered safely
+                    to your preferred destination.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!--==========================================================
+                    MARKETPLACE PREVIEW
+===========================================================-->
+
+<section class="market-preview" id="marketplace">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>
+
+                Marketplace Preview
+
+            </h2>
+
+            <p>
+
+                Explore some of the fresh products available on FarmConnect.
+
+            </p>
+
+        </div>
+
+        <div class="product-grid">
+
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoO_GGzPVbWi1fb0QLBOAxUXWI0Ye99-7DxU0tVWVrkw&s=10">
+
+                </div>
+
+                <div class="product-body">
+
+                    <h3>
+
+                        Fresh Tomatoes
+
+                    </h3>
+
+                    <p>
+
+                        Freshly harvested premium tomatoes
+                        from local farms.
+
+                    </p>
+
+                    <h4>
+
+                        ₦5,500 / Basket
+
+                    </h4>
+
+                    <a href="/marketplace/" class="btn btn-primary">
+
+                        View Product
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJIfSlLzcldAbJCez1Yvojz8dUmVo9gMwS1Iyl8GqAAZ3Rkswgr69A-c0R&s=10">
+
+                </div>
+
+                <div class="product-body">
+
+                    <h3>
+
+                        Premium Rice
+
+                    </h3>
+
+                    <p>
+
+                        High-quality locally produced rice
+                        ready for purchase.
+
+                    </p>
+
+                    <h4>
+
+                        ₦68,000 / Bag
+
+                    </h4>
+
+                    <a href="/marketplace/" class="btn btn-primary">
+
+                        View Product
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqAZ3xr6A_DkT4JbCDdvC2W5G9rvaiTDWwGUzTh_rvDg&s=10">
+
+                </div>
+
+                <div class="product-body">
+
+                    <h3>
+
+                        Fresh Pepper
+
+                    </h3>
+
+                    <p>
+
+                        Healthy pepper harvested
+                        directly from Nigerian farms.
+
+                    </p>
+
+                    <h4>
+
+                        ₦4,000 / Basket
+
+                    </h4>
+
+                    <a href="/marketplace/" class="btn btn-primary">
+
+                        View Product
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div style="text-align:center;margin-top:50px;">
+
+            <a href="/marketplace/" class="btn btn-secondary">
+
+                <i class="fas fa-store"></i>
+
+                Explore Full Marketplace
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section><!--==========================================================
+                    TESTIMONIALS
+===========================================================-->
+
+<section class="testimonials">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>
+
+                What Our Users Say
+
+            </h2>
+
+            <p>
+
+                Thousands of farmers and buyers trust FarmConnect every day.
+
+            </p>
+
+        </div>
+
+        <div class="testimonial-grid">
+
+            <div class="testimonial-card">
+
+                <div class="stars">
+
+                    ⭐⭐⭐⭐⭐
+
+                </div>
+
+                <p>
+
+                    "FarmConnect has helped me sell my harvest faster than
+                    ever before. I now reach customers from different states."
+
+                </p>
+
+                <h4>
+
+                    👨‍🌾 Musa Ibrahim
+
+                </h4>
+
+                <span>
+
+                    Rice Farmer
+
+                </span>
+
+            </div>
+
+
+            <div class="testimonial-card">
+
+                <div class="stars">
+
+                    ⭐⭐⭐⭐⭐
+
+                </div>
+
+                <p>
+
+                    "Buying farm produce has become so easy.
+                    Prices are transparent and deliveries are always quick."
+
+                </p>
+
+                <h4>
+
+                    🛒 Esther Johnson
+
+                </h4>
+
+                <span>
+
+                    Buyer
+
+                </span>
+
+            </div>
+
+
+            <div class="testimonial-card">
+
+                <div class="stars">
+
+                    ⭐⭐⭐⭐⭐
+
+                </div>
+
+                <p>
+
+                    "I love how simple the platform is.
+                    Managing my products only takes a few minutes."
+
+                </p>
+
+                <h4>
+
+                    👨‍🌾 Chinedu Okafor
+
+                </h4>
+
+                <span>
+
+                    Vegetable Farmer
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!--==========================================================
+                        FAQ
+===========================================================-->
+
+<section class="faq">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>
+
+                Frequently Asked Questions
+
+            </h2>
+
+        </div>
+
+        <div class="faq-container">
+
+            <div class="faq-item">
+
+                <h3>
+
+                    How do I register?
+
+                </h3>
+
+                <p>
+
+                    Click the Register button and choose whether you want
+                    to register as a farmer or buyer.
+
+                </p>
+
+            </div>
+
+            <div class="faq-item">
+
+                <h3>
+
+                    How can I buy products?
+
+                </h3>
+
+                <p>
+
+                    Browse the marketplace, view product details,
+                    add products to your cart,
+                    and complete your order.
+
+                </p>
+
+            </div>
+
+            <div class="faq-item">
+
+                <h3>
+
+                    Can farmers update products?
+
+                </h3>
+
+                <p>
+
+                    Yes.
+                    Farmers can edit, update,
+                    or remove products anytime from
+                    their dashboard.
+
+                </p>
+
+            </div>
+
+            <div class="faq-item">
+
+                <h3>
+
+                    Is FarmConnect secure?
+
+                </h3>
+
+                <p>
+
+                    Yes.
+                    FarmConnect is designed to provide
+                    secure user authentication,
+                    transparent transactions,
+                    and protected user information.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!--==========================================================
+                    NEWSLETTER
+===========================================================-->
+
+<section class="newsletter">
+
+    <div class="container">
+
+        <div class="newsletter-box">
+
+            <h2>
+
+                Stay Updated
+
+            </h2>
+
+            <p>
+
+                Subscribe to receive farming news,
+                market prices,
+                and agricultural updates.
+
+            </p>
+
+            <form>
+
+                <input
+                    type="email"
+                    placeholder="Enter your email address"
+                >
+
+                <button type="submit">
+
+                    Subscribe
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!--==========================================================
+                    CONTACT
+===========================================================-->
+
+<section class="contact" id="contact">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>
+
+                Contact Us
+
+            </h2>
+
+            <p>
+
+                We'd love to hear from you.
+
+            </p>
+
+        </div>
+
+        <div class="contact-wrapper">
+
+            <div class="contact-info">
+
+                <div class="contact-card">
+
+                    <i class="fas fa-location-dot"></i>
+
+                    <h3>
+
+                        Address
+
+                    </h3>
+
+                    <p>
+
+                        Abuja, Nigeria
+
+                    </p>
+
+                </div>
+
+
+                <div class="contact-card">
+
+                    <i class="fas fa-envelope"></i>
+
+                    <h3>
+
+                        Email
+
+                    </h3>
+
+                    <p>
+
+                        support@farmconnect.com
+
+                    </p>
+
+                </div>
+
+
+                <div class="contact-card">
+
+                    <i class="fas fa-phone"></i>
+
+                    <h3>
+
+                        Phone
+
+                    </h3>
+
+                    <p>
+
+                        +234 800 000 0000
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="contact-form">
+
+                <form>
+
+                    <input
+                        type="text"
+                        placeholder="Full Name"
+                        required
+                    >
+
+                    <input
+                        type="email"
+                        placeholder="Email Address"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        placeholder="Subject"
+                    >
+
+                    <textarea
+                        rows="6"
+                        placeholder="Write your message..."
+                    ></textarea>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+
+                        Send Message
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section><!--==========================================================
+                    CALL TO ACTION
+===========================================================-->
+
+<section class="cta">
+
+    <div class="container">
+
+        <div class="cta-content">
+
+            <h2>
+
+                Ready to Transform Your Farming Business?
+
+            </h2>
+
+            <p>
+
+                Join thousands of farmers and buyers already using
+                FarmConnect to grow their businesses, increase sales,
+                and access fresh agricultural products across Nigeria.
+
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="/register/" class="btn btn-primary">
+
+                    <i class="fas fa-user-plus"></i>
+
+                    Create Free Account
+
+                </a>
+
+                <a href="/marketplace/" class="btn btn-secondary">
+
+                    <i class="fas fa-store"></i>
+
+                    Visit Marketplace
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!--==========================================================
+                        FOOTER
+===========================================================-->
+
+<footer class="footer">
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+
+            <!-- COMPANY -->
+
+            <div class="footer-column">
+
+                <h3>
+
+                    🌾 FarmConnect
+
+                </h3>
+
+                <p>
+
+                    A smart agricultural marketplace connecting
+                    farmers directly with buyers through technology,
+                    creating fair prices and improving food distribution.
+
+                </p>
+
+                <div class="social-links">
+
+                    <a href="#">
+
+                        <i class="fab fa-facebook-f"></i>
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="fab fa-instagram"></i>
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="fab fa-x-twitter"></i>
+
+                    </a>
+
+                    <a href="#">
+
+                        <i class="fab fa-linkedin-in"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- QUICK LINKS -->
+
+            <div class="footer-column">
+
+                <h3>
+
+                    Quick Links
+
+                </h3>
+
+                <ul>
+
+                    <li><a href="#">Home</a></li>
+
+                    <li><a href="#about">About</a></li>
+
+                    <li><a href="#features">Features</a></li>
+
+                    <li><a href="/marketplace/">Marketplace</a></li>
+
+                    <li><a href="#contact">Contact</a></li>
+
+                </ul>
+
+            </div>
+
+
+
+            <!-- SERVICES -->
+
+            <div class="footer-column">
+
+                <h3>
+
+                    Services
+
+                </h3>
+
+                <ul>
+
+                    <li>
+
+                        Farmer Dashboard
+
+                    </li>
+
+                    <li>
+
+                        Buyer Marketplace
+
+                    </li>
+
+                    <li>
+
+                        Product Management
+
+                    </li>
+
+                    <li>
+
+                        Order Tracking
+
+                    </li>
+
+                    <li>
+
+                        Agricultural Insights
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+
+            <!-- CONTACT -->
+
+            <div class="footer-column">
+
+                <h3>
+
+                    Contact Information
+
+                </h3>
+
+                <p>
+
+                    <i class="fas fa-location-dot"></i>
+
+                    Abuja, Nigeria
+
+                </p>
+
+                <p>
+
+                    <i class="fas fa-phone"></i>
+
+                    +234 800 000 0000
+
+                </p>
+
+                <p>
+
+                    <i class="fas fa-envelope"></i>
+
+                    support@farmconnect.com
+
+                </p>
+
+                <p>
+
+                    <i class="fas fa-clock"></i>
+
+                    Mon - Sat (8AM - 6PM)
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <hr style="margin:45px 0;border:none;border-top:1px solid rgba(255,255,255,.15);">
+
+
+
+        <div class="footer-bottom">
+
+            <p>
+
+                © {% now "Y" %}
+
+                <strong>FarmConnect</strong>
+
+                | All Rights Reserved.
+
+            </p>
+
+            <p>
+
+                Designed for Smart Agriculture 🌱
+
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!--==========================================================
+                BACK TO TOP BUTTON
+===========================================================-->
+
+<button id="topBtn">
+
+    <i class="fas fa-arrow-up"></i>
+
+</button>
+
+
+
+<!--==========================================================
+                FLOATING WHATSAPP
+===========================================================-->
+
+<a
+
+    href="https://wa.me/2348000000000"
+
+    class="whatsapp"
+
+    target="_blank"
+
+>
+
+    <i class="fab fa-whatsapp"></i>
+
+</a>
+
+
+
+<!--==========================================================
+                PAGE LOADER
+===========================================================-->
+
+<div id="loader">
+
+    <div class="loader-circle"></div>
+
+    <h3>
+
+        🌾 FarmConnect
+
+    </h3>
+
+</div>
+<!--==========================================================
+                    JAVASCRIPT
+===========================================================-->
+
+<script>
+
+/*==========================================================
+                PAGE LOADER
+===========================================================*/
+
+window.addEventListener("load",()=>{
+
+    const loader=document.getElementById("loader");
+
+    if(loader){
+
+        loader.style.opacity="0";
+
+        loader.style.visibility="hidden";
+
+        loader.style.transition=".6s";
+
+    }
+
+});
+
+
+/*==========================================================
+                STICKY NAVBAR
+===========================================================*/
+
+const navbar=document.querySelector(".navbar");
+
+window.addEventListener("scroll",()=>{
+
+    if(window.scrollY>80){
+
+        navbar.style.padding="14px 6%";
+
+        navbar.style.boxShadow="0 10px 35px rgba(0,0,0,.12)";
+
+        navbar.style.background="rgba(255,255,255,.98)";
+
+    }
+
+    else{
+
+        navbar.style.padding="18px 6%";
+
+        navbar.style.boxShadow="0 8px 25px rgba(0,0,0,.05)";
+
+    }
+
+});
+
+
+/*==========================================================
+                SCROLL TO TOP
+===========================================================*/
+
+const topBtn=document.getElementById("topBtn");
+
+window.addEventListener("scroll",()=>{
+
+    if(window.scrollY>500){
+
+        topBtn.style.display="flex";
+
+    }
+
+    else{
+
+        topBtn.style.display="none";
+
+    }
+
+});
+
+topBtn.onclick=function(){
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+};
+
+
+/*==========================================================
+                SMOOTH SCROLL
+===========================================================*/
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+
+    anchor.addEventListener("click",function(e){
+
+        const target=document.querySelector(this.getAttribute("href"));
+
+        if(target){
+
+            e.preventDefault();
+
+            target.scrollIntoView({
+
+                behavior:"smooth"
+
+            });
+
+        }
+
+    });
+
+});
+
+
+/*==========================================================
+                COUNTER ANIMATION
+===========================================================*/
+
+const counters=document.querySelectorAll(".counter");
+
+const speed=200;
+
+counters.forEach(counter=>{
+
+    const update=()=>{
+
+        const target=counter.innerText.replace("+","").replace("%","");
+
+        const value=+counter.getAttribute("data-count") || target;
+
+        const count=+counter.innerText.replace("+","").replace("%","");
+
+        const increment=value/speed;
+
+        if(count<value){
+
+            counter.innerText=Math.ceil(count+increment);
+
+            if(counter.innerHTML.includes("%")){
+
+                counter.innerHTML+="%";
+
+            }
+
+            setTimeout(update,10);
+
+        }
+
+        else{
+
+            if(counter.dataset.suffix=="%"){
+
+                counter.innerHTML=value+"%";
+
+            }
+
+            else{
+
+                counter.innerHTML=value+"+";
+
+            }
+
+        }
+
+    }
+
+    update();
+
+});
+
+
+/*==========================================================
+                REVEAL ANIMATION
+===========================================================*/
+
+const reveal=document.querySelectorAll(
+
+".feature-card,.stat-card,.step,.product-card,.testimonial-card,.contact-card"
+
+);
+
+const observer=new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.style.opacity="1";
+
+entry.target.style.transform="translateY(0)";
+
+}
+
+});
+
+});
+
+reveal.forEach(item=>{
+
+item.style.opacity="0";
+
+item.style.transform="translateY(40px)";
+
+item.style.transition=".7s ease";
+
+observer.observe(item);
+
+});
+
+
+/*==========================================================
+                FAQ ACCORDION
+===========================================================*/
+
+document.querySelectorAll(".faq-item h3").forEach(question=>{
+
+question.addEventListener("click",()=>{
+
+const answer=question.nextElementSibling;
+
+answer.style.display=
+
+answer.style.display==="block"
+
+?
+
+"none"
+
+:
+
+"block";
+
+});
+
+});
+
+
+/*==========================================================
+                BUTTON HOVER
+===========================================================*/
+
+document.querySelectorAll(".btn").forEach(button=>{
+
+button.addEventListener("mouseenter",()=>{
+
+button.style.transform="translateY(-4px)";
+
+});
+
+button.addEventListener("mouseleave",()=>{
+
+button.style.transform="translateY(0px)";
+
+});
+
+});
+
+
+/*==========================================================
+                IMAGE ZOOM CURSOR
+===========================================================*/
+
+document.querySelectorAll("img").forEach(img=>{
+
+img.addEventListener("mouseenter",()=>{
+
+img.style.cursor="pointer";
+
+});
+
+});
+
+
+/*==========================================================
+                CURRENT YEAR
+===========================================================*/
+
+document.querySelectorAll(".year").forEach(year=>{
+
+year.innerHTML=new Date().getFullYear();
+
+});
+
+</script>
+
+</body>
+
+</html>

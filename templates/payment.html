@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment | FarmConnect</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+
+        :root{
+            --primary:#2E7D32;
+            --secondary:#1B5E20;
+            --accent:#FFB300;
+            --white:#fff;
+            --bg:#f5f7fb;
+            --dark:#222;
+            --shadow:0 12px 30px rgba(0,0,0,.08);
+            --radius:14px;
+            --transition:.3s;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            background:var(--bg);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            padding:20px;
+        }
+
+        .payment-card{
+            background:var(--white);
+            width:100%;
+            max-width:480px;
+            border-radius:var(--radius);
+            box-shadow:var(--shadow);
+            padding:30px;
+            animation:fadeIn .5s ease-in-out;
+        }
+
+        .payment-header{
+            text-align:center;
+            margin-bottom:25px;
+        }
+
+        .payment-header i{
+            font-size:40px;
+            color:var(--primary);
+            margin-bottom:10px;
+        }
+
+        .payment-header h2{
+            color:var(--dark);
+            font-size:26px;
+        }
+
+        .info{
+            background:#f9f9f9;
+            padding:15px;
+            border-radius:10px;
+            margin-bottom:15px;
+            font-size:15px;
+            color:#444;
+        }
+
+        .info strong{
+            color:var(--dark);
+        }
+
+        .status{
+            display:inline-block;
+            padding:6px 12px;
+            border-radius:20px;
+            font-size:13px;
+            font-weight:600;
+            margin-top:5px;
+        }
+
+        .pending{
+            background:#fff3cd;
+            color:#856404;
+        }
+
+        .paid{
+            background:#d4edda;
+            color:#155724;
+        }
+
+        .btn-pay{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            background:var(--primary);
+            color:#fff;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+            transition:var(--transition);
+            margin-top:20px;
+        }
+
+        .btn-pay:hover{
+            background:var(--secondary);
+            transform:translateY(-3px);
+            box-shadow:0 10px 25px rgba(46,125,50,.25);
+        }
+
+        .footer-text{
+            text-align:center;
+            margin-top:15px;
+            font-size:13px;
+            color:#777;
+        }
+
+        @keyframes fadeIn{
+            from{opacity:0; transform:translateY(20px);}
+            to{opacity:1; transform:translateY(0);}
+        }
+
+        @media(max-width:480px){
+            .payment-card{
+                padding:20px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="payment-card">
+
+        <div class="payment-header">
+            <i class="fas fa-credit-card"></i>
+            <h2>Payment</h2>
+        </div>
+
+        <div class="info">
+            <p><strong>Order ID:</strong> {{ order.id }}</p>
+        </div>
+
+        <div class="info">
+            <p><strong>Total:</strong> ₦{{ order.total_price }}</p>
+        </div>
+
+        <div class="info">
+            <p><strong>Status:</strong></p>
+
+            {% if order.payment_status == "paid" %}
+                <span class="status paid">Paid</span>
+            {% else %}
+                <span class="status pending">{{ order.payment_status }}</span>
+            {% endif %}
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <button type="submit" class="btn-pay">
+                <i class="fas fa-lock"></i>
+                Pay Now
+            </button>
+
+        </form>
+
+        <div class="footer-text">
+            Secure payment powered by FarmConnect
+        </div>
+
+    </div>
+
+</body>
+</html>

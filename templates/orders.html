@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Orders - FarmConnect</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f4f7fb;
+    color:#333;
+}
+
+/*=========================
+        NAVBAR
+==========================*/
+
+.navbar{
+
+    background:linear-gradient(135deg,#2e7d32,#43a047);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 6%;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+.navbar h2{
+    color:#fff;
+}
+
+.nav-links{
+    display:flex;
+    gap:15px;
+}
+
+.nav-links a{
+    color:#fff;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:8px;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    background:rgba(255,255,255,.18);
+}
+
+/*=========================
+        CONTAINER
+==========================*/
+
+.container{
+
+    width:95%;
+
+    max-width:1200px;
+
+    margin:40px auto;
+}
+
+.page-title{
+
+    text-align:center;
+
+    color:#2e7d32;
+
+    margin-bottom:30px;
+
+    font-size:35px;
+}
+
+/*=========================
+        ORDER CARD
+==========================*/
+
+.order-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    margin-bottom:25px;
+
+    overflow:hidden;
+
+    transition:.3s;
+}
+
+.order-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 18px 35px rgba(0,0,0,.12);
+}
+
+.order-header{
+
+    background:#f5f5f5;
+
+    padding:20px 25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+}
+
+.order-header div{
+    font-size:15px;
+}
+
+.order-header strong{
+    color:#2e7d32;
+}
+
+.order-body{
+
+    padding:25px;
+}
+
+.order-body table{
+
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+.order-body th{
+
+    background:#2e7d32;
+
+    color:white;
+
+    padding:14px;
+
+    text-align:left;
+}
+
+.order-body td{
+
+    padding:14px;
+
+    border-bottom:1px solid #eee;
+}
+
+.total{
+
+    text-align:right;
+
+    margin-top:20px;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#2e7d32;
+}
+
+.status{
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:600;
+}
+
+.processing{
+    background:#ff9800;
+}
+
+.delivered{
+    background:#4caf50;
+}
+
+.cancelled{
+    background:#e53935;
+}
+
+.actions{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-top:25px;
+
+    flex-wrap:wrap;
+}
+
+.btn{
+
+    text-decoration:none;
+
+    color:#fff;
+
+    padding:12px 25px;
+
+    border-radius:10px;
+
+    transition:.3s;
+
+    font-weight:600;
+}
+
+.view{
+    background:#1565c0;
+}
+
+.buy{
+    background:#2e7d32;
+}
+
+.btn:hover{
+
+    transform:translateY(-3px);
+
+    opacity:.9;
+}
+
+/*=========================
+        MOBILE
+==========================*/
+
+@media(max-width:768px){
+
+.order-header{
+
+    flex-direction:column;
+}
+
+.order-body{
+
+    overflow:auto;
+}
+
+.page-title{
+
+    font-size:28px;
+}
+
+.navbar{
+
+    flex-direction:column;
+
+    gap:15px;
+}
+
+}
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>🌾 FarmConnect</h2>
+
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+
+        <a href="/marketplace/">Marketplace</a>
+
+        <a href="/cart/">Cart</a>
+
+    </div>
+
+</div>
+
+<div class="container">
+
+    <h1 class="page-title">📦 My Orders</h1>
+
+    {% for order in orders %}
+
+    <div class="order-card">
+
+        <div class="order-header">
+
+            <div>
+                <strong>Order ID</strong><br>
+                #FC{{ order.id }}
+            </div>
+
+            <div>
+                <strong>Order Date</strong><br>
+                {{ order.created_at|date:"d M Y, h:i A" }}
+            </div>
+
+            <div>
+                <strong>Status</strong><br>
+
+                <span class="status
+                    {% if order.status == 'Pending' %}
+                        processing
+                    {% elif order.status == 'Processing' %}
+                        processing
+                    {% elif order.status == 'Delivered' %}
+                        delivered
+                    {% endif %}
+                ">
+                    {{ order.status }}
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="order-body">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Farmer</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Order Total</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>
+
+                            <img
+                                src="{{ order.product.image.url }}"
+                                alt="{{ order.product.name }}"
+                                width="80"
+                                height="80"
+                                style="object-fit:cover;border-radius:10px;"
+                            >
+
+                        </td>
+
+                        <td>
+
+                            <strong>{{ order.product.name }}</strong><br>
+
+                            <small>{{ order.product.description|truncatewords:10 }}</small>
+
+                        </td>
+
+                        <td>
+
+                            {{ order.product.farmer.username }}
+
+                        </td>
+
+                        <td>
+
+                            {{ order.quantity }} {{ order.product.get_unit_display }}
+
+                        </td>
+
+                        <td>
+
+                            ₦{{ order.product.price }}
+
+                        </td>
+
+                        <td>
+
+                            <strong>₦{{ order.total_price }}</strong>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <div class="total">
+
+                Total Paid: <strong>₦{{ order.total_price }}</strong>
+
+            </div>
+
+            <div class="actions">
+
+                <a href="/product/{{ order.product.id }}/" class="btn view">
+                    View Product
+                </a>
+
+                <a href="/add-to-cart/{{ order.product.id }}/" class="btn buy">
+                    Buy Again
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="order-card">
+
+        <div class="order-body" style="text-align:center;padding:70px;">
+
+            <h2>🛒 No Orders Yet</h2>
+
+            <p>
+                You haven't placed any orders yet.
+            </p>
+
+            <br>
+
+            <a href="/marketplace/" class="btn buy">
+                Start Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>
