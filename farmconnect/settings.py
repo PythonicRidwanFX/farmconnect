@@ -48,10 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-<<<<<<< HEAD
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-=======
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
+
 ]
 
 ROOT_URLCONF = 'farmconnect.urls'
@@ -132,12 +129,11 @@ import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-<<<<<<< HEAD
+
 STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-=======
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
+
