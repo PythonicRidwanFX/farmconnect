@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="en">
 
 <head>
@@ -1284,10 +1285,229 @@ button{
                     </div>
 
                 </div>
+=======
+<html>
+<head>
+    <title>FarmConnect Marketplace</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #2e7d32;
+            padding: 15px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-weight: bold;
+        }
+
+        /* CONTAINER */
+        .container {
+            width: 90%;
+            margin: auto;
+            padding-top: 20px;
+        }
+
+        /* SEARCH */
+        .search-box {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .search-box button {
+            padding: 10px 15px;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 220px));
+            gap: 20px;
+            justify-content: start;
+            margin-top: 20px;
+        }
+
+        /* ================= CARD ================= */
+        .card {
+            width: 220px;
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* ================= IMAGE ================= */
+        .image-box {
+            width: 100%;
+            height: 180px;
+            background: #eee;
+            overflow: hidden;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            background: #f5f5f5;
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .price {
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .btn {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+            background: #2e7d32;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .btn:hover {
+            background: #1b5e20;
+        }
+
+        .view-btn {
+            background: #1565c0;
+        }
+
+        .view-btn:hover {
+            background: #0d47a1;
+        }
+
+        /* EMPTY */
+        .empty {
+            text-align: center;
+            padding: 50px;
+            color: #777;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:600px){
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>🌾 FarmConnect Marketplace</h2>
+
+    <div>
+        <a href="/marketplace/">Marketplace</a>
+        <a href="/cart/">Cart</a>
+        <a href="/logout/">Logout</a>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+    <h2>🛒 Fresh Farm Products</h2>
+
+    <!-- SEARCH -->
+    <form method="GET" class="search-box">
+        <input type="text" name="q" placeholder="Search products...">
+        <input type="number" name="min" placeholder="Min price">
+        <input type="number" name="max" placeholder="Max price">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- PRODUCTS -->
+    <div class="grid">
+
+        {% for p in products %}
+        <div class="card">
+
+            {% if p.image %}
+                <img src="{{ p.image.url }}">
+            {% else %}
+                <img src="https://via.placeholder.com/300x200">
+            {% endif %}
+
+            <div class="card-body">
+
+                <h3>{{ p.name }}</h3>
+
+                <p class="price">₦{{ p.price }}</p>
+
+                <p>Qty: {{ p.quantity }}</p>
+
+                <p>{{ p.description|truncatewords:12 }}</p>
+
+                <!-- VIEW DETAIL -->
+                <a class="btn view-btn" href="/product/{{ p.id }}/">
+                    View Details
+                </a>
+
+                <!-- ADD TO CART -->
+                <a class="btn" href="/add-to-cart/{{ p.id }}/">
+                    Add to Cart
+                </a>
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
 
             </div>
 
         </div>
+<<<<<<< HEAD
 
         {% empty %}
                 <div class="empty">
@@ -1309,12 +1529,20 @@ button{
 
         </div>
 
+=======
+        {% empty %}
+        <div class="empty">
+            <h3>No products found 😔</h3>
+            <p>Try adjusting your search</p>
+        </div>
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         {% endfor %}
 
     </div>
 
 </div>
 
+<<<<<<< HEAD
 
 <!--====================================================
                         FOOTER
@@ -1466,4 +1694,7 @@ window.addEventListener("load",()=>{
 
 </body>
 
+=======
+</body>
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
 </html>

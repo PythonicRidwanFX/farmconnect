@@ -8,9 +8,12 @@ from .models import Product, Cart, Order, Profile, ChatRoom, Message
 from django.contrib.auth import login, authenticate
 from django.utils import timezone
 from django.contrib.auth import logout
+<<<<<<< HEAD
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Cart, Order, OrderItem, DeliveryDetails
+=======
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
 
 
 
@@ -35,6 +38,7 @@ def register(request):
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
 
+<<<<<<< HEAD
         print("Username:", username)
         print("Email:", email)
         print("User Type:", user_type)
@@ -53,6 +57,15 @@ def register(request):
             messages.error(request, "Email already exists")
             return render("register.html")
 
+=======
+        if password1 != password2:
+            return redirect('register')
+
+        if User.objects.filter(username=username).exists():
+            return redirect('register')
+
+        # ✅ CREATE USER
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         user = User.objects.create_user(
             username=username,
             email=email,
@@ -62,6 +75,7 @@ def register(request):
         user.first_name = full_name
         user.save()
 
+<<<<<<< HEAD
         profile = Profile.objects.create(
             user=user,
             user_type=user_type,
@@ -78,12 +92,32 @@ def register(request):
             return redirect("farmer_dashboard")
         else:
             return redirect("marketplace")
+=======
+        # ✅ GET PROFILE FROM SIGNAL (important safety check)
+        profile = user.profile
+        profile.user_type = user_type
+        profile.phone = phone
+        profile.location = location
+        profile.save()
+
+        # 🔐 LOGIN USER
+        login(request, user)
+
+        # 🔥 FORCE ROLE REDIRECT
+        if profile.user_type == "farmer":
+            return redirect("farmer_dashboard")
+        elif profile.user_type == "buyer":
+            return redirect("marketplace")
+        else:
+            return redirect("login")
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
 
     return render(request, "register.html")
 # =========================
 # 🔐 LOGIN
 # =========================
 
+<<<<<<< HEAD
 def user_login(request):
     if request.method == "POST":
         email = request.POST.get("email").strip().lower()
@@ -118,6 +152,32 @@ def user_login(request):
 
         except User.DoesNotExist:
             messages.error(request, "No account exists with this email.")
+=======
+
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user:
+            login(request, user)
+
+            # 🔥 set online
+            user.profile.is_online = True
+            user.profile.save()
+
+            # 🔥 ROLE REDIRECT
+            if user.profile.user_type == "farmer":
+                return redirect("farmer_dashboard")
+            else:
+                return redirect("marketplace")
+
+        else:
+            messages.error(request, "Invalid username or password")
+            return redirect("login")
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
 
     return render(request, "login.html")
 
@@ -171,7 +231,10 @@ def add_product(request):
         name = request.POST.get("name")
         price = request.POST.get("price")
         quantity = request.POST.get("quantity")
+<<<<<<< HEAD
         unit = request.POST.get("unit")
+=======
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         description = request.POST.get("description")
         image = request.FILES.get("image")
 
@@ -184,8 +247,12 @@ def add_product(request):
             name=name,
             description=description,
             price=float(price),
+<<<<<<< HEAD
             quantity=float(quantity),
             unit=unit,
+=======
+            quantity=int(quantity),
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
             image=image
         )
 
@@ -277,6 +344,7 @@ def add_to_cart(request, id):
 
     return redirect('cart')
 
+<<<<<<< HEAD
 @login_required
 def checkout(request):
 
@@ -344,6 +412,29 @@ def checkout(request):
             "total": total,
         }
     )
+=======
+
+@login_required
+def checkout(request):
+    cart_items = Cart.objects.filter(user=request.user)
+
+    if not cart_items.exists():
+        return redirect('marketplace')
+
+    for item in cart_items:
+        Order.objects.create(
+            buyer=request.user,
+            product=item.product,
+            quantity=item.quantity,
+            total_price=item.product.price * item.quantity,
+            status="Pending"
+        )
+
+    # clear cart after checkout
+    cart_items.delete()
+
+    return render(request, "success.html")
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
 
 
 
@@ -392,7 +483,11 @@ def edit_product(request, id):
         product.description = request.POST.get("description")
         product.price = request.POST.get("price")
         product.quantity = request.POST.get("quantity")
+<<<<<<< HEAD
         product.unit = request.POST.get("unit")
+=======
+
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         if request.FILES.get("image"):
             product.image = request.FILES.get("image")
 
@@ -415,6 +510,7 @@ def delete_product(request, id):
 
 @login_required
 def orders(request):
+<<<<<<< HEAD
     orders = (
         Order.objects
         .filter(buyer=request.user)
@@ -491,3 +587,6 @@ def payment_page(request, order_id):
         }
     )
 
+=======
+    return render(request, "orders.html")
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc

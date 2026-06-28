@@ -28,8 +28,11 @@ urlpatterns = [
     path('chat/<int:room_id>/', views.chat_room, name='chat_room'),
     path('product/edit/<int:id>/', views.edit_product, name='edit_product'),
     path('product/delete/<int:id>/', views.delete_product, name='delete_product'),
+<<<<<<< HEAD
     path("remove-from-cart/<int:id>/", views.remove_from_cart, name="remove_from_cart"),
     path("farmer/orders/",views.farmer_orders,name="farmer_orders"),
     path("order/update/<int:id>/<str:status>/",views.update_order_status,name="update_order_status"),
     path('payment/<int:order_id>/',views.payment_page, name='payment_page'),
+=======
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
 ]

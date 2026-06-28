@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+<<<<<<< HEAD
        /*=========================================
         GOOGLE FONT
 =========================================*/
@@ -515,6 +516,231 @@
             font-size:22px;
         }
 
+=======
+        /* ==========================
+           RESET
+        ========================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* ==========================
+           NAVBAR
+        ========================== */
+        .navbar {
+            background: #2e7d32;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* ==========================
+           CONTAINER
+        ========================== */
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .page-title {
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        /* ==========================
+           CART TABLE
+        ========================== */
+        .cart-box {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f1f5f9;
+            text-align: left;
+            padding: 15px;
+            font-size: 15px;
+        }
+
+        td {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-info img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #eee;
+        }
+
+        .qty {
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        .price {
+            font-weight: bold;
+        }
+
+        .subtotal {
+            font-weight: bold;
+            color: #1565c0;
+        }
+
+        /* ==========================
+           SUMMARY
+        ========================== */
+        .summary {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        }
+
+        .summary h3 {
+            margin-bottom: 15px;
+        }
+
+        .total {
+            font-size: 24px;
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* ==========================
+           BUTTONS
+        ========================== */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .checkout-btn {
+            background: #2e7d32;
+        }
+
+        .checkout-btn:hover {
+            background: #1b5e20;
+        }
+
+        .shop-btn {
+            background: #1565c0;
+        }
+
+        .shop-btn:hover {
+            background: #0d47a1;
+        }
+
+        .remove-btn {
+            background: #c62828;
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+
+        .remove-btn:hover {
+            background: #a81e1e;
+        }
+
+        /* ==========================
+           EMPTY CART
+        ========================== */
+        .empty {
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        }
+
+        .empty h3 {
+            margin-bottom: 15px;
+            color: #666;
+        }
+
+        /* ==========================
+           RESPONSIVE
+        ========================== */
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+                width: 100%;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tr {
+                border-bottom: 1px solid #eee;
+                padding: 15px;
+            }
+
+            td {
+                border: none;
+                padding: 8px 0;
+            }
+
+            .product-info {
+                flex-direction: row;
+            }
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         }
     </style>
 </head>
@@ -546,6 +772,7 @@
     <div class="cart-box">
 
         <table>
+<<<<<<< HEAD
 
             <thead>
 
@@ -557,11 +784,22 @@
                     <th>Action</th>
                 </tr>
 
+=======
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
             </thead>
 
             <tbody>
 
             {% for item in cart %}
+<<<<<<< HEAD
 
                 <tr>
 
@@ -620,16 +858,55 @@
 
             </tbody>
 
+=======
+                <tr>
+
+                    <td>
+                        <div class="product-info">
+                            <img src="{{ item.product.image.url }}" alt="">
+                            <div>
+                                <strong>{{ item.product.name }}</strong>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="price">
+                        ₦{{ item.product.price }}
+                    </td>
+
+                    <td class="qty">
+                        {{ item.quantity }}
+                    </td>
+
+                    <td class="subtotal">
+                        ₦{{ item.subtotal }}
+                    </td>
+
+                    <td>
+                        <a href="/remove-from-cart/{{ item.product.id }}/" class="btn remove-btn">
+                            Remove
+                        </a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+
+            </tbody>
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         </table>
 
     </div>
 
     <!-- SUMMARY -->
+<<<<<<< HEAD
 
+=======
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
     <div class="summary">
 
         <h3>Order Summary</h3>
 
+<<<<<<< HEAD
         <hr>
 
         <p>
@@ -644,6 +921,10 @@
 
             Total: ₦{{ total }}
 
+=======
+        <p class="total">
+            Total: ₦{{ total }}
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         </p>
 
         <div class="btn-group">
@@ -662,6 +943,7 @@
 
     {% else %}
 
+<<<<<<< HEAD
     <div class="empty">
 
         <h3>Your cart is empty 🛒</h3>
@@ -676,6 +958,15 @@
             Start Shopping
         </a>
 
+=======
+    <!-- EMPTY CART -->
+    <div class="empty">
+        <h3>Your cart is empty 🛒</h3>
+
+        <a href="/marketplace/" class="btn shop-btn">
+            Start Shopping
+        </a>
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
     </div>
 
     {% endif %}

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+<<<<<<< HEAD
        /*=========================================
         GOOGLE FONT
 =========================================*/
@@ -405,6 +406,162 @@
             min-width:unset;
         }
 
+=======
+        /* ==========================
+           RESET
+        ========================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9, #f4f6f9);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==========================
+           NAVBAR
+        ========================== */
+        .navbar {
+            background: #2e7d32;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* ==========================
+           MAIN
+        ========================== */
+        .wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+        }
+
+        .success-card {
+            background: white;
+            width: 100%;
+            max-width: 550px;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin: 0 auto 20px;
+        }
+
+        .success-card h1 {
+            font-size: 30px;
+            color: #2e7d32;
+            margin-bottom: 12px;
+        }
+
+        .success-card p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* ==========================
+           BUTTONS
+        ========================== */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: white;
+            padding: 13px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: inline-block;
+            min-width: 180px;
+        }
+
+        .primary-btn {
+            background: #2e7d32;
+        }
+
+        .primary-btn:hover {
+            background: #1b5e20;
+        }
+
+        .secondary-btn {
+            background: #1565c0;
+        }
+
+        .secondary-btn:hover {
+            background: #0d47a1;
+        }
+
+        /* ==========================
+           FOOTER NOTE
+        ========================== */
+        .note {
+            margin-top: 22px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        /* ==========================
+           RESPONSIVE
+        ========================== */
+        @media (max-width: 600px) {
+            .success-card {
+                padding: 30px 20px;
+            }
+
+            .success-card h1 {
+                font-size: 24px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+>>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         }
     </style>
 </head>
