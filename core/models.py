@@ -3,6 +3,9 @@ from django.db import models
 from django.utils import timezone
 
 
+# ======================
+# 👤 PROFILE
+# ======================
 class Profile(models.Model):
     USER_TYPE = (
         ('farmer', 'Farmer'),
@@ -40,6 +43,7 @@ class Profile(models.Model):
         else:
             return f"Last seen {int(seconds // 86400)} day(s) ago"
 
+
 # ======================
 # 🌾 PRODUCT
 # ======================
@@ -48,7 +52,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     price = models.FloatField()
-<<<<<<< HEAD
+
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
 
     unit = models.CharField(
@@ -65,9 +69,7 @@ class Product(models.Model):
         ],
         default='kg',
     )
-=======
-    quantity = models.IntegerField()
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
+
     image = models.ImageField(upload_to='products/')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -94,21 +96,11 @@ class Cart(models.Model):
 # ======================
 # 📦 ORDER
 # ======================
-<<<<<<< HEAD
-# ======================
-# 📦 ORDER
-# ======================
-
 class Order(models.Model):
-
-=======
-class Order(models.Model):
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
     STATUS = (
         ('Pending', 'Pending'),
         ('Processing', 'Processing'),
         ('Delivered', 'Delivered'),
-<<<<<<< HEAD
         ('Completed', 'Completed'),
         ('Cancelled', 'Cancelled'),
     )
@@ -119,10 +111,7 @@ class Order(models.Model):
         ('Failed', 'Failed'),
     )
 
-    buyer = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE
-    )
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE)
 
     total_price = models.FloatField(default=0)
 
@@ -144,13 +133,10 @@ class Order(models.Model):
         return f"Order #{self.id} - {self.buyer.username}"
 
 
-
 # ======================
 # 📦 ORDER ITEM
 # ======================
-
 class OrderItem(models.Model):
-
     order = models.ForeignKey(
         Order,
         on_delete=models.CASCADE,
@@ -175,27 +161,23 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.product.name} ({self.quantity})"
-=======
-    )
-
-    buyer = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-    total_price = models.FloatField()
-    status = models.CharField(max_length=50, choices=STATUS, default='Pending')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Order by {self.buyer.username}"
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
 
 
 # ======================
 # 💬 CHAT ROOM
 # ======================
 class ChatRoom(models.Model):
-    farmer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='farmer_rooms')
-    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer_rooms')
+    farmer = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='farmer_rooms'
+    )
+
+    buyer = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='buyer_rooms'
+    )
 
     def __str__(self):
         return f"{self.farmer.username} & {self.buyer.username}"
@@ -206,19 +188,25 @@ class ChatRoom(models.Model):
 # ======================
 class Message(models.Model):
     room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
+
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
 
     message = models.TextField(blank=True, null=True)
-    file = models.FileField(upload_to="chat_files/", blank=True, null=True)
+
+    file = models.FileField(
+        upload_to="chat_files/",
+        blank=True,
+        null=True
+    )
 
     is_read = models.BooleanField(default=False)
+
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.sender.username}: {self.message[:20] if self.message else 'file'}"
 
     class Meta:
-<<<<<<< HEAD
         ordering = ['timestamp']
 
 
@@ -257,6 +245,3 @@ class DeliveryDetails(models.Model):
 
     def __str__(self):
         return f"Delivery for Order #{self.order.id}"
-=======
-        ordering = ['timestamp']
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc

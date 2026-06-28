@@ -1,20 +1,21 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate, logout
 from django.db.models import Q
-from django.shortcuts import redirect, get_object_or_404
-from .models import Product, Cart, Order, Profile, ChatRoom, Message
-from django.contrib.auth import login, authenticate
 from django.utils import timezone
-from django.contrib.auth import logout
-<<<<<<< HEAD
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Cart, Order, OrderItem, DeliveryDetails
-=======
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
 
+from .models import (
+    Product,
+    Cart,
+    Order,
+    OrderItem,
+    DeliveryDetails,
+    Profile,
+    ChatRoom,
+    Message,
+)
 
 
 # =========================
@@ -29,21 +30,14 @@ def landing(request):
 # =========================
 def register(request):
     if request.method == "POST":
-        full_name = request.POST.get('full_name')
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        location = request.POST.get('location')
-        user_type = request.POST.get('user_type')
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
-
-<<<<<<< HEAD
-        print("Username:", username)
-        print("Email:", email)
-        print("User Type:", user_type)
-        print("Password1:", password1)
-        print("Password2:", password2)
+        full_name = request.POST.get("full_name")
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        phone = request.POST.get("phone")
+        location = request.POST.get("location")
+        user_type = request.POST.get("user_type")
+        password1 = request.POST.get("password1")
+        password2 = request.POST.get("password2")
 
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
@@ -54,18 +48,9 @@ def register(request):
             return render(request, "register.html")
 
         if User.objects.filter(email=email).exists():
-            messages.error(request, "Email already exists")
-            return render("register.html")
+            messages.error(request, "Email already exists.")
+            return render(request, "register.html")
 
-=======
-        if password1 != password2:
-            return redirect('register')
-
-        if User.objects.filter(username=username).exists():
-            return redirect('register')
-
-        # ✅ CREATE USER
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         user = User.objects.create_user(
             username=username,
             email=email,
@@ -75,59 +60,36 @@ def register(request):
         user.first_name = full_name
         user.save()
 
-<<<<<<< HEAD
         profile = Profile.objects.create(
             user=user,
             user_type=user_type,
             phone=phone,
             location=location
         )
+
         messages.success(request, "Account created successfully.")
 
         login(request, user)
 
-        print("Registration successful!")
-
         if profile.user_type == "farmer":
             return redirect("farmer_dashboard")
         else:
             return redirect("marketplace")
-=======
-        # ✅ GET PROFILE FROM SIGNAL (important safety check)
-        profile = user.profile
-        profile.user_type = user_type
-        profile.phone = phone
-        profile.location = location
-        profile.save()
-
-        # 🔐 LOGIN USER
-        login(request, user)
-
-        # 🔥 FORCE ROLE REDIRECT
-        if profile.user_type == "farmer":
-            return redirect("farmer_dashboard")
-        elif profile.user_type == "buyer":
-            return redirect("marketplace")
-        else:
-            return redirect("login")
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
 
     return render(request, "register.html")
+
+
 # =========================
 # 🔐 LOGIN
 # =========================
-
-<<<<<<< HEAD
 def user_login(request):
     if request.method == "POST":
         email = request.POST.get("email").strip().lower()
         password = request.POST.get("password")
 
         try:
-            # Find user using email
             user_obj = User.objects.get(email__iexact=email)
 
-            # Authenticate using username
             user = authenticate(
                 request,
                 username=user_obj.username,
@@ -140,7 +102,10 @@ def user_login(request):
                 user.profile.is_online = True
                 user.profile.save()
 
-                messages.success(request, f"Welcome back, {user.first_name}!")
+                messages.success(
+                    request,
+                    f"Welcome back, {user.first_name}!"
+                )
 
                 if user.profile.user_type == "farmer":
                     return redirect("farmer_dashboard")
@@ -152,39 +117,13 @@ def user_login(request):
 
         except User.DoesNotExist:
             messages.error(request, "No account exists with this email.")
-=======
-
-def user_login(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(request, username=username, password=password)
-
-        if user:
-            login(request, user)
-
-            # 🔥 set online
-            user.profile.is_online = True
-            user.profile.save()
-
-            # 🔥 ROLE REDIRECT
-            if user.profile.user_type == "farmer":
-                return redirect("farmer_dashboard")
-            else:
-                return redirect("marketplace")
-
-        else:
-            messages.error(request, "Invalid username or password")
-            return redirect("login")
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
 
     return render(request, "login.html")
+
 
 # =========================
 # 🚪 LOGOUT
 # =========================
-
 def user_logout(request):
     if request.user.is_authenticated:
         profile = request.user.profile
@@ -194,6 +133,7 @@ def user_logout(request):
 
     logout(request)
     return redirect("landing")
+
 
 # =========================
 # 🌾 FARMER DASHBOARD
@@ -205,10 +145,7 @@ def farmer_dashboard(request):
 
     products = Product.objects.filter(farmer=request.user)
 
-    # 💰 TOTAL VALUE (price only, NO quantity)
     total_value = sum(p.price for p in products)
-
-    # 📦 TOTAL PRODUCTS
     total_products = products.count()
 
     return render(request, "farmer_dashboard.html", {
@@ -231,15 +168,15 @@ def add_product(request):
         name = request.POST.get("name")
         price = request.POST.get("price")
         quantity = request.POST.get("quantity")
-<<<<<<< HEAD
         unit = request.POST.get("unit")
-=======
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         description = request.POST.get("description")
         image = request.FILES.get("image")
 
-        # 🚨 PREVENT DUPLICATE (same farmer + same name)
-        if Product.objects.filter(farmer=request.user, name=name).exists():
+        if Product.objects.filter(
+            farmer=request.user,
+            name=name
+        ).exists():
+            messages.warning(request, "You already added this product.")
             return redirect("farmer_dashboard")
 
         Product.objects.create(
@@ -247,20 +184,19 @@ def add_product(request):
             name=name,
             description=description,
             price=float(price),
-<<<<<<< HEAD
             quantity=float(quantity),
             unit=unit,
-=======
-            quantity=int(quantity),
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
             image=image
         )
 
+        messages.success(request, "Product added successfully.")
         return redirect("farmer_dashboard")
 
     return render(request, "add_product.html")
+
+
 # =========================
-# 🛒 MARKETPLACE (SEARCH + FILTER)
+# 🛒 MARKETPLACE
 # =========================
 def marketplace(request):
     query = (request.GET.get("q") or "").strip()
@@ -269,14 +205,12 @@ def marketplace(request):
 
     products = Product.objects.all().order_by("-created_at")
 
-    # 🔍 SEARCH
     if query:
         products = products.filter(
             Q(name__icontains=query) |
             Q(description__icontains=query)
         )
 
-    # 💰 PRICE FILTER (SAFE)
     if min_price:
         try:
             products = products.filter(price__gte=float(min_price))
@@ -289,7 +223,6 @@ def marketplace(request):
         except (ValueError, TypeError):
             pass
 
-    # 👤 SAFE USER ROLE HANDLING
     user_type = None
 
     if request.user.is_authenticated:
@@ -303,6 +236,10 @@ def marketplace(request):
         "query": query
     })
 
+
+# =========================
+# 📦 PRODUCTS
+# =========================
 def products(request):
     query = request.GET.get("q")
     products = Product.objects.all()
@@ -318,6 +255,10 @@ def products(request):
     })
 
 
+# =========================
+# 🛒 VIEW CART
+# =========================
+@login_required
 def view_cart(request):
     cart_items = Cart.objects.filter(user=request.user)
 
@@ -329,10 +270,13 @@ def view_cart(request):
     })
 
 
+# =========================
+# ➕ ADD TO CART
+# =========================
+@login_required
 def add_to_cart(request, id):
     product = get_object_or_404(Product, id=id)
 
-    # check if item already exists in cart
     cart_item, created = Cart.objects.get_or_create(
         user=request.user,
         product=product
@@ -342,9 +286,11 @@ def add_to_cart(request, id):
         cart_item.quantity += 1
         cart_item.save()
 
-    return redirect('cart')
-
-<<<<<<< HEAD
+    messages.success(request, "Product added to cart.")
+    return redirect("cart")
+# =========================
+# 🛒 CHECKOUT
+# =========================
 @login_required
 def checkout(request):
 
@@ -383,9 +329,8 @@ def checkout(request):
             notes=notes,
         )
 
-        # Move Cart Items to Order Items
+        # Create Order Items
         for item in cart_items:
-
             OrderItem.objects.create(
                 order=order,
                 product=item.product,
@@ -395,126 +340,114 @@ def checkout(request):
                 subtotal=item.total_price,
             )
 
-        # Empty Cart
+        # Clear Cart
         cart_items.delete()
-        from django.urls import reverse
-
-        print("Order ID:", order.id)
-        print("Redirect URL:", reverse("payment_page", kwargs={"order_id": order.id}))
 
         return redirect("payment_page", order_id=order.id)
 
-    return render(
-        request,
-        "checkout.html",
-        {
-            "cart": cart_items,
-            "total": total,
-        }
-    )
-=======
-
-@login_required
-def checkout(request):
-    cart_items = Cart.objects.filter(user=request.user)
-
-    if not cart_items.exists():
-        return redirect('marketplace')
-
-    for item in cart_items:
-        Order.objects.create(
-            buyer=request.user,
-            product=item.product,
-            quantity=item.quantity,
-            total_price=item.product.price * item.quantity,
-            status="Pending"
-        )
-
-    # clear cart after checkout
-    cart_items.delete()
-
-    return render(request, "success.html")
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
+    return render(request, "checkout.html", {
+        "cart": cart_items,
+        "total": total,
+    })
 
 
-
+# =========================
+# 💬 START CHAT
+# =========================
 @login_required
 def start_chat(request, farmer_id):
     farmer = get_object_or_404(User, id=farmer_id)
 
-    # prevent self-chat
     if request.user == farmer:
-        return redirect('marketplace')
+        return redirect("marketplace")
 
-    # create or get chat room
     room, created = ChatRoom.objects.get_or_create(
         farmer=farmer,
         buyer=request.user
     )
 
-    return redirect('chat_room', room.id)
+    return redirect("chat_room", room.id)
 
+
+# =========================
+# 💬 CHAT ROOM
+# =========================
 @login_required
 def chat_room(request, room_id):
     room = get_object_or_404(ChatRoom, id=room_id)
 
-    messages = Message.objects.filter(room=room).order_by('timestamp')
+    messages = Message.objects.filter(room=room).order_by("timestamp")
 
     return render(request, "chat.html", {
         "room": room,
         "messages": messages
     })
 
+
+# =========================
+# 📦 PRODUCT DETAIL
+# =========================
 def product_detail(request, id):
     product = get_object_or_404(Product, id=id)
 
     return render(request, "product_detail.html", {
         "product": product
     })
+
+
+# =========================
+# ✏️ EDIT PRODUCT
+# =========================
 @login_required
 def edit_product(request, id):
     product = get_object_or_404(Product, id=id)
 
     if request.user != product.farmer:
-        return redirect('farmer_dashboard')
+        return redirect("farmer_dashboard")
 
     if request.method == "POST":
         product.name = request.POST.get("name")
         product.description = request.POST.get("description")
         product.price = request.POST.get("price")
         product.quantity = request.POST.get("quantity")
-<<<<<<< HEAD
         product.unit = request.POST.get("unit")
-=======
 
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         if request.FILES.get("image"):
             product.image = request.FILES.get("image")
 
         product.save()
-        return redirect('farmer_dashboard')
+
+        messages.success(request, "Product updated successfully.")
+        return redirect("farmer_dashboard")
 
     return render(request, "edit_product.html", {
         "product": product
     })
 
 
+# =========================
+# 🗑 DELETE PRODUCT
+# =========================
 @login_required
 def delete_product(request, id):
     product = get_object_or_404(Product, id=id)
 
     if request.user == product.farmer:
         product.delete()
+        messages.success(request, "Product deleted successfully.")
 
-    return redirect('farmer_dashboard')
+    return redirect("farmer_dashboard")
 
+
+# =========================
+# 📦 BUYER ORDERS
+# =========================
 @login_required
 def orders(request):
-<<<<<<< HEAD
     orders = (
         Order.objects
         .filter(buyer=request.user)
-        .select_related("product")
+        .prefetch_related("items__product")
         .order_by("-created_at")
     )
 
@@ -522,6 +455,10 @@ def orders(request):
         "orders": orders
     })
 
+
+# =========================
+# ❌ REMOVE FROM CART
+# =========================
 @login_required
 def remove_from_cart(request, id):
     product = get_object_or_404(Product, id=id)
@@ -531,45 +468,53 @@ def remove_from_cart(request, id):
         product=product
     ).delete()
 
+    messages.success(request, "Item removed from cart.")
     return redirect("cart")
 
 
-from django.contrib.auth.decorators import login_required
-from .models import Order
-
+# =========================
+# 🌾 FARMER ORDERS
+# =========================
 @login_required
 def farmer_orders(request):
 
-    orders = Order.objects.filter(
-        product__farmer=request.user
-    ).select_related(
-        "buyer",
-        "product"
-    ).order_by("-created_at")
-
-    return render(
-        request,
-        "farmer_orders.html",
-        {
-            "orders": orders
-        }
+    orders = (
+        Order.objects
+        .filter(items__farmer=request.user)
+        .distinct()
+        .prefetch_related("items__product", "items__farmer")
+        .select_related("buyer")
+        .order_by("-created_at")
     )
 
+    return render(request, "farmer_orders.html", {
+        "orders": orders
+    })
+
+
+# =========================
+# 🔄 UPDATE ORDER STATUS
+# =========================
 @login_required
 def update_order_status(request, id, status):
 
     order = get_object_or_404(
         Order,
         id=id,
-        product__farmer=request.user
+        items__farmer=request.user
     )
 
-    if status in ["Pending", "Processing", "Delivered"]:
+    if status in ["Pending", "Processing", "Delivered", "Completed", "Cancelled"]:
         order.status = status
         order.save()
+        messages.success(request, "Order status updated successfully.")
 
     return redirect("farmer_orders")
 
+
+# =========================
+# 💳 PAYMENT PAGE
+# =========================
 @login_required
 def payment_page(request, order_id):
 
@@ -579,14 +524,6 @@ def payment_page(request, order_id):
         buyer=request.user
     )
 
-    return render(
-        request,
-        "payment.html",
-        {
-            "order": order,
-        }
-    )
-
-=======
-    return render(request, "orders.html")
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
+    return render(request, "payment.html", {
+        "order": order
+    })
