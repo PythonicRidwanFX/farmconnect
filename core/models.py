@@ -133,9 +133,6 @@ class Order(models.Model):
         return f"Order #{self.id} - {self.buyer.username}"
 
 
-# ======================
-# 📦 ORDER ITEM
-# ======================
 class OrderItem(models.Model):
     order = models.ForeignKey(
         Order,
@@ -162,10 +159,6 @@ class OrderItem(models.Model):
     def __str__(self):
         return f"{self.product.name} ({self.quantity})"
 
-
-# ======================
-# 💬 CHAT ROOM
-# ======================
 class ChatRoom(models.Model):
     farmer = models.ForeignKey(
         User,

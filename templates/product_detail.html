@@ -703,17 +703,14 @@
             .price {
                 font-size: 24px;
             }
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         }
     </style>
 </head>
 
 <body>
 
-<!-- ===============================
-     NAVBAR
-================================ -->
 <div class="navbar">
+
     <h2>🌾 FarmConnect</h2>
 
     <div class="nav-links">
@@ -721,71 +718,97 @@
         <a href="/cart/">Cart</a>
         <a href="/">Home</a>
     </div>
+
 </div>
 
-<!-- ===============================
-     PRODUCT DETAILS
-================================ -->
 <div class="container">
 
     <div class="product-card">
 
         <!-- IMAGE -->
+
         <div class="image-section">
 
-            <img
-                src="{{ product.image.url }}"
-                alt="{{ product.name }}"
-                class="main-image"
-                onclick="openModal()"
-            >
+            {% if product.image %}
 
+                <img
+                    src="{{ product.image.url }}"
+                    alt="{{ product.name }}"
+                    class="main-image"
+                    onclick="openModal()"
+                >
 
-=======
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
+            {% else %}
+
+                <img
+                    src="https://via.placeholder.com/600x500?text=No+Image"
+                    alt="No Image"
+                    class="main-image"
+                >
+
+            {% endif %}
+
         </div>
 
         <!-- DETAILS -->
+
         <div class="details">
 
             <h1>{{ product.name }}</h1>
 
             <p class="price">
+
                 ₦{{ product.price }}
+
             </p>
 
             <p class="stock">
+
                 <strong>Available Quantity:</strong>
-                {{ product.quantity }} {{ product.get_unit_display }}
+
+                {{ product.quantity }}
+                {{ product.get_unit_display }}
+
             </p>
 
             <p class="stock">
+
                 <strong>Farmer:</strong>
+
                 {{ product.farmer.username }}
+
             </p>
 
             <p class="stock">
-                <strong>Date Added:</strong>
-                {{ product.created_at|date:"d M Y" }}
-=======
-            <p class="price">₦{{ product.price }}</p>
 
-            <p class="stock">
-                <strong>Available Quantity:</strong> {{ product.quantity }}
+                <strong>Date Added:</strong>
+
+                {{ product.created_at|date:"d M Y" }}
+
             </p>
 
             <p class="desc">
+
                 {{ product.description }}
+
             </p>
 
             <div class="btn-group">
 
-                <a class="btn cart-btn" href="/add-to-cart/{{ product.id }}/">
+                <a
+                    class="btn cart-btn"
+                    href="/add-to-cart/{{ product.id }}/">
+
                     🛒 Add to Cart
+
                 </a>
 
-                <a class="btn chat-btn" href="/chat/start/{{ product.farmer.id }}/">
+                <a
+                    class="btn chat-btn"
+                    href="/chat/start/{{ product.farmer.id }}/">
+
                     💬 Chat Farmer
+
                 </a>
 
             </div>
@@ -796,25 +819,50 @@
 
 </div>
 
-<!-- ===============================
-     IMAGE VIEW MODAL
-================================ -->
+<!-- IMAGE MODAL -->
+
 <div id="imgModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img src="{{ product.image.url }}">
+
+    <span class="close" onclick="closeModal()">
+
+        &times;
+
+    </span>
+
+    {% if product.image %}
+
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+
+    {% endif %}
+
 </div>
 
-<!-- ===============================
-     SCRIPT
-================================ -->
 <script>
+
 function openModal() {
+
     document.getElementById("imgModal").style.display = "block";
+
 }
 
 function closeModal() {
+
     document.getElementById("imgModal").style.display = "none";
+
 }
+
+window.onclick = function(event){
+
+    const modal = document.getElementById("imgModal");
+
+    if(event.target == modal){
+
+        modal.style.display = "none";
+
+    }
+
+}
+
 </script>
 
 </body>

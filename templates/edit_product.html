@@ -411,16 +411,14 @@
 
     <div class="card">
 
-
         <h2>Edit Product ✏️</h2>
-        <h2>Edit Product ✏</h2>
-
 
         <form method="POST" enctype="multipart/form-data">
+
             {% csrf_token %}
 
-
             <label>Product Name</label>
+
             <input
                 type="text"
                 name="name"
@@ -429,6 +427,7 @@
             >
 
             <label>Description</label>
+
             <textarea
                 name="description"
                 rows="5"
@@ -436,6 +435,7 @@
             >{{ product.description }}</textarea>
 
             <label>Price (₦)</label>
+
             <input
                 type="number"
                 name="price"
@@ -460,37 +460,21 @@
 
                 <select name="unit" required>
 
-                    <option value="kg" {% if product.unit == "kg" %}selected{% endif %}>
-                        Kilogram (Kg)
-                    </option>
+                    <option value="kg" {% if product.unit == "kg" %}selected{% endif %}>Kilogram (Kg)</option>
 
-                    <option value="bag" {% if product.unit == "bag" %}selected{% endif %}>
-                        Bag
-                    </option>
+                    <option value="bag" {% if product.unit == "bag" %}selected{% endif %}>Bag</option>
 
-                    <option value="basket" {% if product.unit == "basket" %}selected{% endif %}>
-                        Basket
-                    </option>
+                    <option value="basket" {% if product.unit == "basket" %}selected{% endif %}>Basket</option>
 
-                    <option value="crate" {% if product.unit == "crate" %}selected{% endif %}>
-                        Crate
-                    </option>
+                    <option value="crate" {% if product.unit == "crate" %}selected{% endif %}>Crate</option>
 
-                    <option value="piece" {% if product.unit == "piece" %}selected{% endif %}>
-                        Piece
-                    </option>
+                    <option value="piece" {% if product.unit == "piece" %}selected{% endif %}>Piece</option>
 
-                    <option value="dozen" {% if product.unit == "dozen" %}selected{% endif %}>
-                        Dozen
-                    </option>
+                    <option value="dozen" {% if product.unit == "dozen" %}selected{% endif %}>Dozen</option>
 
-                    <option value="litre" {% if product.unit == "litre" %}selected{% endif %}>
-                        Litre
-                    </option>
+                    <option value="litre" {% if product.unit == "litre" %}selected{% endif %}>Litre</option>
 
-                    <option value="ton" {% if product.unit == "ton" %}selected{% endif %}>
-                        Ton
-                    </option>
+                    <option value="ton" {% if product.unit == "ton" %}selected{% endif %}>Ton</option>
 
                 </select>
 
@@ -500,35 +484,36 @@
 
             <div style="margin-bottom:20px;">
 
-                <img
-                    src="{{ product.image.url }}"
-                    alt="{{ product.name }}"
-                    width="150"
-                    style="border-radius:12px; border:1px solid #ddd;"
-                >
+                {% if product.image %}
+
+                    <img
+                        src="{{ product.image.url }}"
+                        alt="{{ product.name }}"
+                        width="150"
+                        style="border-radius:12px;border:1px solid #ddd;"
+                    >
+
+                {% else %}
+
+                    <p>No image uploaded.</p>
+
+                {% endif %}
 
             </div>
 
             <label>Change Image (Optional)</label>
-            <input type="file" name="image">
+
+            <input
+                type="file"
+                name="image"
+            >
 
             <button type="submit">
-                Update Product 🚀
+
+                🚀 Update Product
+
             </button>
 
-=======
-            <input type="text" name="name" value="{{ product.name }}">
-            <textarea name="description">{{ product.description }}</textarea>
-            <input type="number" name="price" value="{{ product.price }}">
-            <input type="number" name="quantity" value="{{ product.quantity }}">
-
-            <p>Current Image:</p>
-            <img src="{{ product.image.url }}" width="100">
-
-            <input type="file" name="image">
-
-            <button type="submit">Update Product</button>
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         </form>
 
     </div>

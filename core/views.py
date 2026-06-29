@@ -24,18 +24,20 @@ from .models import (
 def landing(request):
     return render(request, "landing.html")
 
-
+# =========================
+# 📝 REGISTER
+# =========================
 # =========================
 # 📝 REGISTER
 # =========================
 def register(request):
     if request.method == "POST":
-        full_name = request.POST.get("full_name")
-        username = request.POST.get("username")
-        email = request.POST.get("email")
-        phone = request.POST.get("phone")
-        location = request.POST.get("location")
-        user_type = request.POST.get("user_type")
+        full_name = request.POST.get("full_name", "").strip()
+        username = request.POST.get("username", "").strip()
+        email = request.POST.get("email", "").strip().lower()
+        phone = request.POST.get("phone", "").strip()
+        location = request.POST.get("location", "").strip()
+        user_type = request.POST.get("user_type", "").strip()
         password1 = request.POST.get("password1")
         password2 = request.POST.get("password2")
 
@@ -51,6 +53,7 @@ def register(request):
             messages.error(request, "Email already exists.")
             return render(request, "register.html")
 
+        # Create the user
         user = User.objects.create_user(
             username=username,
             email=email,
@@ -60,21 +63,22 @@ def register(request):
         user.first_name = full_name
         user.save()
 
-        profile = Profile.objects.create(
-            user=user,
-            user_type=user_type,
-            phone=phone,
-            location=location
-        )
-
-        messages.success(request, "Account created successfully.")
+        # The profile was already created by signals.py
+        profile = user.profile
+        profile.user_type = user_type
+        profile.phone = phone
+        profile.location = location
+        profile.is_online = True
+        profile.save()
 
         login(request, user)
 
+        messages.success(request, "Account created successfully.")
+
         if profile.user_type == "farmer":
             return redirect("farmer_dashboard")
-        else:
-            return redirect("marketplace")
+
+        return redirect("marketplace")
 
     return render(request, "register.html")
 
@@ -84,36 +88,42 @@ def register(request):
 # =========================
 def user_login(request):
     if request.method == "POST":
-        email = request.POST.get("email").strip().lower()
+        email = request.POST.get("email", "").strip().lower()
         password = request.POST.get("password")
 
         try:
             user_obj = User.objects.get(email__iexact=email)
 
             user = authenticate(
-                request,
+                request=request,
                 username=user_obj.username,
                 password=password
             )
 
-            if user is not None:
-                login(request, user)
-
-                user.profile.is_online = True
-                user.profile.save()
-
-                messages.success(
-                    request,
-                    f"Welcome back, {user.first_name}!"
-                )
-
-                if user.profile.user_type == "farmer":
-                    return redirect("farmer_dashboard")
-                else:
-                    return redirect("marketplace")
-
-            else:
+            if user is None:
                 messages.error(request, "Incorrect password.")
+                return render(request, "login.html")
+
+            login(request, user)
+
+            profile, created = Profile.objects.get_or_create(
+                user=user,
+                defaults={
+                    "user_type": "buyer",
+                    "phone": "",
+                    "location": "",
+                }
+            )
+
+            profile.is_online = True
+            profile.save()
+
+            messages.success(request, f"Welcome back, {user.first_name}!")
+
+            if profile.user_type == "farmer":
+                return redirect("farmer_dashboard")
+            else:
+                return redirect("marketplace")
 
         except User.DoesNotExist:
             messages.error(request, "No account exists with this email.")
@@ -124,67 +134,89 @@ def user_login(request):
 # =========================
 # 🚪 LOGOUT
 # =========================
+# =========================
+# 🚪 LOGOUT
+# =========================
 def user_logout(request):
     if request.user.is_authenticated:
-        profile = request.user.profile
-        profile.is_online = False
-        profile.last_seen = timezone.now()
-        profile.save()
+        profile = Profile.objects.filter(user=request.user).first()
+
+        if profile:
+            profile.is_online = False
+            profile.last_seen = timezone.now()
+            profile.save()
 
     logout(request)
     return redirect("landing")
 
 
-# =========================
-# 🌾 FARMER DASHBOARD
-# =========================
 @login_required
 def farmer_dashboard(request):
-    if request.user.profile.user_type != "farmer":
+    # Safely get the user's profile
+    profile = Profile.objects.filter(user=request.user).first()
+
+    if profile is None:
+        return render(request, "error.html", {
+            "message": "No profile found for this user."
+        })
+
+    if profile.user_type != "farmer":
         return redirect("marketplace")
 
     products = Product.objects.filter(farmer=request.user)
 
-    total_value = sum(p.price for p in products)
+    total_value = sum(product.price for product in products)
     total_products = products.count()
 
-    return render(request, "farmer_dashboard.html", {
+    context = {
         "products": products,
         "total_value": total_value,
-        "total_products": total_products
-    })
+        "total_products": total_products,
+        "profile": profile,
+    }
 
+    return render(request, "farmer_dashboard.html", context)
 
-# =========================
-# ➕ ADD PRODUCT
-# =========================
 @login_required
 def add_product(request):
-    if request.user.profile.user_type != "farmer":
+    # only farmers allowed
+    if not hasattr(request.user, "profile") or request.user.profile.user_type != "farmer":
+        messages.error(request, "Only farmers can add products.")
         return redirect("marketplace")
 
     if request.method == "POST":
 
-        name = request.POST.get("name")
-        price = request.POST.get("price")
-        quantity = request.POST.get("quantity")
-        unit = request.POST.get("unit")
-        description = request.POST.get("description")
+        name = request.POST.get("name", "").strip()
+        price = request.POST.get("price", "").strip()
+        quantity = request.POST.get("quantity", "").strip()
+        unit = request.POST.get("unit", "").strip()
+        description = request.POST.get("description", "").strip()
         image = request.FILES.get("image")
 
-        if Product.objects.filter(
-            farmer=request.user,
-            name=name
-        ).exists():
+        # ✅ VALIDATION (IMPORTANT FIX)
+        if not name or not price or not quantity or not unit or not description:
+            messages.error(request, "All fields are required.")
+            return redirect("add_product")
+
+        try:
+            price = float(price)
+            quantity = float(quantity)
+        except ValueError:
+            messages.error(request, "Price and quantity must be valid numbers.")
+            return redirect("add_product")
+
+        # prevent duplicate product
+        if Product.objects.filter(farmer=request.user, name=name).exists():
             messages.warning(request, "You already added this product.")
             return redirect("farmer_dashboard")
 
+        # save product
         Product.objects.create(
             farmer=request.user,
             name=name,
             description=description,
-            price=float(price),
-            quantity=float(quantity),
+            price=price,
+            quantity=quantity,
             unit=unit,
             image=image
         )
@@ -428,7 +460,6 @@ def edit_product(request, id):
 # =========================
 # 🗑 DELETE PRODUCT
 # =========================
-@login_required
 def delete_product(request, id):
     product = get_object_or_404(Product, id=id)
 
@@ -438,10 +469,6 @@ def delete_product(request, id):
 
     return redirect("farmer_dashboard")
 
-
-# =========================
-# 📦 BUYER ORDERS
-# =========================
 @login_required
 def orders(request):
     orders = (
@@ -456,9 +483,6 @@ def orders(request):
     })
 
 
-# =========================
-# ❌ REMOVE FROM CART
-# =========================
 @login_required
 def remove_from_cart(request, id):
     product = get_object_or_404(Product, id=id)
@@ -472,9 +496,6 @@ def remove_from_cart(request, id):
     return redirect("cart")
 
 
-# =========================
-# 🌾 FARMER ORDERS
-# =========================
 @login_required
 def farmer_orders(request):
 

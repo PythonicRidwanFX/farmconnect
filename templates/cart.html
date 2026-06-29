@@ -7,9 +7,6 @@
 
     <style>
 
-       /*=========================================
-        GOOGLE FONT
-=========================================*/
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
         *{
@@ -28,10 +25,6 @@
 
             min-height:100vh;
         }
-
-        /*=========================================
-                NAVBAR
-        =========================================*/
 
         .navbar{
 
@@ -94,10 +87,6 @@
             transform:translateY(-2px);
         }
 
-        /*=========================================
-                CONTAINER
-        =========================================*/
-
         .container{
 
             width:min(1400px,92%);
@@ -116,10 +105,6 @@
             font-weight:700;
         }
 
-        /*=========================================
-                CART BOX
-        =========================================*/
-
         .cart-box{
 
             background:#fff;
@@ -130,10 +115,6 @@
 
             box-shadow:0 15px 40px rgba(0,0,0,.08);
         }
-
-        /*=========================================
-                TABLE
-        =========================================*/
 
         table{
 
@@ -175,10 +156,6 @@
 
             background:#fafafa;
         }
-
-        /*=========================================
-                PRODUCT
-        =========================================*/
 
         .product-info{
 
@@ -232,10 +209,6 @@
             font-size:18px;
         }
 
-        /*=========================================
-                SUMMARY
-        =========================================*/
-
         .summary{
 
             margin-top:30px;
@@ -268,10 +241,6 @@
 
             margin-bottom:25px;
         }
-
-        /*=========================================
-                BUTTONS
-        =========================================*/
 
         .btn-group{
 
@@ -341,10 +310,6 @@
             box-shadow:0 10px 20px rgba(198,40,40,.25);
         }
 
-        /*=========================================
-                EMPTY CART
-        =========================================*/
-
         .empty{
 
             background:#fff;
@@ -374,9 +339,6 @@
             margin-bottom:25px;
         }
 
-        /*=========================================
-                SCROLLBAR
-        =========================================*/
 
         ::-webkit-scrollbar{
 
@@ -395,9 +357,7 @@
             background:#eee;
         }
 
-        /*=========================================
-                TABLET
-        =========================================*/
+
 
         @media(max-width:992px){
 
@@ -407,10 +367,6 @@
         }
 
         }
-
-        /*=========================================
-                MOBILE
-        =========================================*/
 
         @media(max-width:768px){
 
@@ -490,10 +446,6 @@
 
         }
 
-        /*=========================================
-                SMALL MOBILE
-        =========================================*/
-
         @media(max-width:480px){
 
         .container{
@@ -515,11 +467,6 @@
 
             font-size:22px;
         }
-
-=======
-        /* ==========================
-           RESET
-        ========================== */
         * {
             margin: 0;
             padding: 0;
@@ -531,10 +478,6 @@
             background: #f4f6f9;
             color: #333;
         }
-
-        /* ==========================
-           NAVBAR
-        ========================== */
         .navbar {
             background: #2e7d32;
             color: white;
@@ -560,10 +503,6 @@
         .nav-links a:hover {
             opacity: 0.8;
         }
-
-        /* ==========================
-           CONTAINER
-        ========================== */
         .container {
             width: 92%;
             max-width: 1100px;
@@ -574,10 +513,6 @@
             margin-bottom: 20px;
             font-size: 28px;
         }
-
-        /* ==========================
-           CART TABLE
-        ========================== */
         .cart-box {
             background: white;
             border-radius: 12px;
@@ -630,10 +565,6 @@
             font-weight: bold;
             color: #1565c0;
         }
-
-        /* ==========================
-           SUMMARY
-        ========================== */
         .summary {
             margin-top: 20px;
             background: white;
@@ -652,10 +583,6 @@
             font-weight: bold;
             margin-bottom: 20px;
         }
-
-        /* ==========================
-           BUTTONS
-        ========================== */
         .btn-group {
             display: flex;
             gap: 12px;
@@ -697,10 +624,6 @@
         .remove-btn:hover {
             background: #a81e1e;
         }
-
-        /* ==========================
-           EMPTY CART
-        ========================== */
         .empty {
             background: white;
             padding: 40px;
@@ -713,10 +636,6 @@
             margin-bottom: 15px;
             color: #666;
         }
-
-        /* ==========================
-           RESPONSIVE
-        ========================== */
         @media (max-width: 768px) {
             table, thead, tbody, th, td, tr {
                 display: block;
@@ -740,16 +659,12 @@
             .product-info {
                 flex-direction: row;
             }
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         }
     </style>
 </head>
 
 <body>
 
-<!-- ==========================
-     NAVBAR
-========================== -->
 <div class="navbar">
     <h2>🌾 FarmConnect</h2>
 
@@ -760,9 +675,6 @@
     </div>
 </div>
 
-<!-- ==========================
-     CONTENT
-========================== -->
 <div class="container">
 
     <h1 class="page-title">🛒 Shopping Cart</h1>
@@ -773,9 +685,7 @@
 
         <table>
 
-
             <thead>
-
                 <tr>
                     <th>Product</th>
                     <th>Unit Price</th>
@@ -783,23 +693,11 @@
                     <th>Subtotal</th>
                     <th>Action</th>
                 </tr>
-
-=======
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Qty</th>
-                    <th>Subtotal</th>
-                    <th>Action</th>
-                </tr>
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
             </thead>
 
             <tbody>
 
-            {% for item in cart %}
-
+                {% for item in cart %}
 
                 <tr>
 
@@ -807,8 +705,10 @@
 
                         <div class="product-info">
 
-                            <img src="{{ item.product.image.url }}"
-                                 alt="{{ item.product.name }}">
+                            {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}"
+                                     alt="{{ item.product.name }}">
+                            {% endif %}
 
                             <div>
 
@@ -817,7 +717,8 @@
                                 <br>
 
                                 <small>
-                                    Farmer: {{ item.product.farmer.username }}
+                                    Farmer:
+                                    {{ item.product.farmer.username }}
                                 </small>
 
                             </div>
@@ -834,75 +735,43 @@
 
                     <td class="qty">
 
-                        {{ item.quantity }} {{ item.product.get_unit_display }}
-
-                    </td>
-
-                    <td class="subtotal">
-
-                        ₦{{ item.subtotal }}
-
-                    </td>
-
-                    <td>
-
-                        <a href="{% url 'remove_from_cart' item.product.id %}" class="btn remove-btn">
-                            Remove
-                        </a>
-
-                    </td>
-
-                </tr>
-
-            {% endfor %}
-
-            </tbody>
-
-=======
-                <tr>
-
-                    <td>
-                        <div class="product-info">
-                            <img src="{{ item.product.image.url }}" alt="">
-                            <div>
-                                <strong>{{ item.product.name }}</strong>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="price">
-                        ₦{{ item.product.price }}
-                    </td>
-
-                    <td class="qty">
                         {{ item.quantity }}
+                        {{ item.product.get_unit_display }}
+
                     </td>
 
                     <td class="subtotal">
+
                         ₦{{ item.subtotal }}
+
                     </td>
 
                     <td>
-                        <a href="/remove-from-cart/{{ item.product.id }}/" class="btn remove-btn">
+
+                        <a href="{% url 'remove_from_cart' item.product.id %}"
+                           class="btn remove-btn">
+
                             Remove
+
                         </a>
+
                     </td>
 
                 </tr>
-            {% endfor %}
+
+                {% endfor %}
 
             </tbody>
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
+
         </table>
 
     </div>
 
-    <!-- SUMMARY -->
+    <!-- ORDER SUMMARY -->
 
     <div class="summary">
 
         <h3>Order Summary</h3>
-
 
         <hr>
 
@@ -916,22 +785,22 @@
 
         <p class="total">
 
-            Total: ₦{{ total }}
+            <strong>Total: ₦{{ total }}</strong>
 
-=======
-        <p class="total">
-            Total: ₦{{ total }}
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         </p>
 
         <div class="btn-group">
 
             <a href="/checkout/" class="btn checkout-btn">
+
                 Checkout 💳
+
             </a>
 
             <a href="/marketplace/" class="btn shop-btn">
+
                 Continue Shopping
+
             </a>
 
         </div>
@@ -940,30 +809,24 @@
 
     {% else %}
 
-
     <div class="empty">
 
         <h3>Your cart is empty 🛒</h3>
 
         <p>
+
             Browse our marketplace and add fresh farm products to your cart.
+
         </p>
 
         <br>
 
         <a href="/marketplace/" class="btn shop-btn">
+
             Start Shopping
+
         </a>
 
-=======
-    <!-- EMPTY CART -->
-    <div class="empty">
-        <h3>Your cart is empty 🛒</h3>
-
-        <a href="/marketplace/" class="btn shop-btn">
-            Start Shopping
-        </a>
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
     </div>
 
     {% endif %}

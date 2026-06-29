@@ -393,8 +393,6 @@
             .quantity-group select{
                 width:100%;
             }
-
-=======
         body {
             margin: 0;
             font-family: Arial;
@@ -479,7 +477,6 @@
                 flex-direction: column;
                 text-align: center;
             }
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
         }
     </style>
 </head>
@@ -497,7 +494,6 @@
         <a href="/logout/">Logout</a>
     </div>
 </div>
-
 <!-- FORM -->
 <div class="container">
 
@@ -509,99 +505,36 @@
             {% csrf_token %}
 
             <label>Product Name</label>
-
-            <input
-                type="text"
-                name="name"
-                placeholder="e.g. Tomato, Yam, Rice"
-                required
-            >
+            <input type="text" name="name" placeholder="e.g. Tomato, Yam, Rice" required>
 
             <label>Description</label>
-            <textarea
-                name="description"
-                placeholder="Describe your product..."
-                rows="5"
-                required
-            ></textarea>
+            <textarea name="description" placeholder="Describe your product..." rows="5" required></textarea>
 
             <label>Price (₦)</label>
-            <input
-                type="number"
-                name="price"
-                step="0.01"
-                min="0"
-                placeholder="Enter product price"
-                required
-            >
+            <input type="number" name="price" step="0.01" min="0" required>
 
             <label>Available Quantity</label>
-
             <div class="quantity-group">
-
-                <input
-                    type="number"
-                    name="quantity"
-                    step="0.01"
-                    min="0.01"
-                    placeholder="Enter quantity"
-                    required
-                >
+                <input type="number" name="quantity" step="0.01" min="0.01" required>
 
                 <select name="unit" required>
-
                     <option value="">Select Unit</option>
-
                     <option value="kg">Kilogram (Kg)</option>
-
                     <option value="bag">Bag</option>
-
                     <option value="basket">Basket</option>
-
                     <option value="crate">Crate</option>
-
                     <option value="piece">Piece</option>
-
                     <option value="dozen">Dozen</option>
-
                     <option value="litre">Litre</option>
-
                     <option value="ton">Ton</option>
-
                 </select>
-
             </div>
 
             <label>Product Image</label>
-
-            <input
-                type="file"
-                name="image"
-                accept="image/*"
-                required
-            >
-
-            <button type="submit">
-                Upload Product 🚀
-            </button>
-
-=======
-            <input type="text" name="name" placeholder="e.g. Tomato, Yam, Rice">
-
-            <label>Description</label>
-            <textarea name="description" placeholder="Describe your product..."></textarea>
-
-            <label>Price (₦)</label>
-            <input type="number" name="price">
-
-            <label>Quantity</label>
-            <input type="number" name="quantity">
-
-            <label>Product Image</label>
-            <input type="file" name="image">
+            <input type="file" name="image" accept="image/*" required>
 
             <button type="submit">Upload Product 🚀</button>
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
+
         </form>
 
     </div>

@@ -4,436 +4,382 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | FarmConnect</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
 
-    <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-                /* ==========================
-           GLOBAL STYLES
-        ========================== */
+/* ==========================================
+   RESET
+========================================== */
 
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Poppins',sans-serif;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
 
-        html{
-            scroll-behavior:smooth;
-        }
+html{
+    scroll-behavior:smooth;
+}
 
-        body{
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
 
-            min-height:100vh;
+    background:
+    linear-gradient(rgba(0,0,0,.60),rgba(0,0,0,.60)),
+    url("https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1800&q=80")
+    center center/cover no-repeat;
 
-            display:flex;
-            justify-content:center;
-            align-items:center;
+    overflow-x:hidden;
+}
 
-            padding:25px;
+/* ==========================================
+   LOGIN CARD
+========================================== */
 
-            background:
-            linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
-            url("https://images.unsplash.com/photo-1500595046743-cd271d694d30")
-            center center/cover no-repeat;
+.login-container{
 
-        }
+    width:100%;
+    max-width:430px;
 
-        /* ==========================
-           LOGIN CARD
-        ========================== */
+    padding:45px 35px;
 
-        .login-container{
+    background:rgba(255,255,255,.15);
 
-            width:100%;
-            max-width:420px;
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
 
-            padding:45px 35px;
+    border:1px solid rgba(255,255,255,.20);
 
-            border-radius:20px;
+    border-radius:22px;
 
-            background:rgba(255,255,255,.15);
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.35);
 
-            backdrop-filter:blur(20px);
-            -webkit-backdrop-filter:blur(20px);
+    animation:fadeIn .8s ease;
+}
 
-            border:1px solid rgba(255,255,255,.2);
+/* ==========================================
+   ANIMATION
+========================================== */
 
-            box-shadow:
-            0 20px 45px rgba(0,0,0,.35);
+@keyframes fadeIn{
 
-            animation:fadeIn .7s ease;
-        }
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
 
-        @keyframes fadeIn{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 
-            from{
-                opacity:0;
-                transform:translateY(30px);
-            }
+}
 
-            to{
-                opacity:1;
-                transform:translateY(0);
-            }
+/* ==========================================
+   TITLE
+========================================== */
 
-        }
+.login-container h2{
 
-        /* ==========================
-           TITLE
-        ========================== */
+    text-align:center;
 
-        .login-container h2{
+    color:#fff;
 
-            color:#fff;
+    font-size:32px;
 
-            text-align:center;
+    font-weight:700;
 
-            font-size:30px;
+    margin-bottom:10px;
+}
 
-            margin-bottom:10px;
+.login-container p{
 
-            font-weight:700;
-        }
+    text-align:center;
 
-        .login-container p{
+    color:#f1f1f1;
 
-            text-align:center;
+    margin-bottom:30px;
 
-            color:#eee;
+    font-size:15px;
+}
 
-            margin-bottom:25px;
-        }
+/* ==========================================
+   ERROR MESSAGE
+========================================== */
 
-        /* ==========================
-           INPUTS
-        ========================== */
+.error{
 
-        input{
+    background:#ffebee;
 
-            width:100%;
+    color:#c62828;
 
-            height:52px;
+    padding:12px;
 
-            padding:0 18px;
+    border-left:5px solid #f44336;
 
-            margin-bottom:18px;
+    border-radius:10px;
 
-            border:none;
+    margin-bottom:20px;
 
-            outline:none;
+    font-size:14px;
 
-            border-radius:10px;
+    font-weight:600;
+}
 
-            background:rgba(255,255,255,.92);
+/* ==========================================
+   INPUTS
+========================================== */
 
-            font-size:15px;
+input{
 
-            transition:.35s;
-        }
+    width:100%;
 
-        input::placeholder{
+    height:54px;
 
-            color:#777;
-        }
+    padding:0 18px;
 
-        input:focus{
+    margin-bottom:18px;
 
-            background:#fff;
+    border:none;
 
-            transform:translateY(-2px);
+    outline:none;
 
-            box-shadow:
+    border-radius:12px;
 
-            0 0 0 4px rgba(40,167,69,.25);
-        }
+    background:rgba(255,255,255,.95);
 
-        /* ==========================
-           BUTTON
-        ========================== */
+    color:#333;
 
-        button{
+    font-size:15px;
 
-            width:100%;
+    transition:.3s;
+}
 
-            height:54px;
+input::placeholder{
+    color:#777;
+}
 
-            border:none;
+input:focus{
 
-            border-radius:12px;
+    background:#fff;
 
-            cursor:pointer;
+    box-shadow:
+    0 0 0 4px rgba(40,167,69,.20);
 
-            color:#fff;
+    transform:translateY(-2px);
+}
 
-            font-size:17px;
+/* ==========================================
+   BUTTON
+========================================== */
 
-            font-weight:600;
+button{
 
-            background:linear-gradient(135deg,#28a745,#20c997);
+    width:100%;
 
-            transition:.35s;
-        }
+    height:56px;
 
-        button:hover{
+    border:none;
 
-            transform:translateY(-3px);
+    border-radius:12px;
 
-            box-shadow:
+    cursor:pointer;
 
-            0 12px 25px rgba(0,0,0,.25);
+    color:#fff;
 
-            background:linear-gradient(135deg,#218838,#1ba784);
-        }
+    font-size:16px;
 
-        button:active{
+    font-weight:600;
 
-            transform:scale(.98);
-        }
+    background:
+    linear-gradient(
+    135deg,
+    #28a745,
+    #20c997
+    );
 
-        /* ==========================
-           LINKS
-        ========================== */
+    transition:.35s;
+}
 
-        .links{
+button:hover{
 
-            margin-top:25px;
+    transform:translateY(-3px);
 
-            text-align:center;
-        }
+    box-shadow:
+    0 12px 25px rgba(0,0,0,.25);
 
-        .links a{
+    background:
+    linear-gradient(
+    135deg,
+    #218838,
+    #1ba784
+    );
+}
 
-            display:block;
+button:active{
+    transform:scale(.98);
+}
 
-            color:#fff;
+/* ==========================================
+   LINKS
+========================================== */
 
-            text-decoration:none;
+.links{
 
-            margin-top:12px;
+    text-align:center;
 
-            font-size:15px;
+    margin-top:25px;
+}
 
-            transition:.3s;
-        }
+.links a{
 
-        .links a:hover{
+    display:block;
 
-            color:#ffe082;
+    color:#fff;
 
-            text-decoration:underline;
-        }
+    text-decoration:none;
 
-        /* ==========================
-           ERROR MESSAGE
-        ========================== */
+    margin-top:12px;
 
-        .error{
+    font-size:15px;
 
-            padding:12px;
+    transition:.3s;
+}
 
-            margin-bottom:18px;
+.links a:hover{
 
-            border-radius:10px;
+    color:#FFD54F;
 
-            background:#ffebee;
+    text-decoration:underline;
+}
 
-            color:#c62828;
+/* ==========================================
+   OPTIONAL LOGO
+========================================== */
 
-            font-size:14px;
+.login-logo{
 
-            font-weight:600;
+    text-align:center;
 
-            border-left:5px solid #f44336;
+    margin-bottom:20px;
+}
 
-            animation:slideDown .4s ease;
-        }
+.login-logo i{
 
-        @keyframes slideDown{
+    font-size:55px;
 
-            from{
-                opacity:0;
-                transform:translateY(-20px);
-            }
+    color:#4CAF50;
+}
 
-            to{
-                opacity:1;
-                transform:translateY(0);
-            }
+/* ==========================================
+   TABLET
+========================================== */
 
-        }
+@media(max-width:768px){
 
-        /* ==========================
-           TABLET
-        ========================== */
+    .login-container{
 
-        @media(max-width:768px){
+        max-width:100%;
 
-        .login-container{
+        padding:35px 28px;
+    }
 
-            max-width:100%;
+    .login-container h2{
 
-            padding:35px 25px;
-        }
+        font-size:28px;
+    }
 
-        .login-container h2{
+}
 
-            font-size:26px;
-        }
+/* ==========================================
+   MOBILE
+========================================== */
 
-        button{
+@media(max-width:480px){
 
-            height:50px;
-        }
+    body{
+        padding:15px;
+    }
 
-        }
+    .login-container{
 
-        /* ==========================
-           MOBILE
-        ========================== */
+        padding:28px 20px;
 
-        @media(max-width:480px){
+        border-radius:18px;
+    }
 
-        body{
+    .login-container h2{
 
-            padding:18px;
-        }
+        font-size:24px;
+    }
 
-        .login-container{
+    .login-container p{
 
-            padding:28px 20px;
+        font-size:14px;
+    }
 
-            border-radius:15px;
-        }
+    input{
 
-        .login-container h2{
+        height:50px;
 
-            font-size:22px;
-        }
+        font-size:14px;
+    }
 
-        input{
+    button{
 
-            height:48px;
+        height:50px;
 
-            font-size:14px;
-        }
+        font-size:15px;
+    }
 
-        button{
+    .links a{
 
-            height:48px;
+        font-size:14px;
+    }
 
-            font-size:15px;
-        }
+}
 
-        .links a{
+/* ==========================================
+   LARGE DESKTOP
+========================================== */
 
-            font-size:14px;
-        }
+@media(min-width:1400px){
 
-        }
+    .login-container{
 
-        /* ==========================
-           LARGE SCREEN
-        ========================== */
+        max-width:470px;
+    }
 
-        @media(min-width:1400px){
+}
 
-        .login-container{
+/* ==========================================
+   SCROLLBAR
+========================================== */
 
-            max-width:450px;
-        }
+::-webkit-scrollbar{
+    width:8px;
+}
 
-        }
+::-webkit-scrollbar-thumb{
+    background:#28a745;
+    border-radius:20px;
+}
 
-        /* ==========================
-           SCROLLBAR
-        ========================== */
+::-webkit-scrollbar-track{
+    background:#e5e5e5;
+}
 
-        ::-webkit-scrollbar{
+</style>
 
-            width:8px;
-        }
-
-        ::-webkit-scrollbar-thumb{
-
-            background:#28a745;
-
-            border-radius:20px;
-        }
-
-        ::-webkit-scrollbar-track{
-
-            background:#ddd;
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-                        url('https://images.unsplash.com/photo-1500595046743-cd271d694d30') no-repeat center center/cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-container {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            width: 350px;
-            text-align: center;
-        }
-
-        .login-container h2 {
-            margin-bottom: 20px;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background: #218838;
-        }
-
-        .links {
-            margin-top: 15px;
-        }
-
-        .links a {
-            display: block;
-            text-decoration: none;
-            color: #007bff;
-            margin-top: 5px;
-        }
-
-        .error {
-            color: red;
-            margin-bottom: 10px;
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
-        }
-    </style>
 </head>
 
 <body>
@@ -447,12 +393,23 @@
         {% endfor %}
     {% endif %}
 
-    <form method="POST">
+    <form method="POST" class="login-form">
         {% csrf_token %}
-        <input type="email" name="email" placeholder="Email Address" required>
-        <input type="password" name="password" placeholder="Password" required>
 
-        <button type="submit">Login</button>
+        <div class="input-group">
+            <i class="bi bi-envelope-fill"></i>
+            <input type="email" name="email" placeholder="Email Address" required>
+        </div>
+
+        <div class="input-group">
+            <i class="bi bi-lock-fill"></i>
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+
+        <button type="submit" class="login-btn">
+            <i class="bi bi-box-arrow-in-right"></i>
+            Login
+        </button>
     </form>
 
     <div class="links">
