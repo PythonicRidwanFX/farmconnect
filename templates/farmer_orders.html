@@ -206,7 +206,7 @@ table{
 
             <a href="{% url 'farmer_orders' %}">Orders</a>
 
-            <a href="/logout/">Logout</a>
+            <a href="{% url 'logout' %}">Logout</a>
 
         </div>
 
@@ -214,161 +214,168 @@ table{
 
     <div class="container">
 
-    <h1>📦 Customer Orders</h1>
+        <h1>📦 Customer Orders</h1>
 
-    {% if orders %}
+        {% if orders %}
 
-    <table>
+        <table>
 
-    <tr>
+            <tr>
 
-    <th>Order</th>
+                <th>Order</th>
 
-    <th>Buyer</th>
+                <th>Buyer</th>
 
-    <th>Phone</th>
+                <th>Phone</th>
 
-    <th>Product</th>
+                <th>Product</th>
 
-    <th>Image</th>
+                <th>Image</th>
 
-    <th>Quantity</th>
+                <th>Quantity</th>
 
-    <th>Total</th>
+                <th>Total</th>
 
-    <th>Status</th>
+                <th>Status</th>
 
-    <th>Date</th>
-    <th>Action</th>
+                <th>Date</th>
 
-    </tr>
+                <th>Action</th>
 
-    {% for order in orders %}
+            </tr>
 
-    <tr>
+            {% for order in orders %}
 
-    <td>#FC{{ order.id }}</td>
+            <tr>
 
-    <td>
+                <td>#FC{{ order.id }}</td>
 
-    {{ order.buyer.first_name }}
-    {{ order.buyer.last_name }}
+                <td>
+                    {{ order.buyer.first_name }} {{ order.buyer.last_name }}
+                    <br>
+                </td>
 
-    <br>
+                <td>
+                    {{ order.buyer.profile.phone }}
+                </td>
 
-    <small>{{ order.buyer.username }}</small>
+                <!-- Product -->
+                <td>
+                    {% for item in order.items.all %}
+                        {{ item.product.name }}<br>
+                    {% endfor %}
+                </td>
 
-    </td>
+                <!-- Image -->
+                <td>
+                    {% for item in order.items.all %}
+                        <img src="{{ item.product.image.url }}"
+                             width="70"
+                             height="70"
+                             style="object-fit:cover;border-radius:8px;margin-bottom:5px;">
+                        <br>
+                    {% endfor %}
+                </td>
 
-    <td>
+                <!-- Quantity + Unit -->
+                <td>
+                    {% for item in order.items.all %}
+                        {{ item.quantity }} {{ item.product.get_unit_display }}<br>
+                    {% endfor %}
+                </td>
 
-    {{ order.buyer.profile.phone }}
+                <!-- Total -->
+                <td>
+                    ₦{{ order.total_price }}
+                </td>
 
-    </td>
+                <!-- Status -->
+                <td>
 
-    <td>
+                    {% if order.status == "Pending" %}
 
-    {{ order.product.name }}
+                        <span class="status pending">
+                            {{ order.status }}
+                        </span>
 
-    </td>
+                    {% elif order.status == "Processing" %}
 
-    <td>
+                        <span class="status processing">
+                            {{ order.status }}
+                        </span>
 
-    <img src="{{ order.product.image.url }}">
+                    {% elif order.status == "Delivered" %}
 
-    </td>
+                        <span class="status delivered">
+                            {{ order.status }}
+                        </span>
 
-    <td>
+                    {% else %}
 
-    {{ order.quantity }}
-    {{ order.product.get_unit_display }}
+                        <span class="status delivered">
+                            {{ order.status }}
+                        </span>
 
-    </td>
+                    {% endif %}
 
-    <td>
+                </td>
 
-    ₦{{ order.total_price }}
+                <!-- Date -->
+                <td>
+                    {{ order.created_at|date:"d M Y" }}
+                </td>
 
-    </td>
+                <!-- Action -->
+                <td>
 
-    <td>
+                    {% if order.status == "Pending" %}
 
-    {% if order.status == "Pending" %}
+                        <a class="btn processing"
+                           href="{% url 'update_order_status' order.id 'Processing' %}">
+                            Accept
+                        </a>
 
-    <span class="status pending">
+                    {% elif order.status == "Processing" %}
 
-    {{ order.status }}
+                        <a class="btn delivered"
+                           href="{% url 'update_order_status' order.id 'Delivered' %}">
+                            Mark Delivered
+                        </a>
 
-    </span>
+                    {% elif order.status == "Delivered" %}
 
-    {% elif order.status == "Processing" %}
+                        <a class="btn completed"
+                           href="{% url 'update_order_status' order.id 'Completed' %}">
+                            Complete Order
+                        </a>
 
-    <span class="status processing">
+                    {% else %}
 
-    {{ order.status }}
+                        <span style="color:green;font-weight:bold;">
+                            ✔ Completed
+                        </span>
 
-    </span>
+                    {% endif %}
 
-    {% else %}
+                </td>
 
-    <span class="status delivered">
+            </tr>
 
-    {{ order.status }}
+            {% endfor %}
 
-    </span>
+        </table>
 
-    {% endif %}
+        {% else %}
 
-    </td>
+        <div class="empty">
 
-    <td>
+            <h2>No Customer Orders Yet 📦</h2>
 
-        {{ order.created_at|date:"d M Y" }}
+            <p>When buyers purchase your products, they will appear here.</p>
 
-    </td>
+        </div>
 
-    <td>
-
-    {% if order.status == "Pending" %}
-
-        <a class="btn processing"
-           href="{% url 'update_order_status' order.id 'Processing' %}">
-            Accept
-        </a>
-
-    {% elif order.status == "Processing" %}
-
-        <a class="btn delivered"
-           href="{% url 'update_order_status' order.id 'Delivered' %}">
-            Mark Delivered
-        </a>
-
-    {% else %}
-
-        <span style="color:green;font-weight:bold;">
-            ✔ Completed
-        </span>
-
-    {% endif %}
-
-    </td>
-    </tr>
-
-    {% endfor %}
-
-    </table>
-
-    {% else %}
-
-    <div class="empty">
-
-    <h2>No Customer Orders Yet 📦</h2>
-
-    <p>When buyers purchase your products, they will appear here.</p>
-
-    </div>
-
-    {% endif %}
+        {% endif %}
 
     </div>
 

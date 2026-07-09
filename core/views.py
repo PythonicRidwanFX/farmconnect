@@ -5,7 +5,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.db.models import Q
 from django.utils import timezone
-
+import requests
+import uuid
+from django.conf import settings
 from .models import (
     Product,
     Cart,
@@ -152,7 +154,6 @@ def user_logout(request):
 
 @login_required
 def farmer_dashboard(request):
-    # Safely get the user's profile
     profile = Profile.objects.filter(user=request.user).first()
 
     if profile is None:
@@ -163,20 +164,29 @@ def farmer_dashboard(request):
     if profile.user_type != "farmer":
         return redirect("marketplace")
 
+    # Show all products (including sold ones)
     products = Product.objects.filter(farmer=request.user)
 
-    total_value = sum(product.price for product in products)
-    total_products = products.count()
+    # Only active (unsold) products
+    active_products = products.filter(is_sold=False)
+
+    # Dashboard statistics
+    total_products = products.count()           # All products ever added
+    sold_products = products.filter(is_sold=True).count()
+    active_listings = active_products.count()
+    total_value = sum(p.price for p in active_products)
 
     context = {
         "products": products,
-        "total_value": total_value,
-        "total_products": total_products,
         "profile": profile,
+
+        "total_products": total_products,
+        "sold_products": sold_products,
+        "active_listings": active_listings,
+        "total_value": total_value,
     }
 
     return render(request, "farmer_dashboard.html", context)
-
 @login_required
 def add_product(request):
     # only farmers allowed
@@ -230,12 +240,14 @@ def add_product(request):
 # =========================
 # 🛒 MARKETPLACE
 # =========================
+@login_required
 def marketplace(request):
     query = (request.GET.get("q") or "").strip()
     min_price = request.GET.get("min")
     max_price = request.GET.get("max")
 
-    products = Product.objects.all().order_by("-created_at")
+    # Only show products that still have stock
+    products = Product.objects.filter(is_sold=False).order_by("-created_at")
 
     if query:
         products = products.filter(
@@ -267,7 +279,6 @@ def marketplace(request):
         "user_type": user_type,
         "query": query
     })
-
 
 # =========================
 # 📦 PRODUCTS
@@ -342,6 +353,15 @@ def checkout(request):
         address = request.POST.get("address")
         notes = request.POST.get("notes")
 
+        # Check stock before creating the order
+        for item in cart_items:
+            if item.quantity > item.product.quantity:
+                messages.error(
+                    request,
+                    f"Only {item.product.quantity} {item.product.get_unit_display()} of '{item.product.name}' is available."
+                )
+                return redirect("cart")
+
         # Create Order
         order = Order.objects.create(
             buyer=request.user,
@@ -361,8 +381,9 @@ def checkout(request):
             notes=notes,
         )
 
-        # Create Order Items
+        # Create Order Items and reduce stock
         for item in cart_items:
+
             OrderItem.objects.create(
                 order=order,
                 product=item.product,
@@ -371,6 +392,10 @@ def checkout(request):
                 unit_price=item.product.price,
                 subtotal=item.total_price,
             )
+
+            # Reduce product quantity
+            item.product.quantity -= item.quantity
+            item.product.save()
 
         # Clear Cart
         cart_items.delete()
@@ -519,11 +544,19 @@ def farmer_orders(request):
 @login_required
 def update_order_status(request, id, status):
 
-    order = get_object_or_404(
-        Order,
-        id=id,
-        items__farmer=request.user
+    order = (
+        Order.objects
+        .filter(
+            id=id,
+            items__farmer=request.user
+        )
+        .distinct()
+        .first()
     )
+
+    if not order:
+        messages.error(request, "Order not found.")
+        return redirect("farmer_orders")
 
     if status in ["Pending", "Processing", "Delivered", "Completed", "Cancelled"]:
         order.status = status
@@ -531,7 +564,6 @@ def update_order_status(request, id, status):
         messages.success(request, "Order status updated successfully.")
 
     return redirect("farmer_orders")
-
 
 # =========================
 # 💳 PAYMENT PAGE
@@ -545,6 +577,92 @@ def payment_page(request, order_id):
         buyer=request.user
     )
 
+    if request.method == "POST":
+
+        reference = str(uuid.uuid4())
+
+        headers = {
+            "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
+            "Content-Type": "application/json",
+        }
+
+        data = {
+            "email": request.user.email,
+            "amount": int(order.total_price * 100),
+            "reference": reference,
+            "callback_url": request.build_absolute_uri("/payment/verify/")
+        }
+
+        response = requests.post(
+            "https://api.paystack.co/transaction/initialize",
+            json=data,
+            headers=headers
+        )
+
+        result = response.json()
+
+        if result["status"]:
+
+            # Save order id so we know which order to verify
+            request.session["order_id"] = order.id
+            request.session["payment_reference"] = reference
+
+            return redirect(result["data"]["authorization_url"])
+
+        messages.error(request, "Unable to initialize payment.")
+
     return render(request, "payment.html", {
         "order": order
     })
+
+
+@login_required
+def verify_payment(request):
+
+    reference = request.GET.get("reference")
+
+    headers = {
+        "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
+    }
+
+    response = requests.get(
+        f"https://api.paystack.co/transaction/verify/{reference}",
+        headers=headers
+    )
+
+    result = response.json()
+
+    order_id = request.session.get("order_id")
+
+    if not order_id:
+        messages.error(request, "Order not found.")
+        return redirect("orders")
+
+    order = get_object_or_404(
+        Order,
+        id=order_id,
+        buyer=request.user
+    )
+
+    if result["status"] and result["data"]["status"] == "success":
+
+        order.payment_status = "Paid"
+        order.status = "Processing"
+        order.save()
+
+        # ✅ Mark all purchased products as sold
+        for item in order.items.all():
+
+            item.product.is_sold = True
+            item.product.save()
+
+        messages.success(request, "Payment Successful!")
+
+        request.session.pop("order_id", None)
+        request.session.pop("payment_reference", None)
+
+        return redirect("orders")
+
+    messages.error(request, "Payment failed.")
+
+    return redirect("payment_page", order.id)

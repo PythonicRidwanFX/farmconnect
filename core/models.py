@@ -49,11 +49,17 @@ class Profile(models.Model):
 # ======================
 class Product(models.Model):
     farmer = models.ForeignKey(User, on_delete=models.CASCADE)
+
     name = models.CharField(max_length=200)
+
     description = models.TextField()
+
     price = models.FloatField()
 
-    quantity = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
 
     unit = models.CharField(
         max_length=20,
@@ -70,12 +76,15 @@ class Product(models.Model):
         default='kg',
     )
 
+    # ✅ NEW FIELD
+    is_sold = models.BooleanField(default=False)
+
     image = models.ImageField(upload_to='products/')
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
-
 
 # ======================
 # 🛒 CART
@@ -238,3 +247,45 @@ class DeliveryDetails(models.Model):
 
     def __str__(self):
         return f"Delivery for Order #{self.order.id}"
+
+# ======================
+# 💳 PAYMENT
+# ======================
+
+class Payment(models.Model):
+    PAYMENT_METHODS = (
+        ('Paystack', 'Paystack'),
+        ('Flutterwave', 'Flutterwave'),
+    )
+
+    order = models.OneToOneField(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='payment'
+    )
+
+    reference = models.CharField(max_length=100, unique=True)
+
+    amount = models.FloatField()
+
+    payment_method = models.CharField(
+        max_length=30,
+        choices=PAYMENT_METHODS,
+        default='Paystack'
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=Order.PAYMENT_STATUS,
+        default='Pending'
+    )
+
+    paid_at = models.DateTimeField(
+        blank=True,
+        null=True
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.reference

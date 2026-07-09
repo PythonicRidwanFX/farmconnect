@@ -773,7 +773,7 @@ grid-template-columns:1fr;
             </div>
 
             <div class="stat-value">
-                {{ products|length }}
+                {{ active_listings }}
             </div>
 
         </div>
@@ -782,13 +782,12 @@ grid-template-columns:1fr;
         <div class="stat-card">
 
             <div class="stat-title">
-                Logged In As
+                Sold Products
             </div>
 
-            <div class="stat-value"
-                 style="font-size:18px;line-height:1.5;word-break:break-word;">
+            <div class="stat-value">
 
-                {{ request.user.username }}
+                {{ sold_products }}
 
             </div>
 
@@ -825,13 +824,13 @@ grid-template-columns:1fr;
                  alt="No Image">
         {% endif %}
 
-        {% if p.quantity > 0 %}
-            <span class="badge">
-                ✅ Available
+        {% if p.is_sold %}
+            <span class="badge out">
+                🔴 SOLD
             </span>
         {% else %}
-            <span class="badge out">
-                ❌ Out of Stock
+            <span class="badge">
+                ✅ Available
             </span>
         {% endif %}
 
@@ -854,14 +853,14 @@ grid-template-columns:1fr;
                 📦 {{ p.quantity }} {{ p.get_unit_display }}
             </span>
 
-            {% if p.quantity > 0 %}
-            <span style="background:#E8F5E9;color:#2E7D32;">
-                In Stock
-            </span>
+            {% if p.is_sold %}
+                <span style="background:#FDECEA;color:#C62828;">
+                    Sold
+                </span>
             {% else %}
-            <span style="background:#FDECEA;color:#C62828;">
-                Empty
-            </span>
+                <span style="background:#E8F5E9;color:#2E7D32;">
+                    In Stock
+                </span>
             {% endif %}
 
         </div>
@@ -872,24 +871,40 @@ grid-template-columns:1fr;
 
             <div class="actions">
 
-                <a
-                    href="{% url 'edit_product' p.id %}"
-                    class="edit-btn">
+    {% if not p.is_sold %}
 
-                    ✏ Edit
+    <a
+        href="{% url 'edit_product' p.id %}"
+        class="edit-btn">
 
-                </a>
+        ✏ Edit
 
-                <a
-                    href="{% url 'delete_product' p.id %}"
-                    class="delete-btn"
-                    onclick="return confirm('Delete {{ p.name }}?');">
+    </a>
 
-                    🗑 Delete
+    <a
+        href="{% url 'delete_product' p.id %}"
+        class="delete-btn"
+        onclick="return confirm('Delete {{ p.name }}?');">
 
-                </a>
+        🗑 Delete
 
-            </div>
+    </a>
+
+    {% else %}
+
+    <span style="
+        background:#FDECEA;
+        color:#C62828;
+        padding:10px 16px;
+        border-radius:8px;
+        font-weight:600;
+    ">
+        ✔ Product Sold
+    </span>
+
+    {% endif %}
+
+</div>
 
         </div>
 

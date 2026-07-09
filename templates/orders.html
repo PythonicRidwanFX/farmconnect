@@ -278,7 +278,6 @@ body{
     </style>
 
 </head>
-
 <body>
 
 <div class="navbar">
@@ -287,11 +286,13 @@ body{
 
     <div class="nav-links">
 
-        <a href="/">Home</a>
+        <a href="{% url 'marketplace' %}">Marketplace</a>
 
-        <a href="/marketplace/">Marketplace</a>
+        <a href="{% url 'cart' %}">Cart</a>
 
-        <a href="/cart/">Cart</a>
+        <a href="{% url 'orders' %}">My Orders</a>
+
+        <a href="{% url 'logout' %}">Logout</a>
 
     </div>
 
@@ -301,166 +302,212 @@ body{
 
     <h1 class="page-title">📦 My Orders</h1>
 
-    {% for order in orders %}
+    {% if orders %}
 
-    <div class="order-card">
+        {% for order in orders %}
 
-        <div class="order-header">
+        <div class="order-card">
 
-            <div>
-                <strong>Order ID</strong><br>
-                #FC{{ order.id }}
-            </div>
+            <div class="order-header">
 
-            <div>
-                <strong>Order Date</strong><br>
-                {{ order.created_at|date:"d M Y, h:i A" }}
-            </div>
+                <div>
+                    <strong>Order ID</strong><br>
+                    #FC{{ order.id }}
+                </div>
 
-            <div>
-                <strong>Status</strong><br>
+                <div>
+                    <strong>Order Date</strong><br>
+                    {{ order.created_at|date:"d M Y, h:i A" }}
+                </div>
 
-                <span class="status
-                    {% if order.status == 'Pending' %}
-                        processing
-                    {% elif order.status == 'Processing' %}
-                        processing
-                    {% elif order.status == 'Delivered' %}
-                        delivered
+                <div>
+                    <strong>Payment</strong><br>
+
+                    {% if order.payment_status == "Paid" %}
+                        <span class="status delivered">
+                            {{ order.payment_status }}
+                        </span>
+                    {% else %}
+                        <span class="status processing">
+                            {{ order.payment_status }}
+                        </span>
                     {% endif %}
-                ">
-                    {{ order.status }}
-                </span>
+
+                </div>
+
+                <div>
+                    <strong>Order Status</strong><br>
+
+                    {% if order.status == "Pending" %}
+                        <span class="status processing">
+                            {{ order.status }}
+                        </span>
+
+                    {% elif order.status == "Processing" %}
+                        <span class="status processing">
+                            {{ order.status }}
+                        </span>
+
+                    {% elif order.status == "Delivered" %}
+                        <span class="status delivered">
+                            {{ order.status }}
+                        </span>
+
+                    {% elif order.status == "Completed" %}
+                        <span class="status delivered">
+                            {{ order.status }}
+                        </span>
+
+                    {% else %}
+                        <span class="status">
+                            {{ order.status }}
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <div class="order-body">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Image</th>
+
+                            <th>Product</th>
+
+                            <th>Farmer</th>
+
+                            <th>Quantity</th>
+
+                            <th>Unit Price</th>
+
+                            <th>Subtotal</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in order.items.all %}
+
+                        <tr>
+
+                            <td>
+
+                                <img
+                                    src="{{ item.product.image.url }}"
+                                    alt="{{ item.product.name }}"
+                                    width="80"
+                                    height="80"
+                                    style="object-fit:cover;border-radius:10px;"
+                                >
+
+                            </td>
+
+                            <td>
+
+                                <strong>{{ item.product.name }}</strong><br>
+
+                                <small>
+                                    {{ item.product.description|truncatewords:10 }}
+                                </small>
+
+                            </td>
+
+                            <td>
+
+                                {{ item.farmer.username }}
+
+                            </td>
+
+                            <td>
+
+                                {{ item.quantity }}
+                                {{ item.product.get_unit_display }}
+
+                            </td>
+
+                            <td>
+
+                                ₦{{ item.unit_price }}
+
+                            </td>
+
+                            <td>
+
+                                ₦{{ item.subtotal }}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+                <div class="total">
+
+                    Total Paid:
+                    <strong>₦{{ order.total_price }}</strong>
+
+                </div>
+
+                <div class="actions">
+
+                    {% for item in order.items.all %}
+
+                        <a href="{% url 'product_detail' item.product.id %}" class="btn view">
+                            View Product
+                        </a>
+
+                        <a href="{% url 'add_to_cart' item.product.id %}" class="btn buy">
+                            Buy Again
+                        </a>
+
+                    {% endfor %}
+
+                </div>
 
             </div>
 
         </div>
 
-        <div class="order-body">
+        {% endfor %}
 
-            <table>
+    {% else %}
 
-                <thead>
+        <div class="order-card">
 
-                    <tr>
-                        <th>Image</th>
-                        <th>Product</th>
-                        <th>Farmer</th>
-                        <th>Quantity</th>
-                        <th>Unit Price</th>
-                        <th>Order Total</th>
-                    </tr>
+            <div class="order-body" style="text-align:center;padding:70px;">
 
-                </thead>
+                <h2>🛒 No Orders Yet</h2>
 
-                <tbody>
+                <p>
+                    You haven't placed any orders yet.
+                </p>
 
-                    <tr>
+                <br>
 
-                        <td>
-
-                            <img
-                                src="{{ order.product.image.url }}"
-                                alt="{{ order.product.name }}"
-                                width="80"
-                                height="80"
-                                style="object-fit:cover;border-radius:10px;"
-                            >
-
-                        </td>
-
-                        <td>
-
-                            <strong>{{ order.product.name }}</strong><br>
-
-                            <small>{{ order.product.description|truncatewords:10 }}</small>
-
-                        </td>
-
-                        <td>
-
-                            {{ order.product.farmer.username }}
-
-                        </td>
-
-                        <td>
-
-                            {{ order.quantity }} {{ order.product.get_unit_display }}
-
-                        </td>
-
-                        <td>
-
-                            ₦{{ order.product.price }}
-
-                        </td>
-
-                        <td>
-
-                            <strong>₦{{ order.total_price }}</strong>
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-            <div class="total">
-
-                Total Paid: <strong>₦{{ order.total_price }}</strong>
-
-            </div>
-
-            <div class="actions">
-
-                <a href="/product/{{ order.product.id }}/" class="btn view">
-                    View Product
+                <a href="{% url 'marketplace' %}" class="btn buy">
+                    Start Shopping
                 </a>
 
-                <a href="/add-to-cart/{{ order.product.id }}/" class="btn buy">
-                    Buy Again
-                </a>
-
             </div>
 
         </div>
 
-    </div>
-
-    {% empty %}
-
-    <div class="order-card">
-
-        <div class="order-body" style="text-align:center;padding:70px;">
-
-            <h2>🛒 No Orders Yet</h2>
-
-            <p>
-                You haven't placed any orders yet.
-            </p>
-
-            <br>
-
-            <a href="/marketplace/" class="btn buy">
-                Start Shopping
-            </a>
-
-        </div>
-
-    </div>
-
-    {% endfor %}
+    {% endif %}
 
 </div>
 
-=======
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-
->>>>>>> df4708b9815261166538935075d15908a8cc5dfc
 </body>
 </html>

@@ -147,3 +147,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+PAYSTACK_PUBLIC_KEY = "pk_test_5648ebbf77d6bc63af3123fd5c78a85fa8de13fe"
+
+PAYSTACK_SECRET_KEY = "sk_test_beb10bd55db6ab8b23b5d6611d6ce4834d5eedf8"

@@ -38,4 +38,5 @@ urlpatterns = [
     # 💬 Chat
     path('chat/start/<int:farmer_id>/', views.start_chat, name='start_chat'),
     path('chat/<int:room_id>/', views.chat_room, name='chat_room'),
+    path("payment/verify/",views.verify_payment,name="verify_payment"),
 ]
